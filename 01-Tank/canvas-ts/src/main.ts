@@ -66,17 +66,41 @@ const app = el.getContext('2d')!;
 /**
  * 定义渐变色
  */
-const gradient = app.createLinearGradient(0,0,300,300);
-gradient.addColorStop(0,'#55efc4');
-gradient.addColorStop(0.25,'#81ecec');
-gradient.addColorStop(0.5,'#74b9ff');
-gradient.addColorStop(0.75,'#a29bfe');
-gradient.addColorStop(1,'#6c5ce7');
+// const gradient = app.createLinearGradient(0,0,300,300);
+// gradient.addColorStop(0,'#55efc4');
+// gradient.addColorStop(0.25,'#81ecec');
+// gradient.addColorStop(0.5,'#74b9ff');
+// gradient.addColorStop(0.75,'#a29bfe');
+// gradient.addColorStop(1,'#6c5ce7');
 
-app.strokeStyle = gradient;
-app.lineWidth = 20;
-app.lineJoin = 'round';
-app.strokeRect(25,25,120,120);
+// app.strokeStyle = gradient;
+// app.lineWidth = 20;
+// app.lineJoin = 'round';
+// app.strokeRect(25,25,120,120);
 
-app.fillStyle = gradient;
-app.fillRect(160,160,120,120);
+// app.fillStyle = gradient;
+// app.fillRect(160,160,120,120);
+
+/**
+ * 绘制文字
+ * 1) 绘制背景色
+ * 2) 绘制填充字体
+ * 3) 绘制边框字体
+ */
+// app.fillStyle = "#34495e";
+// app.fillRect(0,0,el.width,el.height);
+
+// app.fillStyle = "#e67e22"; // 设置填充子颜色
+// app.font = "30px Arial"; // 设置字体大小和类型
+// app.textBaseline = "top" // 设置字体对齐的基线
+// app.fillText("沐沐宝贝", 50 ,0, 100);
+
+// app.lineWidth = 2;
+// app.font = "50px Arial"; // 设置字体大小和类型
+// app.strokeStyle = gradient;
+// app.textBaseline = "top";
+// app.strokeText("我爱沐沐",100,100,180);
+
+/**
+ * 贴图
+ */
