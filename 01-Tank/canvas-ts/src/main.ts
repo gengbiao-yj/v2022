@@ -1,6 +1,6 @@
 // 断言：必须是canvas 元素，且不为空
-const el = document.querySelector<HTMLCanvasElement>('#canvas')!; 
-const app = el.getContext('2d')!;
+const el = document.querySelector<HTMLCanvasElement>("#canvas")!;
+const app = el.getContext("2d")!;
 
 /**
  * 绘制填充矩形
@@ -66,12 +66,12 @@ const app = el.getContext('2d')!;
 /**
  * 定义渐变色
  */
-// const gradient = app.createLinearGradient(0,0,300,300);
-// gradient.addColorStop(0,'#55efc4');
-// gradient.addColorStop(0.25,'#81ecec');
-// gradient.addColorStop(0.5,'#74b9ff');
-// gradient.addColorStop(0.75,'#a29bfe');
-// gradient.addColorStop(1,'#6c5ce7');
+const gradient = app.createLinearGradient(0, 0, 300, 300);
+gradient.addColorStop(0, "#55efc4");
+gradient.addColorStop(0.25, "#81ecec");
+gradient.addColorStop(0.5, "#74b9ff");
+gradient.addColorStop(0.75, "#a29bfe");
+gradient.addColorStop(1, "#6c5ce7");
 
 // app.strokeStyle = gradient;
 // app.lineWidth = 20;
@@ -103,4 +103,81 @@ const app = el.getContext('2d')!;
 
 /**
  * 贴图
+ *  1) 创建图片
+ *  2) 加载图片
+ *  3) 创建填充背景图
+ *  4) 定义尺寸绘制填充贴图
  */
+// const img = document.createElement('img');
+// img.src = '../images/img1@200_200.jpeg';
+// img.onload = () => {
+//   const pattern = app.createPattern(img, 'repeat')!;
+//   app.fillStyle = pattern;
+//   app.fillRect(0,0,300,300);
+// }
+
+/**
+ * 绘制图片
+ */
+// const img = document.createElement('img');
+// img.src = '../images/img1@200_200.jpeg';
+// img.onload = () => {
+//   app.fillStyle = gradient
+//   app.fillRect(0,0,300,300);
+//   app.drawImage(img,50,50,200,200); // 绘制的图片，初始位置x/y 绘制后的尺寸w/h
+// }
+
+/**
+ * 绘制图片，画布与图片尺寸自适应
+ */
+// const img = document.createElement('img');
+// img.src = '../images/img1@200_200.jpeg';
+// function scale(img: HTMLImageElement, el: HTMLCanvasElement) {
+//   return Math.min(el.width / img.naturalWidth, el.height / img.naturalHeight);
+// }
+// img.onload = () => {
+//   el.width = img.naturalWidth * scale(img, el);
+//   el.height = img.naturalHeight * scale(img, el);
+//   app.drawImage(img, 0, 0, el.width, el.height); // 绘制的图片，初始位置x/y 绘制后的尺寸w/h
+// }
+
+/**
+ * 填充杂色矩形
+ */
+// el.width = 500;
+// el.height = 500;
+// app.fillStyle = "#000";
+// app.fillRect(0,0,el.width,el.height);
+// for(let i = 0; i < 1000; i++) {
+//   app.fillStyle = "#fff";
+//   app.fillRect(el.width * Math.random(), el.height * Math.random(), 5, 5);
+// }
+
+/**
+ * 填充杂色圆形
+ */
+el.width = 500;
+el.height = 500;
+function drawArc() {
+  app.clearRect(0, 0, el.width, el.height); // 指定范围内清空画布
+  app.fillStyle = "#000";
+  app.fillRect(0, 0, el.width, el.height);
+  for (let i = 0; i < 50; i++) {
+    app.beginPath(); // 每次刷新页面重新绘制圆形
+    app.fillStyle = ["#00a8ff", "#9c88ff", "#fbc531", "#4cd137", "#487eb0"].sort(
+      () => (Math.floor(Math.random() * 3) ? 1 : -1)
+    )[0];
+    app.arc(
+      Math.random() * el.width,
+      Math.random() * el.height,
+      5 + Math.random() * 10,
+      0,
+      2 * Math.PI
+    );
+    app.fill();
+  }
+}
+setInterval(() => {
+  drawArc();
+}, 800)
+
