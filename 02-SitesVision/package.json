@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve:dev": "vue-cli-service serve --mode dev",
+    "serve:devProxy": "cross-env NODE_ENV=devProxy vue-cli-service serve --mode dev",
     "serve:uat": "vue-cli-service serve --mode uat",
     "serve:prod": "vue-cli-service serve --mode prod",
     "build:dev": "vue-cli-service build --mode dev",
@@ -31,6 +32,7 @@
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
