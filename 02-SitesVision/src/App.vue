@@ -31,4 +31,9 @@ export default defineComponent({
 
 <style lang="scss">
 @import 'assets/scss/public.scss';
+#app,
+body {
+  @include box-size(100vw, 100vh);
+  overflow: hidden;
+}
 </style>
