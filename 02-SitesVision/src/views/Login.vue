@@ -7,15 +7,132 @@
           <p class="large">高效解决选址问题</p>
         </div>
       </div>
-      <div class="right-box"></div>
+      <div class="right-box">
+        <div class="login-form">
+          <!-- title -->
+          <h1 class="login-title">欢迎登录址见</h1>
+          <!-- tabs -->
+          <div class="tabs">
+            <div class="tabs-item-box" ref="tabsItemBox">
+              <span class="tabs-item" @click="calcuActiveBarPos(0)"
+                >账号登录</span
+              >
+              <span class="tabs-item" @click="calcuActiveBarPos(1)"
+                >短信码登录</span
+              >
+            </div>
+            <span ref="tabsActiveBar" class="tabs-active-bar"></span>
+          </div>
+          <!-- form -->
+          <el-form
+            label-position="top"
+            label-width="100px"
+            :model="accountForm"
+            v-show="activeIndex === 0"
+          >
+            <el-form-item label="账号">
+              <el-input
+                v-model="accountForm.account"
+                placeholder="请输入账号/手机号"
+                size="large"
+                clearable
+              />
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input
+                v-model="accountForm.passWord"
+                placeholder="请输入密码"
+                size="large"
+                type="password"
+                show-password
+                clearable
+              />
+            </el-form-item>
+          </el-form>
+
+          <el-form
+            label-position="top"
+            label-width="100px"
+            :model="noteForm"
+            v-show="activeIndex === 1"
+          >
+            <el-form-item label="手机号">
+              <el-input
+                v-model.number="noteForm.phone"
+                placeholder="请输入11位手机号码"
+                size="large"
+                clearable
+                type="text"
+              />
+            </el-form-item>
+            <el-form-item label="验证码">
+              <el-input
+                v-model="noteForm.noteCode"
+                placeholder="请输入短信验证码"
+                size="large"
+                clearable
+              >
+                <template #append>
+                  <span style="color: #5699ff; cursor: pointer"
+                    >发送验证码</span
+                  >
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-form>
+
+          <label class="alert-msg">
+            <span>注：仅支持已配置的账号登录，未配置请联系公司内管理员</span>
+            <span style="color: #009dff; cursor: pointer"> 忘记密码</span>
+          </label>
+          <!-- 登录按钮 -->
+          <el-button
+            size="large"
+            type="primary"
+            style="width: 100%; margin: 15px auto"
+            >登录</el-button
+          >
+        </div>
+        <div class="advice-msg">建议使用谷歌浏览器</div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseLogin'
+<script lang="ts" setup>
+import { ref, reactive, onMounted } from 'vue';
+/*  计算 tabs 指示条位置
+------------------------------------------------ */
+onMounted(() => {
+  calcuActiveBarPos(0);
+});
+const activeIndex = ref<number>(0);
+const tabsItemBox = ref<HTMLDivElement | null>(null);
+const tabsActiveBar = ref<HTMLSpanElement | null>(null);
+const calcuActiveBarPos = (index: number) => {
+  activeIndex.value = index;
+  const boxel = tabsItemBox.value!;
+  if (boxel.children.length > 0) {
+    const activeTabsItem = boxel.children[index] as HTMLSpanElement;
+    const offsetX = activeTabsItem.offsetLeft;
+    let activeBarLength = activeTabsItem.clientWidth;
+    const activeBar = tabsActiveBar.value!;
+    activeBar.style.transform = `translate(${offsetX}px)`;
+    activeBar.style.width = `${activeBarLength}px`;
+  }
 };
+/*  操作：登录
+------------------------------------------------ */
+// 账号表单
+const accountForm = reactive({
+  account: '', // 账户
+  passWord: '' // 密码
+});
+// 短信表单
+const noteForm = reactive({
+  phone: '', // 账户
+  noteCode: '' // 密码
+});
 </script>
 
 <style lang="scss" scoped>
@@ -36,6 +153,7 @@ export default {
 
     & > div {
       display: inline-block;
+      position: relative;
       @include box-size(50%, 100%);
     }
 
@@ -52,7 +170,7 @@ export default {
       .slogan-title {
         position: absolute;
         top: 12%;
-        width: 50%;
+        width: 100%;
         text-align: center;
         font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
@@ -61,7 +179,83 @@ export default {
         .large {
           letter-spacing: 3px;
           margin-top: 10px;
+          letter-spacing: 6px;
         }
+      }
+    }
+
+    .right-box {
+      .login-form {
+        width: 100%;
+        text-align: left;
+        color: rgba(13, 22, 46, 0.8);
+        @include abs-position(true);
+
+        .login-title {
+          color: #0d162e;
+          font: {
+            size: 24px;
+            weight: bold;
+          }
+          padding-bottom: 20px;
+        }
+
+        .tabs {
+          margin-bottom: 20px;
+          border-bottom: 2px solid #f7f7f7;
+          position: relative;
+          width: 100%;
+
+          .tabs-item-box {
+            width: 100%;
+            @include flex(row, space-around, center);
+          }
+
+          .tabs-item {
+            text-align: center;
+            font-size: 16px;
+            padding: 10px 0;
+            cursor: pointer;
+          }
+
+          .tabs-active-bar {
+            position: absolute;
+            bottom: -1px;
+            background: #3585ff;
+            height: 2px;
+            min-width: 20px;
+            transition: 0.3s ease-in-out;
+          }
+
+          &::v-deep .el-button--primary {
+            margin: 15px auto 0 !important;
+            width: 80%;
+          }
+        }
+
+        .alert-msg {
+          width: 100%;
+          text-align: center;
+          font: {
+            size: 12px;
+            weight: 400;
+            family: PingFangSC-Regular, PingFang SC;
+          }
+          color: #999;
+        }
+      }
+
+      .advice-msg {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        font: {
+          size: 12px;
+          weight: 400;
+          family: PingFangSC-Regular, PingFang SC;
+        }
+        color: #999;
       }
     }
   }
@@ -83,5 +277,15 @@ export default {
       margin-top: 8px;
     }
   }
+
+  .login-form {
+    padding: 0 80px;
+  }
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'BaseLogin'
+};
+</script>
