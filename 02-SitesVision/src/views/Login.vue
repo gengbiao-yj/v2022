@@ -90,6 +90,7 @@
             size="large"
             type="primary"
             style="width: 100%; margin: 15px auto"
+            @click="loginBtnClick"
             >登录</el-button
           >
         </div>
@@ -100,7 +101,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue';
+import UserApi from '@/axios/apis/user';
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
 onMounted(() => {
@@ -118,10 +119,14 @@ const calcuActiveBarPos = (index: number) => {
     let activeBarLength = activeTabsItem.clientWidth;
     const activeBar = tabsActiveBar.value!;
     activeBar.style.transform = `translate(${offsetX}px)`;
+    // 页面初始化完成后加入动画
+    if (activeBar.style.width > '10px') {
+      activeBar.style.transition = '0.3s ease-in-out';
+    }
     activeBar.style.width = `${activeBarLength}px`;
   }
 };
-/*  操作：登录
+/*  登录
 ------------------------------------------------ */
 // 账号表单
 const accountForm = reactive({
@@ -133,6 +138,17 @@ const noteForm = reactive({
   phone: '', // 账户
   noteCode: '' // 密码
 });
+// 获取用户信息
+const loginBtnClick = () => {
+  UserApi.login({
+    loginName: 'admin',
+    pwd: '96e79218965eb72c92a549dd5a330112',
+    browser:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+    userName: 'Admin',
+    positionID: 1
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -223,14 +239,13 @@ const noteForm = reactive({
             bottom: -1px;
             background: #3585ff;
             height: 2px;
-            min-width: 20px;
-            transition: 0.3s ease-in-out;
+            min-width: 5px;
           }
 
-          &::v-deep .el-button--primary {
-            margin: 15px auto 0 !important;
-            width: 80%;
-          }
+          //&:deep(.el-button--primary) {
+          //  margin: 15px auto 0 !important;
+          //  width: 80% !important;
+          //}
         }
 
         .alert-msg {

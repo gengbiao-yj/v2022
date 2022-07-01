@@ -11,7 +11,8 @@ module.exports = {
     'plugin:vue/essential',
     'eslint:recommended',
     '@vue/typescript/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    './.eslintrc-auto-import.json' // 解决 vue api 全局引入报错问题
   ],
   parserOptions: {
     ecmaVersion: 2020
@@ -167,6 +168,7 @@ module.exports = {
     'no-unsafe-finally': 2, // 禁止在 finally 语句块中出现控制流语句
     'no-unsafe-negation': 'error', // 不允许对关系运算符的左操作数求反 in / instanceof
     'no-useless-rename': 2, // 不允许将导入、导出和解构的分配重命名为相同的名称
+    '@typescript-eslint/no-non-null-assertion': 'off', // 非空断言关闭  data!.id
     'semi-spacing': [
       2,
       {

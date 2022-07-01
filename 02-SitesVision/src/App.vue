@@ -30,7 +30,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import 'assets/scss/public.scss';
+@import 'scss/public.scss';
 #app,
 body {
   @include box-size(100vw, 100vh);
