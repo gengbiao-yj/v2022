@@ -1,46 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Login from '@/views/Login.vue';
+import { App } from 'vue';
+import utilsRoutes from '@/router/funcRoutes';
+import businessRoutes from '@/router/autoload';
 
-const routes: Array<RouteRecordRaw> = [
-  /*  配置
-  ------------------------------------------------ */
-  {
-    path: '/:pathMatch(.*)', // 匹配未定义路由，并重定向至 404 页面
-    redirect: '/404'
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('_views/404.vue'),
-    meta: {
-      title: '404',
-      requireAuth: true
-    }
-  },
-  {
-    path: '/Refresh', // 空页面，用于业务页面强制刷新
-    name: 'Refresh',
-    component: () => import('_views/Refresh.vue'),
-    meta: {
-      title: '',
-      requireAuth: true
-    }
-  },
-  {
-    path: '/',
-    redirect: '/Login'
-  },
-  /*  框架页面
-  ------------------------------------------------ */
-  {
-    path: '/Login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      title: '登录'
-    }
-  }
-];
+const routes: Array<RouteRecordRaw> = [...utilsRoutes, ...businessRoutes];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -68,3 +31,6 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+export function setupRouter(app: App) {
+  app.use(router);
+}

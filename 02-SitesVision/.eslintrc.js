@@ -53,7 +53,14 @@ module.exports = {
         after: true
       }
     ], // 关键字前后空格
-    'space-before-function-paren': [2, 'never'], // function关键字和函数名后面的空格
+    'space-before-function-paren': [
+      'error',
+      {
+        anonymous: 'never', // 匿名函数禁止括号前空格
+        named: 'never', // 命名函数禁止括号前空格
+        asyncArrow: 'always' // 异步箭头函数必须括号前空格
+      }
+    ], // function关键字和函数名后面的空格
     eqeqeq: ['error', 'always', { null: 'ignore' }], // 除了null,其他用===而不是==
     'space-infix-ops': 2, // 字符串拼接操作符直接用空格
     'comma-spacing': [
@@ -202,7 +209,8 @@ module.exports = {
     'no-shadow-restricted-names': 2, // 禁止将标识符定义为受限的名字
     'no-spaced-func': 2, // 要求或禁止在函数标识符和其调用之间有空格
     // 'no-useless-constructor': 2, // 禁止不必要的构造函数
-    'no-debugger': process.env.NODE_ENV === 'prod' ? 2 : 0 // 禁用 debugger
+    'no-debugger': process.env.NODE_ENV === 'prod' ? 2 : 0, // 禁用 debugger
+    'no-async-promise-executor': 'off' // Promise 回调函数禁止使用 async
   },
   //当使用第三方的SDK时，eslint会报找不到，可以加入到globals，取消对这个的检查
   globals: {

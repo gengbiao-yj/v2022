@@ -12,9 +12,15 @@ export default class Axios {
    * @param config 请求配置
    * <T> 泛型：定义接口返回数据 data 的类型格式
    */
-  public request<T>(config: AxiosRequestConfig) {
-    // <ResponseResult<T>> 泛型：定义完整的接口返回数据类型格式
-    this.instance.request<ResponseResult<T>>(config);
+  public async request<T, D = ResponseResult<T>>(config: AxiosRequestConfig) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.instance.request<D>(config);
+        return resolve(response.data);
+      } catch (error) {
+        reject(error);
+      }
+    }) as Promise<D>;
   }
   // 拦截器
   private interceptors() {

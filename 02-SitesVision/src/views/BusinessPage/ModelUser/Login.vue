@@ -24,31 +24,33 @@
             <span ref="tabsActiveBar" class="tabs-active-bar"></span>
           </div>
           <!-- form -->
-          <el-form
-            label-position="top"
-            label-width="100px"
-            :model="accountForm"
-            v-show="activeIndex === 0"
-          >
-            <el-form-item label="账号">
-              <el-input
-                v-model="accountForm.account"
-                placeholder="请输入账号/手机号"
-                size="large"
-                clearable
-              />
-            </el-form-item>
-            <el-form-item label="密码">
-              <el-input
-                v-model="accountForm.passWord"
-                placeholder="请输入密码"
-                size="large"
-                type="password"
-                show-password
-                clearable
-              />
-            </el-form-item>
-          </el-form>
+          <div>
+            <el-form
+              label-position="top"
+              label-width="100px"
+              :model="accountForm"
+              v-show="activeIndex === 0"
+            >
+              <el-form-item label="账号">
+                <el-input
+                  v-model="accountForm.account"
+                  placeholder="请输入账号/手机号"
+                  size="large"
+                  clearable
+                />
+              </el-form-item>
+              <el-form-item label="密码">
+                <el-input
+                  v-model="accountForm.passWord"
+                  placeholder="请输入密码"
+                  size="large"
+                  type="password"
+                  show-password
+                  clearable
+                />
+              </el-form-item>
+            </el-form>
+          </div>
 
           <el-form
             label-position="top"
@@ -101,7 +103,8 @@
 </template>
 
 <script lang="ts" setup>
-import UserApi from '@/axios/apis/user';
+import UserApi from '@apis/user';
+
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
 onMounted(() => {
@@ -139,8 +142,8 @@ const noteForm = reactive({
   noteCode: '' // 密码
 });
 // 获取用户信息
-const loginBtnClick = () => {
-  UserApi.login({
+const loginBtnClick = async () => {
+  const response = await UserApi.login({
     loginName: 'admin',
     pwd: '96e79218965eb72c92a549dd5a330112',
     browser:
@@ -148,6 +151,7 @@ const loginBtnClick = () => {
     userName: 'Admin',
     positionID: 1
   });
+  console.log(response.data);
 };
 </script>
 
@@ -177,7 +181,7 @@ const loginBtnClick = () => {
       border-radius: 16px;
       overflow: hidden;
       background: {
-        image: url('../../public/resource/imgs/loginCard.png');
+        image: url('../../../../public/resource/imgs/loginCard.png');
         repeat: no-repeat;
         size: 100% auto;
         position: 50%;

@@ -19,6 +19,15 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@apis/*": [
+        "src/axios/apis/*"
+      ],
+      "@comps/*": [
+        "src/components/*"
+      ],
+      "#/*": [
+        "public/*"
       ]
     },
     "lib": [

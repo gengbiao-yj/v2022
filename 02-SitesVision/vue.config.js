@@ -3,8 +3,11 @@ const path = require('path');
 const AutoImport = require('unplugin-auto-import/webpack');
 const Components = require('unplugin-vue-components/webpack');
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
-
 const port = '50000'; // 设置端口
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
 const config = defineConfig({
   transpileDependencies: true,
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
@@ -60,10 +63,9 @@ const config = defineConfig({
       /*  路径别名设置
       ------------------------------------------------ */
       alias: {
-        _components: '@/components',
-        _assets: '@/assets',
-        _views: '@/views',
-        _store: '@/store'
+        '@comps': '@/components',
+        '@apis': '@/axios/apis',
+        '#': resolve('public')
       }
     }
   },
