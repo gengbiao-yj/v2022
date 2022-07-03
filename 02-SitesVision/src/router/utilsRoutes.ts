@@ -26,14 +26,6 @@ const routes = [
   {
     path: '/',
     redirect: '/Login'
-  },
-  {
-    path: `/Login`,
-    name: `Login`,
-    component: () => import('@/views/BusinessPage/ModelUser/Login.vue'),
-    meta: {
-      title: '登录'
-    }
   }
 ] as RouteRecordRaw[];
 

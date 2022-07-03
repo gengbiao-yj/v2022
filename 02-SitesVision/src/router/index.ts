@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue';
-import utilsRoutes from '@/router/funcRoutes';
-import businessRoutes from '@/router/autoload';
+import utilsRoutes from '@/router/utilsRoutes';
+import businessRoutes from '@/router/businessRoutes';
 
 const routes: Array<RouteRecordRaw> = [...utilsRoutes, ...businessRoutes];
 

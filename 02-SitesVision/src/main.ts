@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router, { setupRouter } from './router';
+import 'element-plus/theme-chalk/el-loading.css';
+import 'element-plus/theme-chalk/el-message.css';
 
 async function bootstrap() {
   const app = createApp(App);

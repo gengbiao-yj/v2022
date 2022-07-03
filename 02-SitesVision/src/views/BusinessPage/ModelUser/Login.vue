@@ -14,12 +14,8 @@
           <!-- tabs -->
           <div class="tabs">
             <div class="tabs-item-box" ref="tabsItemBox">
-              <span class="tabs-item" @click="calcuActiveBarPos(0)"
-                >账号登录</span
-              >
-              <span class="tabs-item" @click="calcuActiveBarPos(1)"
-                >短信码登录</span
-              >
+              <span class="tabs-item" @click="barClick(0)">账号登录</span>
+              <span class="tabs-item" @click="barClick(1)">短信码登录</span>
             </div>
             <span ref="tabsActiveBar" class="tabs-active-bar"></span>
           </div>
@@ -104,6 +100,8 @@
 
 <script lang="ts" setup>
 import UserApi from '@apis/user';
+import MD5 from 'js-md5';
+import { ElMessage } from 'element-plus';
 
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
@@ -129,27 +127,64 @@ const calcuActiveBarPos = (index: number) => {
     activeBar.style.width = `${activeBarLength}px`;
   }
 };
+
+/*  登录方式切换
+------------------------------------------------ */
+const barClick = (i: number) => {
+  accountForm.account = '';
+  accountForm.passWord = '';
+  noteForm.phone = '';
+  noteForm.noteCode = '';
+  calcuActiveBarPos(i);
+};
+
 /*  登录
 ------------------------------------------------ */
 // 账号表单
-const accountForm = reactive({
+const accountForm = reactive<{ account: string; passWord: string }>({
   account: '', // 账户
   passWord: '' // 密码
 });
 // 短信表单
-const noteForm = reactive({
+const noteForm = reactive<{ phone: string; noteCode: string }>({
   phone: '', // 账户
   noteCode: '' // 密码
 });
-// 获取用户信息
-const loginBtnClick = async () => {
+
+// 登录按钮
+const loginBtnClick = () => {
+  if (activeIndex.value === 0) {
+    const { account, passWord } = accountForm;
+    apiUserLogin(account, MD5(passWord));
+  } else if (activeIndex.value === 1) {
+    ElMessage({
+      message: '暂不支持短信登录！',
+      type: 'warning',
+      duration: 10000
+    });
+  } else {
+    return;
+  }
+};
+/**
+ * 登录接口
+ * @param count         账号
+ * @param password      密码
+ * @param user          对接系统用户
+ * @param positionID    对接系统部门ID
+ */
+const apiUserLogin = async (
+  count: string,
+  password: string,
+  user = 'Admin',
+  positionID = 1
+) => {
   const response = await UserApi.login({
-    loginName: 'admin',
-    pwd: '96e79218965eb72c92a549dd5a330112',
-    browser:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
-    userName: 'Admin',
-    positionID: 1
+    loginName: count,
+    pwd: password,
+    browser: navigator.userAgent,
+    userName: user,
+    positionID: positionID
   });
   console.log(response.data);
 };

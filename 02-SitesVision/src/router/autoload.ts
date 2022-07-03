@@ -9,11 +9,10 @@ businessPages.keys().forEach(path => {
 });
 function getRouteByModel(filePath: string, model: { [key: string]: any }) {
   const name = filePath.split('/').pop()?.split('.')[0];
-  // const viewModel = () => import(`../${model.default.__file.split('src/')[1]}`);
   const route = {
     path: `/${name}`,
     name: `${name}`,
-    // component: viewModel,
+    // component: () => import(`../${model.default.__file.split('src/')[1]}`),
     component: model.default,
     meta: {
       title: '登录'
