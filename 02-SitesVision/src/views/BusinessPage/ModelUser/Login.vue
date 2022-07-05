@@ -102,6 +102,7 @@
 import UserApi from '@apis/user';
 import MD5 from 'js-md5';
 import { ElMessage } from 'element-plus';
+import { storageData } from '@/utils/index';
 
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
@@ -186,7 +187,8 @@ const apiUserLogin = async (
     userName: user,
     positionID: positionID
   });
-  console.log(response.data);
+  storageData.setLocalStorage('userInfo', response.data, 2000);
+  // console.log(response.data);
 };
 </script>
 
