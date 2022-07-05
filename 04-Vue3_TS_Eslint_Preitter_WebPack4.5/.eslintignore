@@ -1,0 +1,8 @@
+// .eslintignore
+build/*.js
+src/assets
+public
+dist
+node_modules
+.eslintrc.js
+.prettierrc.js

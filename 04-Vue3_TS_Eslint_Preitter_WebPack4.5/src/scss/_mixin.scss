@@ -1,0 +1,21 @@
+@mixin box-size($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+}
+
+@mixin abs-position($isTransform: false, $top: 50%, $left: 50%) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  @if($isTransform) {
+    transform: scale(1) translate(-$top, -$left);
+  }
+}
+
+// flex 布局
+@mixin flex($dire: row, $just: center, $align: center) {
+  display: flex;
+  flex-direction: $dire;
+  justify-content: $just;
+  align-items: $align;
+}
