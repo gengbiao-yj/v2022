@@ -2,6 +2,10 @@
   <el-config-provider :locale="locale">
     <router-view />
   </el-config-provider>
+  <div>
+    <button class="btn" id="btn1">操作1</button>
+    <button class="btn" id="btn2">操作2</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -14,6 +18,7 @@ import pt from 'element-plus/lib/locale/lang/pt';
 import fr from 'element-plus/lib/locale/lang/fr';
 import ja from 'element-plus/lib/locale/lang/ja';
 import ko from 'element-plus/lib/locale/lang/ko';
+import '../public/index.js';
 
 export default defineComponent({
   components: {

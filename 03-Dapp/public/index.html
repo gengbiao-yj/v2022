@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <!-- 样式初始化 -->
-    <link href="https://cdn.bootcdn.net/ajax/libs/reseter.css/2.0.0/minireseter.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/reseter.css/2.0.0/minireseter.min.css"
+      rel="stylesheet"
+    />
     <title><%= process.env.VUE_APP_TITLE %></title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script src="https://unpkg.com/moralis@1.8.0/dist/moralis.js"></script>
-  <script src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>
-  <script src="./index.js"></script>
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--  <script src="https://unpkg.com/moralis@1.8.0/dist/moralis.js"></script>-->
+<!--  <script src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>-->
+<!--  <script src="./index.js"></script>-->
+
+    <script src="./jquery-3.3.1.slim.min.js"></script>
+    <script src="./Moralis.js"></script>
+    <script src="./web3.min.js"></script>
+<!--    <script src="./index.js"></script>-->
 </html>
