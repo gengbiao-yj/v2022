@@ -8,14 +8,6 @@ const routes = [
     meta: {
       title: '登录'
     }
-  },
-  {
-    path: `/MainMap`,
-    name: `MainMap`,
-    component: () => import('@/views/BusinessPage/ModelMap/MainMap.vue'),
-    meta: {
-      title: '主页'
-    }
   }
 ] as RouteRecordRaw[];
 

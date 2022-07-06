@@ -18,8 +18,7 @@ export default class Axios {
         const response = await this.instance.request<D>(config);
         return resolve(response.data);
       } catch (error) {
-        console.log(error);
-        return reject(error);
+        reject(error);
       }
     }) as Promise<D>;
   }

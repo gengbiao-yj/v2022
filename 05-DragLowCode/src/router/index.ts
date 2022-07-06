@@ -2,19 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue';
 import utilsRoutes from '@/router/utilsRoutes';
 import businessRoutes from '@/router/businessRoutes';
-import { storageData } from '@/utils/index';
 
 const routes: Array<RouteRecordRaw> = [...utilsRoutes, ...businessRoutes];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(), // process.env.BASE_URL
   routes
 });
 
 router.beforeEach((to, from, next) => {
   // 登录验证
   if (to.meta.requireAuth) {
-    if (storageData.getLocalStorage('userInfo')) {
+    if (sessionStorage.userInfo) {
       if (to.meta.title) {
         document.title = to.meta.title as string;
       }

@@ -104,9 +104,6 @@ import MD5 from 'js-md5';
 import { ElMessage } from 'element-plus';
 import { storageData } from '@/utils/index';
 
-const router = useRouter();
-// const route = useRoute();
-
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
 onMounted(() => {
@@ -183,19 +180,15 @@ const apiUserLogin = async (
   user = 'Admin',
   positionID = 1
 ) => {
-  try {
-    const response = await UserApi.login({
-      loginName: count,
-      pwd: password,
-      browser: navigator.userAgent,
-      userName: user,
-      positionID: positionID
-    });
-    storageData.setLocalStorage('userInfo', response.data, 2000);
-    router.push('/MainMap');
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await UserApi.login({
+    loginName: count,
+    pwd: password,
+    browser: navigator.userAgent,
+    userName: user,
+    positionID: positionID
+  });
+  storageData.setLocalStorage('userInfo', response.data, 2000);
+  // console.log(response.data);
 };
 </script>
 

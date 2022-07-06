@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue';
 import utilsRoutes from '@/router/utilsRoutes';
 import businessRoutes from '@/router/businessRoutes';
@@ -6,7 +6,7 @@ import businessRoutes from '@/router/businessRoutes';
 const routes: Array<RouteRecordRaw> = [...utilsRoutes, ...businessRoutes];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 });
 
