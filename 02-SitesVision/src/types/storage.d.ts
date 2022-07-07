@@ -1,3 +1,3 @@
-let storageKey = ['userInfo'] as const;
+let storageKey = ['userInfo', 'token', 'currentPosition'] as const;
 
-export { storageKey };
+export type { storageKey };

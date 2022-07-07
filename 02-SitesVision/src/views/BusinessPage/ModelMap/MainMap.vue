@@ -1,8 +1,25 @@
-<!-- name: -->
-<script setup lang="ts"></script>
+<!-- 地图主页 -->
+<script setup lang="ts">
+import { amapIP } from '@apis/amap';
+import { storageData } from '@/utils';
+// IP 定位
+onMounted(() => {
+  IPPosition();
+});
+const IPPosition = async () => {
+  try {
+    const data = await amapIP();
+    storageData.setLocalStorage('currentPosition', data, 7200000);
+  } catch (error) {
+    console.log(error);
+  }
+};
+</script>
 
 <template>
-  <h1>MainMap</h1>
+  <div class="main-map-root">
+    <div>Map</div>
+  </div>
 </template>
 
 <style scoped lang="scss"></style>

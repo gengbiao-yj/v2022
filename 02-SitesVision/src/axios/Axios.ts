@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { ResponseResult } from '@/types/ResponseResult';
+import { ElMessage } from 'element-plus';
+import { storageData } from '@/utils/index';
+
 export default class Axios {
   private instance; // 实例
   constructor(config: AxiosRequestConfig) {
@@ -10,15 +12,14 @@ export default class Axios {
   /**
    * 请求动作
    * @param config 请求配置
-   * <T> 泛型：定义接口返回数据 data 的类型格式
+   * <D> 泛型：定义接口返回数据 data 的类型格式
    */
-  public async request<T, D = ResponseResult<T>>(config: AxiosRequestConfig) {
+  public async request<D>(config: AxiosRequestConfig) {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await this.instance.request<D>(config);
         return resolve(response.data);
       } catch (error) {
-        console.log(error);
         return reject(error);
       }
     }) as Promise<D>;
@@ -32,6 +33,12 @@ export default class Axios {
   private interceptorsRequest() {
     this.instance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
+        const { value, status } = storageData.getLocalStorage('token');
+        if (status === 1) {
+          config.headers!.token = value;
+        } else {
+          config.headers!.token = '';
+        }
         return config;
       },
       error => {
@@ -46,6 +53,22 @@ export default class Axios {
         return response;
       },
       error => {
+        const {
+          response: { status, data }
+        } = error;
+        switch (status) {
+          case 401:
+            ElMessage.warning(`后台错误码：401`);
+            break;
+          case 402:
+            ElMessage.warning(`后台错误码：402`);
+            break;
+          case 403:
+            ElMessage.warning(`后台错误码：404`);
+            break;
+          default:
+            if (data?.message) ElMessage.error(data.message);
+        }
         return Promise.reject(error);
       }
     );

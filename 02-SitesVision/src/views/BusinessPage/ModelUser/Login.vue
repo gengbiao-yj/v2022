@@ -26,8 +26,10 @@
               label-width="100px"
               :model="accountForm"
               v-show="activeIndex === 0"
+              ref="accountFormRef"
+              :rules="accountFormRules"
             >
-              <el-form-item label="账号">
+              <el-form-item label="账号" prop="account">
                 <el-input
                   v-model="accountForm.account"
                   placeholder="请输入账号/手机号"
@@ -35,7 +37,7 @@
                   clearable
                 />
               </el-form-item>
-              <el-form-item label="密码">
+              <el-form-item label="密码" prop="passWord">
                 <el-input
                   v-model="accountForm.passWord"
                   placeholder="请输入密码"
@@ -99,9 +101,10 @@
 </template>
 
 <script lang="ts" setup>
-import UserApi from '@apis/user';
+import { login } from '@apis/user';
 import MD5 from 'js-md5';
 import { ElMessage } from 'element-plus';
+import type { FormInstance, FormRules } from 'element-plus';
 import { storageData } from '@/utils/index';
 
 const router = useRouter();
@@ -145,6 +148,11 @@ const barClick = (i: number) => {
 /*  登录
 ------------------------------------------------ */
 // 账号表单
+const accountFormRef = ref<FormInstance>();
+const accountFormRules = reactive<FormRules>({
+  account: [{ required: true, message: '请输入账户！', trigger: 'blur' }],
+  passWord: [{ required: true, message: '请输入密码！', trigger: 'blur' }]
+});
 const accountForm = reactive<{ account: string; passWord: string }>({
   account: '', // 账户
   passWord: '' // 密码
@@ -158,14 +166,14 @@ const noteForm = reactive<{ phone: string; noteCode: string }>({
 // 登录按钮
 const loginBtnClick = () => {
   if (activeIndex.value === 0) {
-    const { account, passWord } = accountForm;
-    apiUserLogin(account, MD5(passWord));
-  } else if (activeIndex.value === 1) {
-    ElMessage({
-      message: '暂不支持短信登录！',
-      type: 'warning',
-      duration: 10000
+    accountFormRef.value!.validate((res, fields) => {
+      if (res) {
+        const { account, passWord } = accountForm;
+        apiUserLogin(account.trim(), MD5(passWord.trim()));
+      }
     });
+  } else if (activeIndex.value === 1) {
+    ElMessage.warning('暂不支持短信登录！');
   } else {
     return;
   }
@@ -184,15 +192,21 @@ const apiUserLogin = async (
   positionID = 1
 ) => {
   try {
-    const response = await UserApi.login({
+    const { data, code, message } = await login({
       loginName: count,
       pwd: password,
       browser: navigator.userAgent,
       userName: user,
       positionID: positionID
     });
-    storageData.setLocalStorage('userInfo', response.data, 2000);
-    router.push('/MainMap');
+    if (code === 200 && !!data) {
+      storageData.setLocalStorage('userInfo', data, 7200000);
+      storageData.setLocalStorage('token', data.token, 7200000);
+      router.push('/MainMap');
+      ElMessage.success('登录成功！');
+    } else {
+      ElMessage.error(message);
+    }
   } catch (error) {
     console.log(error);
   }

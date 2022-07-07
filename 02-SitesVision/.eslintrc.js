@@ -134,7 +134,7 @@ module.exports = {
     'no-dupe-class-members': 2, // 类中不要定义冗余的属性
     'no-dupe-keys': 2, // 对象字面量中不要定义重复的属性
     'no-duplicate-case': 2, // switch 语句中不要定义重复的 case 分支
-    'no-duplicate-imports': 'error', // 同一模块有多个导入时一次性写完
+    'no-duplicate-imports': 'off', // 同一模块下的内容允许多个import引入
     'no-empty-character-class': 2, // 正则中不要使用空字符
     'no-empty-pattern': 2, // 不要解构空值
     'no-eval': 2, // 禁用 eval()

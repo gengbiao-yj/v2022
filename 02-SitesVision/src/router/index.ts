@@ -14,7 +14,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 登录验证
   if (to.meta.requireAuth) {
-    if (storageData.getLocalStorage('userInfo')) {
+    if (storageData.getLocalStorage('token')) {
       if (to.meta.title) {
         document.title = to.meta.title as string;
       }

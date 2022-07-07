@@ -41,7 +41,7 @@ export default class StorageUtils {
   ) {
     const storageValue = {
       value,
-      expirationT: Date.now() + expire
+      expirationT: Date.now() + Math.floor(expire)
     };
     localStorage.setItem(
       this.jointStorageKey(key),
