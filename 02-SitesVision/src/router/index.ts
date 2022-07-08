@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue';
 import utilsRoutes from '@/router/utilsRoutes';
 import businessRoutes from '@/router/businessRoutes';
-import { storageData } from '@/utils/index';
+import { storage } from '@/utils/index';
 
 const routes: Array<RouteRecordRaw> = [...utilsRoutes, ...businessRoutes];
 
@@ -14,7 +14,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 登录验证
   if (to.meta.requireAuth) {
-    if (storageData.getLocalStorage('token')) {
+    // 登录返回的用户信息包含了 token
+    if (storage.getLocal('userInfo')) {
       if (to.meta.title) {
         document.title = to.meta.title as string;
       }

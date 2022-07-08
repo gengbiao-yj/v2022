@@ -105,10 +105,13 @@ import { login } from '@apis/user';
 import MD5 from 'js-md5';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
-import { storageData } from '@/utils/index';
+import basicPinia from '@/pinia/storagePinia';
 
 const router = useRouter();
 // const route = useRoute();
+
+const basicStore = basicPinia();
+const { setUserInfo, getUserInfo } = basicStore;
 
 /*  计算 tabs 指示条位置
 ------------------------------------------------ */
@@ -200,8 +203,9 @@ const apiUserLogin = async (
       positionID: positionID
     });
     if (code === 200 && !!data) {
-      storageData.setLocalStorage('userInfo', data, 7200000);
-      storageData.setLocalStorage('token', data.token, 7200000);
+      setUserInfo(data);
+      const user = getUserInfo();
+      console.log(user.token);
       router.push('/MainMap');
       ElMessage.success('登录成功！');
     } else {

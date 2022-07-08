@@ -1,7 +1,7 @@
 <!-- 地图主页 -->
 <script setup lang="ts">
 import { amapIP } from '@apis/amap';
-import { storageData } from '@/utils';
+import { storage } from '@/utils';
 // IP 定位
 onMounted(() => {
   IPPosition();
@@ -9,7 +9,7 @@ onMounted(() => {
 const IPPosition = async () => {
   try {
     const data = await amapIP();
-    storageData.setLocalStorage('currentPosition', data, 7200000);
+    storage.setLocal('currentPosition', data, 120);
   } catch (error) {
     console.log(error);
   }

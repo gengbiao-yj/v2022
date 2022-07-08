@@ -4,6 +4,6 @@ import StorageUtils from './Storage';
 
 const cryptoData = new DataCrypto();
 const dataType = new JudgeDataType();
-const storageData = new StorageUtils();
+const storage = new StorageUtils();
 
-export { dataType, cryptoData, storageData };
+export { dataType, cryptoData, storage };

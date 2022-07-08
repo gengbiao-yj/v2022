@@ -1,30 +1,22 @@
 /*  storage 存储
 ------------------------------------------------ */
 import DataCrypto from './crypto';
-import { storageKey } from '@/types/storage';
+import {
+  storageKey,
+  getLocalStorage,
+  localStorageValue,
+  sessionStorageValue
+} from '@/types/storage';
 const cryptoData = new DataCrypto();
-
-interface sessionStorageValue {
-  value: any;
-}
-
-interface localStorageValue {
-  value: any;
-  expirationT: number;
-}
-
-interface getLocalStorage {
-  value: any;
-  msg: string;
-  status: 0 | 1;
-}
 
 export default class StorageUtils {
   private jointStorageKey(key: typeof storageKey[number]) {
     return `${process.env.VUE_APP_TITLE}__${key}`;
   }
 
-  public setSessionStorage(key: typeof storageKey[number], value: any) {
+  /*  储存数据
+  ------------------------------------------------ */
+  public setSession(key: typeof storageKey[number], value: any) {
     const storageValue = {
       value
     };
@@ -34,14 +26,10 @@ export default class StorageUtils {
     );
   }
 
-  public setLocalStorage(
-    key: typeof storageKey[number],
-    value: any,
-    expire: number
-  ) {
+  public setLocal(key: typeof storageKey[number], value: any, expire: number) {
     const storageValue = {
       value,
-      expirationT: Date.now() + Math.floor(expire)
+      expirationT: Date.now() + Math.floor(expire) * 60000
     };
     localStorage.setItem(
       this.jointStorageKey(key),
@@ -49,12 +37,14 @@ export default class StorageUtils {
     );
   }
 
-  public getSessionStorage(key: typeof storageKey[number]) {
+  /*  获取数据
+  ------------------------------------------------ */
+  public getSession(key: typeof storageKey[number]) {
     const value = sessionStorage.getItem(this.jointStorageKey(key));
     return cryptoData.Decrypt<sessionStorageValue>(value, true);
   }
 
-  public getLocalStorage(key: typeof storageKey[number]): getLocalStorage {
+  public getLocal(key: typeof storageKey[number]): getLocalStorage {
     if (localStorage.getItem(this.jointStorageKey(key))) {
       const value = localStorage.getItem(this.jointStorageKey(key));
       const decryptVal = cryptoData.Decrypt<localStorageValue>(value, true);
@@ -79,5 +69,15 @@ export default class StorageUtils {
         msg: '未找到指定 session 数据！'
       };
     }
+  }
+
+  /*  清除指定数据
+  ------------------------------------------------ */
+  public removeLocal(key: typeof storageKey[number]) {
+    localStorage.removeItem(key);
+  }
+
+  public removeSession(key: typeof storageKey[number]) {
+    sessionStorage.removeItem(key);
   }
 }

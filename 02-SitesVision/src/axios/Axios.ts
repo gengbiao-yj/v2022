@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ElMessage } from 'element-plus';
-import { storageData } from '@/utils/index';
+import { storage } from '@/utils/index';
 
 export default class Axios {
   private instance; // 实例
@@ -33,9 +33,9 @@ export default class Axios {
   private interceptorsRequest() {
     this.instance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        const { value, status } = storageData.getLocalStorage('token');
+        const { value, status } = storage.getLocal('userInfo');
         if (status === 1) {
-          config.headers!.token = value;
+          config.headers!.token = value.token;
         } else {
           config.headers!.token = '';
         }
