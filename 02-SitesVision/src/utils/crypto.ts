@@ -1,3 +1,5 @@
+/*  数据加密
+------------------------------------------------ */
 import CryptoJS from 'crypto-js';
 
 class DataCrypto {
