@@ -18,11 +18,28 @@ const IPPosition = async () => {
 
 <template>
   <div class="main-map-root">
-    <div>Map</div>
+    <el-container>
+      <el-header height="50px">Header</el-header>
+      <el-main>
+        <div class="map-container"></div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.main-map-root {
+  @include box-size(100vw, 100vh);
+  overflow: hidden;
+  .map-container {
+    width: 100%;
+    height: calc(100vh - 50px);
+  }
+  .el-header {
+    background: #009dff;
+  }
+}
+</style>
 
 <script lang="ts">
 export default {
