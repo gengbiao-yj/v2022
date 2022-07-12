@@ -64,7 +64,6 @@ const config = defineConfig({
       ------------------------------------------------ */
       alias: {
         '@comps': '@/components',
-        '@apis': '@/axios/apis',
         '#': resolve('public')
       }
     }

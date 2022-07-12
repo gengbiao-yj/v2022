@@ -24,6 +24,7 @@ module.exports = {
     'vue/name-property-casing': ['error', 'PascalCase'], // 组件名称使用大驼峰格式
     'vue/no-v-html': 'off', // 关闭vue v-html 指令
     'vue/no-multiple-template-root': 'off', // 对于vue文件，template模板内是否指定唯一的根节点
+    'vue/no-v-model-argument': 'off', // vue v-model指令允许传参
     indent: [
       2,
       2,

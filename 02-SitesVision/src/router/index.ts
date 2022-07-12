@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { App } from 'vue';
+import type { App } from 'vue';
 import utilsRoutes from '@/router/utilsRoutes';
 import businessRoutes from '@/router/businessRoutes';
 import { storage } from '@/utils/index';

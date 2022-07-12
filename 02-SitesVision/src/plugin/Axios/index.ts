@@ -1,5 +1,5 @@
-import Axios from '@/axios/Axios';
-import { BASE_URL, urlKey } from '@/axios/config';
+import Axios from './Axios';
+import { BASE_URL, urlKey } from './config';
 
 /*  业务 - 接口封装
 ------------------------------------------------ */

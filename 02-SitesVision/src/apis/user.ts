@@ -1,7 +1,7 @@
 /**
  * 业务 - 注册登录模块
  */
-import { http } from '@/axios/index';
+import { http } from '@/plugin/Axios/index';
 import qs from 'qs';
 import type { ResponseResult, UserLogin } from '@/types/ResponseResult';
 import { UserLoginParams } from '@/types/RequestParams';

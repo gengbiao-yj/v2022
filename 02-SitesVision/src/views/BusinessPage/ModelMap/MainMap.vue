@@ -1,6 +1,6 @@
 <!-- 地图主页 -->
 <script setup lang="ts">
-import { amapIP } from '@apis/amap';
+import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
 // IP 定位
 onMounted(() => {
@@ -14,12 +14,42 @@ const IPPosition = async () => {
     console.log(error);
   }
 };
+
+// header下拉菜单
+const smartRecommendShow = ref<boolean>(false);
 </script>
 
 <template>
   <div class="main-map-root">
     <el-container>
-      <el-header height="50px">Header</el-header>
+      <el-header height="50px">
+        <div class="header-left">
+          <img src="@/assets/img/logo1.png" />
+          <span>智慧选址平台</span>
+        </div>
+        <div class="header-menu">
+          <!-- 智能推荐 -->
+          <el-popover
+            placement="bottom"
+            title=""
+            :width="200"
+            trigger="click"
+            v-model:visible="smartRecommendShow"
+          >
+            <template #reference>
+              <div
+                class="select-menu"
+                @click="smartRecommendShow = !smartRecommendShow"
+              >
+                <span> 智能推荐 </span>
+                <ArrowDown class="svg-20" v-rotate:180="smartRecommendShow" />
+              </div>
+            </template>
+            <div>AAA</div>
+          </el-popover>
+        </div>
+        <div class="header-right"></div>
+      </el-header>
       <el-main>
         <div class="map-container"></div>
       </el-main>
@@ -37,6 +67,40 @@ const IPPosition = async () => {
   }
   .el-header {
     background: #009dff;
+    @include flex(row, flex-start, center);
+    .header-left {
+      @include box-size(15%, 100%);
+      @include flex(row, flex-start, flex-end);
+      padding-bottom: 10px;
+      img {
+        height: 30px;
+      }
+      span {
+        color: white;
+        margin-left: 10px;
+        font-size: 16px;
+      }
+    }
+    .header-menu {
+      @include box-size(70%, 100%);
+      @include flex(row, flex-start, center);
+      .select-menu {
+        height: 100%;
+        min-width: 120px;
+        padding: 0 10px;
+        @include flex(row, center, center);
+        color: #fff;
+        cursor: pointer;
+        > span {
+          font-size: 16px;
+          font-weight: bold;
+          margin-right: 5px;
+        }
+      }
+    }
+    .header-right {
+      @include box-size(15%, 100%);
+    }
   }
 }
 </style>
