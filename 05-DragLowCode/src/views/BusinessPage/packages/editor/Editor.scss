@@ -29,17 +29,18 @@
     right: 280px;
     left: 280px;
     bottom: 0;
-    padding: 20px 0;
+    padding: 20px 0 0;
     &-box {
       width: 100%;
       height: 100%;
-      overflow: scroll;
+      overflow: auto;
     }
     &-canvas {
       margin: 0 auto;
       background: honeydew;
-      width: 1500px;
-      height: 1000px;
+      position: relative;
+      //width: 1200px;
+      //height: 1000px;
     }
   }
 }

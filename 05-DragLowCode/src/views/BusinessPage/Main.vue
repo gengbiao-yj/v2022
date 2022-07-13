@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { config } from './config';
 import type { configType } from './config';
-import Editor from './packages/editor.tsx';
+import Editor from './packages/editor/Editor';
 
 const data = ref<configType>(config);
 </script>
 
 <template>
   <div class="main-root">
-    <Editor :data="data"></Editor>
+    <Editor v-model="data"></Editor>
+    <el-button v-show="false">按钮</el-button>
   </div>
 </template>
 
