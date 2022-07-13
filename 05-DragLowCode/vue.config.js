@@ -3,7 +3,7 @@ const path = require('path');
 const AutoImport = require('unplugin-auto-import/webpack');
 const Components = require('unplugin-vue-components/webpack');
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
-const port = '50000'; // 设置端口
+const port = process.env.VUE_APP_PORT; // 设置端口
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -64,7 +64,6 @@ const config = defineConfig({
       ------------------------------------------------ */
       alias: {
         '@comps': '@/components',
-        '@apis': '@/axios/apis',
         '#': resolve('public')
       }
     }

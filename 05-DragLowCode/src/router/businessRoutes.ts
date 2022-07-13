@@ -2,11 +2,12 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes = [
   {
-    path: `/Login`,
-    name: `Login`,
-    component: () => import('@/views/BusinessPage/ModelUser/Login.vue'),
+    path: `/Main`,
+    name: `MainPage`,
+    component: () => import('@/views/BusinessPage/Main.vue'),
     meta: {
-      title: '登录'
+      title: '主页',
+      requireAuth: false
     }
   }
 ] as RouteRecordRaw[];

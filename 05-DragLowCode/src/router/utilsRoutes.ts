@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/Login'
+    redirect: '/Main'
   }
 ] as RouteRecordRaw[];
 

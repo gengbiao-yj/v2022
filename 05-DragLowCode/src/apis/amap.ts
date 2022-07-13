@@ -1,0 +1,22 @@
+/**
+ * 第三方 - 高德地图 API
+ */
+import axios from 'axios';
+import { AMAP_WEBKEY } from '@/data/amap';
+import { AmapV3IP } from '@/types/ResponseResult';
+
+// IP 定位
+const amapIP = async () => {
+  try {
+    const { data } = await axios.get('https://restapi.amap.com/v3/ip', {
+      params: {
+        key: AMAP_WEBKEY
+      }
+    });
+    return Promise.resolve(data) as Promise<AmapV3IP>;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export { amapIP };
