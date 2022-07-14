@@ -1,4 +1,12 @@
-export const POIs = [
+interface POIItem {
+  name: string;
+  title: string;
+  items: Array<{
+    label: string;
+    value: string;
+  }>;
+}
+export const POIs: Array<POIItem> = [
   {
     name: 'traffic',
     title: '交通：',
