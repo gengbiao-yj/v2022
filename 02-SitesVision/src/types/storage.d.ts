@@ -1,4 +1,5 @@
-let storageKey = ['userInfo', 'currentPosition'] as const;
+const storageKey = ['userInfo', 'currentPosition'] as const;
+type storageKeyType = typeof storageKey[number];
 interface sessionStorageValue {
   value: any;
 }
@@ -15,7 +16,7 @@ interface getLocalStorage<T = any> {
 }
 
 export type {
-  storageKey,
+  storageKeyType,
   sessionStorageValue,
   localStorageValue,
   getLocalStorage

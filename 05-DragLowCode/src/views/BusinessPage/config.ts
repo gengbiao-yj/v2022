@@ -1,9 +1,10 @@
 const blocksTypes = ['text', 'button', 'input'] as const;
+export type blocksType = typeof blocksTypes[number];
 export type blocksItemType = {
   top: number;
   left: number;
   zIndex: number;
-  type: typeof blocksTypes[number];
+  type: blocksType;
 };
 
 export const config = {

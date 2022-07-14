@@ -2,7 +2,7 @@
 ------------------------------------------------ */
 import DataCrypto from './crypto';
 import {
-  storageKey,
+  storageKeyType,
   getLocalStorage,
   localStorageValue,
   sessionStorageValue
@@ -10,13 +10,13 @@ import {
 const cryptoData = new DataCrypto();
 
 export default class StorageUtils {
-  private jointStorageKey(key: typeof storageKey[number]) {
+  private jointStorageKey(key: storageKeyType) {
     return `${process.env.VUE_APP_TITLE}__${key}`;
   }
 
   /*  储存数据
   ------------------------------------------------ */
-  public setSession(key: typeof storageKey[number], value: any) {
+  public setSession(key: storageKeyType, value: any) {
     const storageValue = {
       value
     };
@@ -26,7 +26,7 @@ export default class StorageUtils {
     );
   }
 
-  public setLocal(key: typeof storageKey[number], value: any, expire: number) {
+  public setLocal(key: storageKeyType, value: any, expire: number) {
     const storageValue = {
       value,
       expirationT: Date.now() + Math.floor(expire) * 60000
@@ -39,12 +39,12 @@ export default class StorageUtils {
 
   /*  获取数据
   ------------------------------------------------ */
-  public getSession(key: typeof storageKey[number]) {
+  public getSession(key: storageKeyType) {
     const value = sessionStorage.getItem(this.jointStorageKey(key));
     return cryptoData.Decrypt<sessionStorageValue>(value, true);
   }
 
-  public getLocal(key: typeof storageKey[number]): getLocalStorage {
+  public getLocal(key: storageKeyType): getLocalStorage {
     if (localStorage.getItem(this.jointStorageKey(key))) {
       const value = localStorage.getItem(this.jointStorageKey(key));
       const decryptVal = cryptoData.Decrypt<localStorageValue>(value, true);
@@ -73,11 +73,11 @@ export default class StorageUtils {
 
   /*  清除指定数据
   ------------------------------------------------ */
-  public removeLocal(key: typeof storageKey[number]) {
+  public removeLocal(key: storageKeyType) {
     localStorage.removeItem(key);
   }
 
-  public removeSession(key: typeof storageKey[number]) {
+  public removeSession(key: storageKeyType) {
     sessionStorage.removeItem(key);
   }
 }
