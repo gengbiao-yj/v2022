@@ -2,12 +2,17 @@
 import { POIs } from './config';
 const selectedType = ref<'POI' | '网格'>('POI'); // 按钮选中类型
 
-// POI 多选项组 - 交通
-const traffic = ref(POIs.traffic);
-const selectedTraffics = ref<object>([]);
-// POI 多选项组 - 商场
-const mall = ref(POIs.mall);
-const selectedMalls = ref<object>([]); // POI 多选项组 - 已选商场项
+// POI 多选项动态绑定
+const selectedPOI = reactive({
+  traffic: [],
+  mall: []
+});
+// // POI 多选项组 - 交通
+// const traffic = ref(POIs.traffic);
+// const selectedTraffics = ref<object>([]);
+// // POI 多选项组 - 商场
+// const mall = ref(POIs.mall);
+// const selectedMalls = ref<object>([]); // POI 多选项组 - 已选商场项
 </script>
 
 <template>
@@ -27,33 +32,48 @@ const selectedMalls = ref<object>([]); // POI 多选项组 - 已选商场项
     <!-- POI -->
     <div class="pd-t-15">
       <!-- 交通 -->
-      <el-row style="width: 100%">
-        <el-col :span="2" class="middle-xy">交通：</el-col>
-        <el-col :span="22">
-          <el-checkbox-group v-model="selectedTraffics">
-            <el-checkbox
-              style="width: 74px; margin-right: 15px"
-              :label="e.value"
-              v-for="(e, i) in traffic"
-              :key="i"
-            >
-              <span style="font-size: 12px">{{ e.label }}</span>
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-col>
-      </el-row>
+      <!--      <el-row style="width: 100%">-->
+      <!--        <el-col :span="2" class="middle-xy">交通：</el-col>-->
+      <!--        <el-col :span="22">-->
+      <!--          <el-checkbox-group v-model="selectedTraffics">-->
+      <!--            <el-checkbox-->
+      <!--              style="width: 74px; margin-right: 15px"-->
+      <!--              :label="e.value"-->
+      <!--              v-for="(e, i) in traffic"-->
+      <!--              :key="i"-->
+      <!--            >-->
+      <!--              <span style="font-size: 12px">{{ e.label }}</span>-->
+      <!--            </el-checkbox>-->
+      <!--          </el-checkbox-group>-->
+      <!--        </el-col>-->
+      <!--      </el-row>-->
       <!-- 商场 -->
-      <el-row style="width: 100%">
-        <el-col :span="2" class="middle-xy">商场：</el-col>
+      <!--      <el-row style="width: 100%">-->
+      <!--        <el-col :span="2" class="middle-xy">商场：</el-col>-->
+      <!--        <el-col :span="22">-->
+      <!--          <el-checkbox-group v-model="selectedMalls">-->
+      <!--            <el-checkbox-->
+      <!--              style="width: 74px; margin-right: 15px"-->
+      <!--              :label="e.value"-->
+      <!--              v-for="(e, i) in mall"-->
+      <!--              :key="i"-->
+      <!--            >-->
+      <!--              <span style="font-size: 12px">{{ e.label }}</span>-->
+      <!--            </el-checkbox>-->
+      <!--          </el-checkbox-group>-->
+      <!--        </el-col>-->
+      <!--      </el-row>-->
+      <el-row style="width: 100%" v-for="(e, i) in POIs" :key="i">
+        <el-col :span="2" class="middle-xy">{{ e.title }}</el-col>
         <el-col :span="22">
-          <el-checkbox-group v-model="selectedMalls">
+          <el-checkbox-group v-model="selectedPOI[e.name]">
             <el-checkbox
               style="width: 74px; margin-right: 15px"
-              :label="e.value"
-              v-for="(e, i) in mall"
-              :key="i"
+              :label="k.value"
+              v-for="(k, j) in e.items"
+              :key="j"
             >
-              <span style="font-size: 12px">{{ e.label }}</span>
+              <span style="font-size: 12px">{{ k.label }}</span>
             </el-checkbox>
           </el-checkbox-group>
         </el-col>
