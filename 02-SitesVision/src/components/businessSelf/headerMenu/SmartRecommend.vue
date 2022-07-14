@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {POIs} from './config';
+import { POIs } from './config';
 
 const selectedType = ref<'POI' | '网格'>('POI'); // 按钮选中类型
 
