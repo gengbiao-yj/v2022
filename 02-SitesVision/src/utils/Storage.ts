@@ -2,21 +2,21 @@
 ------------------------------------------------ */
 import DataCrypto from './crypto';
 import {
-  storageKeyType,
-  getLocalStorage,
-  localStorageValue,
-  sessionStorageValue
-} from '@/types/storage';
+  StorageKeyType,
+  GetLocalStorage,
+  LocalStorageValue,
+  SessionStorageValue
+} from '@/types/Storage';
 const cryptoData = new DataCrypto();
 
 export default class StorageUtils {
-  private jointStorageKey(key: storageKeyType) {
+  private jointStorageKey(key: StorageKeyType) {
     return `${process.env.VUE_APP_TITLE}__${key}`;
   }
 
   /*  储存数据
   ------------------------------------------------ */
-  public setSession(key: storageKeyType, value: any) {
+  public setSession(key: StorageKeyType, value: any) {
     const storageValue = {
       value
     };
@@ -26,7 +26,7 @@ export default class StorageUtils {
     );
   }
 
-  public setLocal(key: storageKeyType, value: any, expire: number) {
+  public setLocal(key: StorageKeyType, value: any, expire: number) {
     const storageValue = {
       value,
       expirationT: Date.now() + Math.floor(expire) * 60000
@@ -39,15 +39,15 @@ export default class StorageUtils {
 
   /*  获取数据
   ------------------------------------------------ */
-  public getSession(key: storageKeyType) {
+  public getSession(key: StorageKeyType) {
     const value = sessionStorage.getItem(this.jointStorageKey(key));
-    return cryptoData.Decrypt<sessionStorageValue>(value, true);
+    return cryptoData.Decrypt<SessionStorageValue>(value, true);
   }
 
-  public getLocal(key: storageKeyType): getLocalStorage {
+  public getLocal(key: StorageKeyType): GetLocalStorage {
     if (localStorage.getItem(this.jointStorageKey(key))) {
       const value = localStorage.getItem(this.jointStorageKey(key));
-      const decryptVal = cryptoData.Decrypt<localStorageValue>(value, true);
+      const decryptVal = cryptoData.Decrypt<LocalStorageValue>(value, true);
       if (decryptVal.expirationT > Date.now()) {
         return {
           value: decryptVal.value,
@@ -73,11 +73,11 @@ export default class StorageUtils {
 
   /*  清除指定数据
   ------------------------------------------------ */
-  public removeLocal(key: storageKeyType) {
+  public removeLocal(key: StorageKeyType) {
     localStorage.removeItem(key);
   }
 
-  public removeSession(key: storageKeyType) {
+  public removeSession(key: StorageKeyType) {
     sessionStorage.removeItem(key);
   }
 }

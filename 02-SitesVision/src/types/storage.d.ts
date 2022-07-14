@@ -1,23 +1,26 @@
 const storageKey = ['userInfo', 'currentPosition'] as const;
-type storageKeyType = typeof storageKey[number];
-interface sessionStorageValue {
+type StorageKeyType = typeof storageKey[number];
+// session 值类型
+interface SessionStorageValue {
   value: any;
 }
 
-interface localStorageValue {
+// local 值类型
+interface LocalStorageValue {
   value: any;
   expirationT: number;
 }
 
-interface getLocalStorage<T = any> {
+// local 提取函数，返回值类型
+interface GetLocalStorage<T = any> {
   value: T;
   msg: string;
   status: 0 | 1;
 }
 
 export type {
-  storageKeyType,
-  sessionStorageValue,
-  localStorageValue,
-  getLocalStorage
+  StorageKeyType,
+  SessionStorageValue,
+  LocalStorageValue,
+  GetLocalStorage
 };
