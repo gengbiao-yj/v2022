@@ -1,8 +1,9 @@
 import { defineComponent, computed } from 'vue';
 import type { PropType } from 'vue';
-import type { configType } from '../../config';
+import type { configType } from '../config';
 import './Editor.scss';
 import EditorBlock from '../editorBlock/EditorBlock';
+import { register } from '@/utils/ProvideInject';
 
 export default defineComponent({
   name: 'EditorRoot',
@@ -28,27 +29,39 @@ export default defineComponent({
       width: data.value.container.width + 'px',
       height: data.value.container.height + 'px'
     }));
-    console.log(data.value.container.width);
-    return () => (
-      <div class={'editor'}>
-        <div class={'editor-left'}>物料区</div>
-        <div class={'editor-top'}>菜单栏</div>
-        <div class={'editor-right'}>属性区</div>
-        <div class={'editor-container'}>
-          {/* 包裹盒子，生成滚动条 */}
-          <div class={'editor-container-box'}>
-            {/* 实际编辑区 */}
-            <div
-              class={'editor-container-canvas'}
-              style={containerStyles.value}
-            >
-              {data.value.blocks.map(block => (
-                <EditorBlock block={block}></EditorBlock>
-              ))}
+    return () => {
+      const registerConfig = inject(register);
+      const components = registerConfig!.componentList;
+
+      return (
+        <div class={'editor'}>
+          <div class={'editor-left'}>
+            {/* 遍历显示物料区现有物料 */}
+            {components.map(component => (
+              <div class={'editor-left-item'}>
+                <span>{component.label}</span>
+                <span>{component.preview()}</span>
+              </div>
+            ))}
+          </div>
+          <div class={'editor-top'}>菜单栏</div>
+          <div class={'editor-right'}>属性区</div>
+          <div class={'editor-container'}>
+            {/* 包裹盒子，生成滚动条 */}
+            <div class={'editor-container-box'}>
+              {/* 实际编辑区 */}
+              <div
+                class={'editor-container-canvas'}
+                style={containerStyles.value}
+              >
+                {data.value.blocks.map(block => (
+                  <EditorBlock block={block}></EditorBlock>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    };
   }
 });

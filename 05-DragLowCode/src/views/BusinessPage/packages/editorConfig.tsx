@@ -1,7 +1,8 @@
 import { ElButton, ElInput } from 'element-plus';
-import type { blocksType } from '../config';
+import type { blocksType } from './config';
 
 interface render {
+  // eslint-disable-next-line
   (): string | JSX.Element;
 }
 // 组件类型
@@ -29,7 +30,8 @@ function createEditorConfig() {
   };
 }
 
-const registerConfig = createEditorConfig();
+export const registerConfig = createEditorConfig();
+export type registerConfigType = typeof registerConfig;
 
 registerConfig.register({
   label: '文本',

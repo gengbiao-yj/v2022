@@ -11,6 +11,42 @@
   }
   &-left {
     left: 0;
+    &-item {
+      width: 250px;
+      min-height: 100px;
+      margin: 20px auto;
+      border: 1px solid #617c8d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: move;
+      user-select: none;
+
+      >span:nth-child(1) {
+        background: #c9c9c9;
+        width: 80px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #545954;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.1);
+      }
+    }
   }
   &-right {
     right: 0;

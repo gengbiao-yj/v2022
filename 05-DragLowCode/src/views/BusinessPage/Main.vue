@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { config } from './config';
-import type { configType } from './config';
+import { config } from './packages/config';
+import type { configType } from './packages/config';
+import ElementImport from '../FunctionPage/ElementImport';
 import Editor from './packages/editor/Editor';
 
 const data = ref<configType>(config);
@@ -9,7 +10,7 @@ const data = ref<configType>(config);
 <template>
   <div class="main-root">
     <Editor v-model="data"></Editor>
-    <el-button v-show="false">按钮</el-button>
+    <ElementImport />
   </div>
 </template>
 

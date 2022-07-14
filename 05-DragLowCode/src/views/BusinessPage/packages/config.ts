@@ -9,8 +9,8 @@ export type blocksItemType = {
 
 export const config = {
   container: {
-    width: '1200',
-    height: '1000'
+    width: '375',
+    height: '667'
   },
   blocks: [
     { top: 100, left: 100, zIndex: 1, type: 'text' as const },
