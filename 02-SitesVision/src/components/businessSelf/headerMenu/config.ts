@@ -1,11 +1,4 @@
-interface POIItem {
-  name: string;
-  title: string;
-  items: Array<{
-    label: string;
-    value: string;
-  }>;
-}
+import type { POIItem } from '@/types/Components';
 export const POIs: Array<POIItem> = [
   {
     name: 'traffic',
@@ -58,5 +51,50 @@ export const POIs: Array<POIItem> = [
         value: 'Convenience'
       }
     ]
+  },
+  {
+    name: 'education',
+    title: '学校：',
+    items: [
+      {
+        label: '学校',
+        value: 'School'
+      },
+      {
+        label: '培训机构',
+        value: 'Training'
+      }
+    ]
+  },
+  {
+    name: 'common',
+    title: '公共：',
+    items: [
+      { label: '餐饮', value: 'Food' },
+      { label: '住宿', value: 'Hotel' },
+      { label: '景点', value: 'Tourism' },
+      { label: '药店', value: 'Medical_Store' },
+      { label: '医院', value: 'Medical_Store' },
+      { label: '政府', value: 'Goverment' }
+    ]
   }
+];
+
+export const SmartReportType: Array<{
+  label: string;
+  value: string;
+}> = [
+  { label: '缓冲区', value: 'bufferArea' },
+  { label: '等时圈', value: 'timeCircle' },
+  { label: '自定义', value: 'userDefined' }
+];
+
+export const DataTableType: Array<{
+  label: string;
+  value: string;
+}> = [
+  { label: '机会项目', value: 'opportunityPoint' },
+  { label: '已开门店', value: 'openingStorePoint' },
+  { label: '关注品牌', value: 'competitiveBrand' },
+  { label: '已有商圈', value: 'businessCircle' }
 ];

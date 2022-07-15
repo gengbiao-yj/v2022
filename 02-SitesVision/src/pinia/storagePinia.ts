@@ -13,7 +13,7 @@ export default defineStore('basicPinia', () => {
   }
   function setUserInfo(data: UserLogin) {
     userInfo.value = data;
-    storage.setLocal('userInfo', data, 120);
+    storage.setLocal('userInfo', data, 480);
   }
   function resetUserInfo() {
     userInfo.value = {} as UserLogin;

@@ -3,6 +3,7 @@
 import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
 import HeaderMenu from '@comps/businessSelf/headerMenu/HeaderMenu.vue';
+import HeaderOption from '@comps/businessSelf/headerMenu/HeaderOption.vue';
 // IP 定位
 onMounted(() => {
   IPPosition();
@@ -28,7 +29,9 @@ const IPPosition = async () => {
         <div class="header-menu">
           <HeaderMenu />
         </div>
-        <div class="header-right"></div>
+        <div class="header-right">
+          <HeaderOption />
+        </div>
       </el-header>
       <el-main>
         <div class="map-container"></div>
@@ -62,6 +65,7 @@ const IPPosition = async () => {
       }
     }
     .header-menu {
+      @include box-size(70%, 100%);
     }
     .header-right {
       @include box-size(15%, 100%);

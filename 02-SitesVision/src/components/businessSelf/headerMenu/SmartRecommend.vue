@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import { POIs } from './config';
+import { POIs } from '@comps/businessSelf/headerMenu/config';
 
 const selectedType = ref<'POI' | '网格'>('POI'); // 按钮选中类型
 
 // POI 多选项动态绑定
 const selectedPOI = reactive({
   traffic: [],
-  mall: []
+  mall: [],
+  education: [],
+  common: []
 });
+
+// 多选框绑定值发生变化时
+const POIsSelectChanged = (value: Array<string>) => {
+  console.log(value);
+  console.log(selectedPOI);
+};
 </script>
 
 <template>
@@ -29,7 +37,10 @@ const selectedPOI = reactive({
       <el-row style="width: 100%" v-for="(e, i) in POIs" :key="i">
         <el-col :span="2" class="middle-xy">{{ e.title }}</el-col>
         <el-col :span="22">
-          <el-checkbox-group v-model="selectedPOI[e.name]">
+          <el-checkbox-group
+            v-model="selectedPOI[e.name]"
+            @change="POIsSelectChanged"
+          >
             <el-checkbox
               style="width: 74px; margin-right: 15px"
               :label="k.value"

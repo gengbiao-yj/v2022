@@ -1,0 +1,47 @@
+/*  sfc 组件内涉及element ui 的样式重写
+------------------------------------------------ */
+/// src\components\businessSelf\headerMenu\HeaderMenu.vue
+.header-menu-popover {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  min-width: 100px !important;
+}
+
+/// src\components\businessSelf\headerMenu\HeaderOption.vue
+.header-option-popover {
+  padding: 0 !important;
+}
+
+.user-option {
+  border-radius: 5px;
+  overflow: hidden;
+  .user-option-header {
+    background: #fafafa;
+    padding-left: 15px;
+    @include box-size(100%, 65px);
+    @include flex(row, flex-start, center);
+    .avatar-box {
+      width: 45px;
+      height: 45px;
+      border-radius: 999px;
+      background: #e9e5e5;
+      @include box-size(45px, 45px);
+      @include flex(row, center, center);
+    }
+    .user-name {
+      margin-left: 15px;
+      height: 40px;
+      text-align: left;
+      line-height: 40px;
+      color: #333;
+      font-weight: bold;
+    }
+  }
+
+  .user-option-list {
+    width: 100%;
+    min-height: 100px;
+    background: white;
+    padding: 0 15px;
+  }
+}

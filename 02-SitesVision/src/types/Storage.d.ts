@@ -1,3 +1,7 @@
+/**
+ * storage 封装浏览器存储涉及的类型集合
+ */
+
 const storageKey = ['userInfo', 'currentPosition'] as const;
 type StorageKeyType = typeof storageKey[number];
 // session 值类型
