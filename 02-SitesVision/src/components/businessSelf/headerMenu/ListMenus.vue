@@ -30,9 +30,21 @@ const props = defineProps({
     letter-spacing: 3px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    position: relative;
     &:hover {
-      background: #e6f3fc;
-      color: #34a0e8;
+      color: var(--primary-color);
+      transition: all 0.3s ease-in-out;
+    }
+    &:hover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: var(--primary-color);
+      opacity: 0.18;
+      transition: all 0.3s ease-in-out;
     }
   }
 }

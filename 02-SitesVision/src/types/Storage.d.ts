@@ -1,9 +1,12 @@
 /**
  * storage 封装浏览器存储涉及的类型集合
  */
-import storageKeys from '@/data/storageKeys';
 
-const storageKey = storageKeys as const;
+const storageKey = [
+  'userInfo', // 用户信息
+  'currentPosition', // 当前位置信息
+  'systemSetting' // 系统设置参数
+] as const;
 type StorageKeyType = typeof storageKey[number];
 // session 值类型
 interface SessionStorageValue {

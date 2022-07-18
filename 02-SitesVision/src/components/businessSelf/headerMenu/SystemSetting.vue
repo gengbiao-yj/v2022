@@ -3,6 +3,10 @@
 ------------------------------------------------ */
 import { defineProps, defineEmits } from 'vue';
 import type { SystemSetType } from '@/types/Components';
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const { getSystemParams, setSystemParams } = basicStore;
+
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -26,9 +30,14 @@ const updateState = () => {
 
 /*  存储设置数据
 ------------------------------------------------ */
-const systemSettings = reactive<SystemSetType>({
-  primaryColor: '#5aa3ec'
+const systemSettings = computed<SystemSetType>(() => {
+  return getSystemParams();
 });
+console.log(systemSettings.value);
+const primaryColorChanged = () => {
+  setSystemParams(systemSettings.value);
+  console.log(systemSettings.value.primaryColor);
+};
 </script>
 
 <template>
@@ -43,7 +52,10 @@ const systemSettings = reactive<SystemSetType>({
   >
     <div class="setting-draw-content">
       <el-divider> 主题颜色 </el-divider>
-      <el-color-picker v-model="systemSettings.primaryColor" />
+      <el-color-picker
+        v-model="systemSettings.primaryColor"
+        @change="primaryColorChanged"
+      />
     </div>
   </el-drawer>
 </template>

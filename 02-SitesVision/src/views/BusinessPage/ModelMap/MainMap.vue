@@ -51,7 +51,7 @@ const IPPosition = async () => {
   }
   .el-header {
     //background: #009dff;
-    background: #5aa3ec;
+    background: var(--primary-color);
     @include flex(row, flex-start, center);
     .header-left {
       @include box-size(15%, 100%);

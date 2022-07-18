@@ -116,10 +116,7 @@ const optionDrawer = ref<boolean>(false);
   }
 
   .svg-bg {
-    background: rgb(121, 182, 246);
-    &:hover {
-      //background: rgba(3, 66, 133, 0.3);
-    }
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -160,10 +157,23 @@ const optionDrawer = ref<boolean>(false);
     padding: 0 15px;
     cursor: pointer;
     color: #666;
+    position: relative;
     &:hover {
-      background: #e6f3fc;
-      color: #34a0e8;
+      color: var(--primary-color);
+      transition: all 0.3s ease-in-out;
     }
+    &:hover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: var(--primary-color);
+      opacity: 0.18;
+      transition: all 0.3s ease-in-out;
+    }
+
     @include flex(row, flex-start, center);
     > svg {
       margin-right: 5px;
