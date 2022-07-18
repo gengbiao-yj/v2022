@@ -1,7 +1,7 @@
 /*  storage 存储
 ------------------------------------------------ */
 import DataCrypto from './crypto';
-import {
+import type {
   StorageKeyType,
   GetLocalStorage,
   LocalStorageValue,

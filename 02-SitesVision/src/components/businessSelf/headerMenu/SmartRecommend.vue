@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { POIs } from '@comps/businessSelf/headerMenu/config';
+import { POIs } from '@/data/headerMenu';
 
 const selectedType = ref<'POI' | '网格'>('POI'); // 按钮选中类型
 

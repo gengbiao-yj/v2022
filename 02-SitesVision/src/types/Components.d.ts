@@ -13,4 +13,8 @@ interface POIItem {
   }>;
 }
 
-export type { POIItem };
+interface SystemSetType {
+  primaryColor: string;
+}
+
+export type { POIItem, SystemSetType };

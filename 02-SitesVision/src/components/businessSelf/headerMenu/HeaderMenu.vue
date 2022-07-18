@@ -3,10 +3,7 @@ import { nanoid } from 'nanoid';
 // 细分组件
 import SmartRecommend from '@comps/businessSelf/headerMenu/SmartRecommend.vue';
 import ListMenus from '@comps/businessSelf/headerMenu/ListMenus.vue';
-import {
-  SmartReportType,
-  DataTableType
-} from '@comps/businessSelf/headerMenu/config';
+import { SmartReportType, DataTableType } from '@/data/headerMenu';
 
 // header下拉菜单展开收缩标志位
 const smartRecommendShow = ref<boolean>(false); // 智能推荐

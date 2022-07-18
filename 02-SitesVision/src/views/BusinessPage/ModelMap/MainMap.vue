@@ -39,6 +39,7 @@ const IPPosition = async () => {
     </el-container>
   </div>
 </template>
+5aa3ec
 
 <style scoped lang="scss">
 .main-map-root {
@@ -49,7 +50,8 @@ const IPPosition = async () => {
     height: calc(100vh - 50px);
   }
   .el-header {
-    background: #009dff;
+    //background: #009dff;
+    background: #5aa3ec;
     @include flex(row, flex-start, center);
     .header-left {
       @include box-size(15%, 100%);
