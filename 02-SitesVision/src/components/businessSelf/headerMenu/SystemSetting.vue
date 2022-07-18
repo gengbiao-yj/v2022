@@ -33,10 +33,21 @@ const updateState = () => {
 const systemSettings = computed<SystemSetType>(() => {
   return getSystemParams();
 });
-console.log(systemSettings.value);
-const primaryColorChanged = () => {
+// 设置新主题
+const newPrimaryColor = () => {
+  systemSettings.value.historyPrimaryCol.unshift(
+    systemSettings.value.primaryColor
+  );
+  if (systemSettings.value.historyPrimaryCol.length > 6) {
+    systemSettings.value.historyPrimaryCol.splice(5);
+  }
   setSystemParams(systemSettings.value);
-  console.log(systemSettings.value.primaryColor);
+};
+
+// 选择历史主题
+const selectOldPrimary = (e: string) => {
+  systemSettings.value.primaryColor = e;
+  setSystemParams(systemSettings.value);
 };
 </script>
 
@@ -54,8 +65,16 @@ const primaryColorChanged = () => {
       <el-divider> 主题颜色 </el-divider>
       <el-color-picker
         v-model="systemSettings.primaryColor"
-        @change="primaryColorChanged"
+        @change="newPrimaryColor"
       />
+      <div class="history-primary-box">
+        <span
+          v-for="(e, i) in systemSettings.historyPrimaryCol"
+          :key="i"
+          :style="{ background: e }"
+          @click="selectOldPrimary(e)"
+        ></span>
+      </div>
     </div>
   </el-drawer>
 </template>
@@ -66,6 +85,22 @@ const primaryColorChanged = () => {
     width: 100%;
     height: 100%;
     @include flex(column, flex-start, center);
+  }
+}
+
+.history-primary-box {
+  width: 100%;
+  margin-top: 10px;
+  height: auto;
+  @include flex(row, space-around, center);
+  flex-wrap: wrap;
+  > span {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    padding: 1px;
+    border: 1px solid #afafaf;
+    cursor: pointer;
   }
 }
 </style>

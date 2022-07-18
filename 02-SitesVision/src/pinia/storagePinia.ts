@@ -24,7 +24,8 @@ export default defineStore('basicPinia', () => {
   /*  系统设置存取
   ------------------------------------------------ */
   const systemParams = ref<SystemSetType>({
-    primaryColor: '#5aa3ec'
+    primaryColor: '#5aa3ec',
+    historyPrimaryCol: ['#5aa3ec']
   });
   function getSystemParams() {
     const storageValue = storage.getLocal('systemSetting').value;

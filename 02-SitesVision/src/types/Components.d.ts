@@ -14,7 +14,8 @@ interface POIItem {
 }
 
 interface SystemSetType {
-  primaryColor: string;
+  primaryColor: string; // 当前主题色
+  historyPrimaryCol: Array<string>; // 历史主题色, max: 5
 }
 
 export type { POIItem, SystemSetType };
