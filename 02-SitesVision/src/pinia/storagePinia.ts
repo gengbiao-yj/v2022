@@ -2,7 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { UserLogin } from '@/types/ResponseResult';
 import type { SystemSetType } from '@/types/Components';
-import { storage } from '@/utils';
+import { storage, colorTransition } from '@/utils';
+import type { rgbType } from '@/types/Utils';
 
 export default defineStore('basicPinia', () => {
   /*  用户信息存取
@@ -36,6 +37,10 @@ export default defineStore('basicPinia', () => {
   }
   function setSystemParams(data: SystemSetType) {
     // 设置主题颜色
+    const rgb = colorTransition(data.primaryColor, 'rgb') as rgbType;
+    document.documentElement.style.setProperty('--primary-color-r', rgb.r + '');
+    document.documentElement.style.setProperty('--primary-color-g', rgb.g + '');
+    document.documentElement.style.setProperty('--primary-color-b', rgb.b + '');
     document.documentElement.style.setProperty(
       '--primary-color',
       data.primaryColor

@@ -15,12 +15,18 @@ import ja from 'element-plus/lib/locale/lang/ja';
 import ko from 'element-plus/lib/locale/lang/ko';
 
 import basicPinia from '@/pinia/storagePinia';
+import { colorTransition } from '@/utils';
+import { rgbType } from '@/types/Utils';
 const basicStore = basicPinia();
 const { getSystemParams } = basicStore;
 /*  初始化系统设置
 ------------------------------------------------ */
 // 主题色初始化
 const systemSettings = getSystemParams();
+const rgb = colorTransition(systemSettings.primaryColor, 'rgb') as rgbType;
+document.documentElement.style.setProperty('--primary-color-r', rgb.r + '');
+document.documentElement.style.setProperty('--primary-color-g', rgb.g + '');
+document.documentElement.style.setProperty('--primary-color-b', rgb.b + '');
 document.documentElement.style.setProperty(
   '--primary-color',
   systemSettings.primaryColor

@@ -10,9 +10,9 @@ const routes = [
     }
   },
   {
-    path: `/MainMap`,
-    name: `MainMap`,
-    component: () => import('@/views/BusinessPage/ModelMap/MainMap.vue'),
+    path: `/Main`,
+    name: `Main`,
+    component: () => import('@/views/BusinessPage/Main.vue'),
     meta: {
       title: '主页'
     }

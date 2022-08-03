@@ -1,7 +1,7 @@
 <!-- 操作按钮 -->
 <script setup lang="ts">
 import basicPinia from '@/pinia/storagePinia';
-import { fullScreen } from '@/utils/others';
+import { fullScreen } from '@/utils/index';
 import SystemSetting from '@comps/businessSelf/headerMenu/SystemSetting.vue';
 
 // 获取用户信息
@@ -28,7 +28,7 @@ const optionDrawer = ref<boolean>(false);
       <template #reference>
         <SLMBadge :content="11">
           <span class="svg-item">
-            <Bell style="color: white" class="svg-20" />
+            <Bell style="color: #303133" class="svg-20" />
           </span>
         </SLMBadge>
       </template>
@@ -36,29 +36,29 @@ const optionDrawer = ref<boolean>(false);
     </el-popover>
     <!-- 刷新 -->
     <span class="svg-item">
-      <Refresh style="color: white" class="svg-20" />
+      <Refresh style="color: #303133" class="svg-20" />
     </span>
     <!-- 全屏 -->
     <span class="svg-item" @click="setRestFullScreen">
-      <FullScreen style="color: white" class="svg-20" />
+      <FullScreen style="color: #303133" class="svg-20" />
     </span>
     <!-- 设置 -->
     <span class="svg-item" @click="optionDrawer = true">
-      <Setting style="color: white" class="svg-20" />
+      <Setting style="color: #303133" class="svg-20" />
     </span>
     <!-- 用户操作 -->
     <el-popover
       placement="bottom-end"
       title=""
       :width="160"
-      trigger="click"
+      trigger="hover"
       :hide-after="120"
       transition="el-zoom-in-top"
       popper-class="header-option-popover"
     >
       <template #reference>
         <span class="svg-item svg-bg"
-          ><Avatar style="color: white" class="svg-20"
+          ><Avatar style="color: #777879" class="svg-20"
         /></span>
       </template>
       <div class="user-option">
@@ -116,7 +116,7 @@ const optionDrawer = ref<boolean>(false);
   }
 
   .svg-bg {
-    background: rgba(255, 255, 255, 0.2);
+    background: #e5e5e5;
   }
 }
 

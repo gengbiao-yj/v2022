@@ -206,7 +206,7 @@ const apiUserLogin = async (
       setUserInfo(data);
       const user = getUserInfo();
       console.log(user.token);
-      router.push('/MainMap');
+      router.replace('/Main');
       ElMessage.success('登录成功！');
     } else {
       ElMessage.error(message);

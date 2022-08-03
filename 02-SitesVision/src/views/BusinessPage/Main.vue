@@ -1,4 +1,4 @@
-<!-- 地图主页 -->
+<!-- 主页 -->
 <script setup lang="ts">
 import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
@@ -22,7 +22,7 @@ const IPPosition = async () => {
   <div class="main-map-root">
     <el-container>
       <el-header height="50px">
-        <div class="header-left">
+        <div class="header-left" ref="headerLeft">
           <img src="@/assets/img/logo1.png" />
           <span>智慧选址平台</span>
         </div>
@@ -39,7 +39,6 @@ const IPPosition = async () => {
     </el-container>
   </div>
 </template>
-5aa3ec
 
 <style scoped lang="scss">
 .main-map-root {
@@ -50,11 +49,23 @@ const IPPosition = async () => {
     height: calc(100vh - 50px);
   }
   .el-header {
-    background: var(--primary-color);
+    background: white;
+    padding-left: 0px;
     @include flex(row, flex-start, center);
     .header-left {
-      @include box-size(240px, 100%);
+      @include box-size(220px, 100%);
       @include flex(row, flex-start, flex-end);
+      padding-left: 15px;
+      background: linear-gradient(
+        90deg,
+        var(--primary-color),
+        rgba(
+          var(--primary-color-r),
+          var(--primary-color-g),
+          var(--primary-color-b),
+          0.25
+        )
+      );
       padding-bottom: 10px;
       img {
         height: 30px;
@@ -66,10 +77,12 @@ const IPPosition = async () => {
       }
     }
     .header-menu {
-      @include box-size(calc(100% - 520px), 100%);
+      @include box-size(calc(100% - 500px), 100%);
+      border-bottom: 1px solid #dcdfe6;
     }
     .header-right {
       @include box-size(280px, 100%);
+      border-bottom: 1px solid #dcdfe6;
     }
   }
 }

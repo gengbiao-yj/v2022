@@ -1,4 +1,5 @@
-// 全屏切换(单例)
+/*  全屏切换(单例)
+------------------------------------------------ */
 let isScreen = false;
 const updateIsScreen = () => {
   isScreen = !isScreen;
@@ -32,4 +33,29 @@ export function fullScreen() {
       }
     }
   };
+}
+
+/* 颜色转换
+------------------------------------------------ */
+import type { rgbType } from '@/types/Utils';
+export function colorTransition(color: string, type: 'rgb' | '#x6' | '#x3') {
+  function toRGB(): rgbType {
+    color = color.trim();
+    if (color.indexOf('#') !== -1 && color.length === 7) {
+      return {
+        r: parseInt(color.slice(1, 3), 16),
+        g: parseInt(color.slice(3, 5), 16),
+        b: parseInt(color.slice(5), 16)
+      };
+    } else if (color.indexOf('#') !== -1 && color.length === 4) {
+      return {
+        r: parseInt(color.charAt(1) + color.charAt(1), 16),
+        g: parseInt(color.charAt(2) + color.charAt(2), 16),
+        b: parseInt(color.charAt(3) + color.charAt(3), 16)
+      };
+    } else {
+      return { r: 0, g: 0, b: 0 };
+    }
+  }
+  if (type === 'rgb') return toRGB();
 }
