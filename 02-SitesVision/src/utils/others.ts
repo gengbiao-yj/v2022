@@ -37,7 +37,7 @@ export function fullScreen() {
 
 /* 颜色转换
 ------------------------------------------------ */
-import type { rgbType } from '@/types/Utils';
+import type { rgbType } from '@/types/index';
 export function colorTransition(color: string, type: 'rgb' | '#x6' | '#x3') {
   function toRGB(): rgbType {
     color = color.trim();

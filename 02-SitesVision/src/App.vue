@@ -16,7 +16,7 @@ import ko from 'element-plus/lib/locale/lang/ko';
 
 import basicPinia from '@/pinia/storagePinia';
 import { colorTransition } from '@/utils';
-import { rgbType } from '@/types/Utils';
+import type { rgbType } from '@/types/index';
 const basicStore = basicPinia();
 const { getSystemParams } = basicStore;
 /*  初始化系统设置

@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { UserLogin } from '@/types/ResponseResult';
-import type { SystemSetType } from '@/types/Components';
+import type { UserLogin, SystemSetType, rgbType } from '@/types/index';
 import { storage, colorTransition } from '@/utils';
-import type { rgbType } from '@/types/Utils';
 
 export default defineStore('basicPinia', () => {
   /*  用户信息存取

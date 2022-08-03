@@ -1,4 +1,4 @@
-import type { POIItem } from '@/types/Components';
+import type { POIItem } from '@/types/index';
 export const POIs: Array<POIItem> = [
   {
     name: 'traffic',

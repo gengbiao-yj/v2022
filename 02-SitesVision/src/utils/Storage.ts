@@ -6,7 +6,7 @@ import type {
   GetLocalStorage,
   LocalStorageValue,
   SessionStorageValue
-} from '@/types/Storage';
+} from '@/types/index';
 const cryptoData = new DataCrypto();
 
 export default class StorageUtils {

@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 import { AMAP_WEBKEY } from '@/data/amap';
-import { AmapV3IP } from '@/types/ResponseResult';
+import type { AmapV3IP } from '@/types/index';
 
 // IP 定位
 const amapIP = async () => {

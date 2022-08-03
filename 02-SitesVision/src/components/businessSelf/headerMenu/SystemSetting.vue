@@ -3,7 +3,7 @@
 /*  init
 ------------------------------------------------ */
 import { defineProps, defineEmits } from 'vue';
-import type { SystemSetType } from '@/types/Components';
+import type { SystemSetType } from '@/types/index';
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
 const { getSystemParams, setSystemParams } = basicStore;
