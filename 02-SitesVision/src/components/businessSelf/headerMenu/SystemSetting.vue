@@ -1,3 +1,4 @@
+<!-- 系统设置 - 侧拉抽屉 -->
 <script setup lang="ts">
 /*  init
 ------------------------------------------------ */
@@ -67,13 +68,18 @@ const selectOldPrimary = (e: string) => {
         v-model="systemSettings.primaryColor"
         @change="newPrimaryColor"
       />
-      <div class="history-primary-box">
-        <span
-          v-for="(e, i) in systemSettings.historyPrimaryCol"
-          :key="i"
-          :style="{ background: e }"
-          @click="selectOldPrimary(e)"
-        ></span>
+      <div class="primary-box">
+        <div v-for="(e, i) in systemSettings.historyPrimaryCol" :key="i">
+          <span
+            class="primary-box-item"
+            :style="{ background: e }"
+            @click="selectOldPrimary(e)"
+          ></span>
+          <span
+            v-if="e === systemSettings.primaryColor"
+            class="primary-circle-tip"
+          ></span>
+        </div>
       </div>
     </div>
   </el-drawer>
@@ -88,19 +94,31 @@ const selectOldPrimary = (e: string) => {
   }
 }
 
-.history-primary-box {
+.primary-box {
   width: 100%;
   margin-top: 10px;
   height: auto;
   @include flex(row, space-around, center);
   flex-wrap: wrap;
-  > span {
+  > div {
     width: 26px;
-    height: 26px;
-    border-radius: 6px;
-    padding: 1px;
-    border: 1px solid #afafaf;
-    cursor: pointer;
+    height: 40px;
+    @include flex(column, flex-start, center);
+    > .primary-box-item {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      padding: 1px;
+      border: 1px solid #afafaf;
+      cursor: pointer;
+    }
+    > .primary-circle-tip {
+      margin-top: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #03be32;
+    }
   }
 }
 </style>

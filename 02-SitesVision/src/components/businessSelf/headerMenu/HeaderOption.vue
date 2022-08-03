@@ -1,3 +1,4 @@
+<!-- 操作按钮 -->
 <script setup lang="ts">
 import basicPinia from '@/pinia/storagePinia';
 import { fullScreen } from '@/utils/others';
@@ -9,7 +10,6 @@ const { getUserInfo } = basicStore;
 const userInfo = getUserInfo();
 const userName = ref(userInfo.userName);
 
-// const collapse = ref('0');
 const setRestFullScreen = fullScreen();
 
 const optionDrawer = ref<boolean>(false);

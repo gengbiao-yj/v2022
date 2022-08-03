@@ -50,11 +50,10 @@ const IPPosition = async () => {
     height: calc(100vh - 50px);
   }
   .el-header {
-    //background: #009dff;
     background: var(--primary-color);
     @include flex(row, flex-start, center);
     .header-left {
-      @include box-size(15%, 100%);
+      @include box-size(240px, 100%);
       @include flex(row, flex-start, flex-end);
       padding-bottom: 10px;
       img {
@@ -67,10 +66,10 @@ const IPPosition = async () => {
       }
     }
     .header-menu {
-      @include box-size(70%, 100%);
+      @include box-size(calc(100% - 520px), 100%);
     }
     .header-right {
-      @include box-size(15%, 100%);
+      @include box-size(280px, 100%);
     }
   }
 }

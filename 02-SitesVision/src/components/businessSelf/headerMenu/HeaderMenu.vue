@@ -1,5 +1,6 @@
+<!-- 操作菜单 -->
 <script setup lang="ts">
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 // 细分组件
 import SmartRecommend from '@comps/businessSelf/headerMenu/SmartRecommend.vue';
 import ListMenus from '@comps/businessSelf/headerMenu/ListMenus.vue';
@@ -9,18 +10,6 @@ import { SmartReportType, DataTableType } from '@/data/headerMenu';
 const smartRecommendShow = ref<boolean>(false); // 智能推荐
 const smartReportShow = ref<boolean>(false); // 评估报告
 const dataTableShow = ref<boolean>(false); // 数据管理
-// 下拉菜单手风琴
-const popoverClose = (index: number) => {
-  const menus = [smartRecommendShow, smartReportShow, dataTableShow];
-  const currentClick = menus.splice(index, 1);
-  currentClick[0].value = !currentClick[0].value;
-  menus.forEach(e => {
-    e.value = false;
-  });
-};
-// 评估报告 popover 样式选择器
-const smartReportPopoverClass: string = nanoid();
-console.log(smartReportPopoverClass);
 </script>
 
 <template>
@@ -30,14 +19,14 @@ console.log(smartReportPopoverClass);
       placement="bottom-end"
       title=""
       :width="700"
-      trigger="click"
+      trigger="hover"
       :hide-after="120"
-      @hide="smartRecommendShow = false"
-      v-model="smartRecommendShow"
+      @before-enter="smartRecommendShow = true"
+      @before-leave="smartRecommendShow = false"
       transition="el-zoom-in-top"
     >
       <template #reference>
-        <div class="select-menu" @click="popoverClose(0)">
+        <div class="select-menu">
           <span> 智能推荐 </span>
           <CaretTop class="svg-16" v-rotate:180="smartRecommendShow" />
         </div>
@@ -49,15 +38,15 @@ console.log(smartReportPopoverClass);
       placement="bottom-end"
       title=""
       :width="100"
-      trigger="click"
+      trigger="hover"
       :hide-after="120"
-      @hide="smartReportShow = false"
-      v-model="smartReportShow"
+      @before-enter="smartReportShow = true"
+      @before-leave="smartReportShow = false"
       popper-class="header-menu-popover"
       transition="el-zoom-in-top"
     >
       <template #reference>
-        <div class="select-menu" @click="popoverClose(1)">
+        <div class="select-menu">
           <span> 评估报告 </span>
           <CaretTop class="svg-16" v-rotate:180="smartReportShow" />
         </div>
@@ -69,15 +58,15 @@ console.log(smartReportPopoverClass);
       placement="bottom-end"
       title=""
       :width="110"
-      trigger="click"
+      trigger="hover"
       :hide-after="120"
-      @hide="dataTableShow = false"
-      v-model="dataTableShow"
+      @before-enter="dataTableShow = true"
+      @before-leave="dataTableShow = false"
       popper-class="header-menu-popover"
       transition="el-zoom-in-top"
     >
       <template #reference>
-        <div class="select-menu" @click="popoverClose(2)">
+        <div class="select-menu">
           <span> 数据管理 </span>
           <CaretTop class="svg-16" v-rotate:180="dataTableShow" />
         </div>
