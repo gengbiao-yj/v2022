@@ -28,7 +28,6 @@ const menuSelect = (e: any) => {
 <template>
   <div class="header-menu-root">
     <el-menu
-      class="el-menu-demo"
       mode="horizontal"
       style="height: 50px"
       :active-text-color="systemSettings.primaryColor || '#000'"
@@ -65,7 +64,7 @@ const menuSelect = (e: any) => {
         <el-menu-item
           :index="`2-${i}`"
           v-for="(e, i) in SmartReportType"
-          :key="i"
+          :key="`2-${i}`"
         >
           <Operation class="svg-16 mg-r-10" />
           {{ e.label }}
@@ -76,7 +75,7 @@ const menuSelect = (e: any) => {
         <el-menu-item
           :index="`3-${i}`"
           v-for="(e, i) in DataTableType"
-          :key="i"
+          :key="`3-${i}`"
         >
           <Operation class="svg-16 mg-r-10" />
           {{ e.label }}
