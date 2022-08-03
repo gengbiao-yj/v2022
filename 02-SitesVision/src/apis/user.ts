@@ -3,7 +3,7 @@
  */
 import { http } from '@/plugin/Axios/index';
 import qs from 'qs';
-import type { ResponseResult, UserLogin } from '@/types/ResponseResult';
+import type { ResponseResult, UserLogin } from '@/types/index';
 import { UserLoginParams } from '@/types/RequestParams';
 
 // 登录
