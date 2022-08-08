@@ -1,7 +1,10 @@
-import DataCrypto from './crypto';
-import JudgeDataType from './dataTypeJudge';
-import StorageUtils from './Storage';
-import { fullScreen, colorTransition } from './others';
+import {
+  fullScreen,
+  colorTransition,
+  JudgeDataType,
+  DataCrypto,
+  StorageUtils
+} from './others';
 
 const cryptoData = new DataCrypto();
 const dataType = new JudgeDataType();
