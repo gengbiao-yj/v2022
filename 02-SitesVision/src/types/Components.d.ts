@@ -20,4 +20,10 @@ interface SystemSetType {
   historyPrimaryCol: Array<string>; // 历史主题色, max: 5
 }
 
-export type { POIItem, SystemSetType, MenuItem };
+interface TabsItem {
+  title: string,
+  name: string,
+  path: string
+}
+
+export type { POIItem, SystemSetType, MenuItem, TabsItem };

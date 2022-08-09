@@ -1,4 +1,4 @@
-import type { POIItem, SystemSetType, MenuItem } from './Components';
+import type { POIItem, SystemSetType, MenuItem, TabsItem } from './Components';
 import type { UserLoginParams } from './RequestParams';
 import type { ResponseResult, UserLogin, AmapV3IP } from './ResponseResult';
 import type {
@@ -13,6 +13,7 @@ export type {
   POIItem,
   SystemSetType,
   MenuItem,
+  TabsItem,
   UserLoginParams,
   ResponseResult,
   UserLogin,

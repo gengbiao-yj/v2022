@@ -5,6 +5,7 @@ import { storage } from '@/utils';
 import HeaderTitle from '@comps/businessSelf/headerMenu/HeaderTitle.vue';
 import HeaderMenu from '@comps/businessSelf/headerMenu/HeaderMenu.vue';
 import HeaderOption from '@comps/businessSelf/headerMenu/HeaderOption.vue';
+import HeaderTabs from '@comps/businessSelf/headerMenu/HeaderTabs.vue';
 
 // 浏览器宽度监视
 import { getWatchBrowserWidth } from '@/utils/hooks';
@@ -47,7 +48,9 @@ const IPPosition = async () => {
             <HeaderOption />
           </div>
         </div>
-        <div class="tabs"></div>
+        <div class="tabs">
+          <HeaderTabs />
+        </div>
       </el-header>
       <el-main>
         <div class="main-container">
