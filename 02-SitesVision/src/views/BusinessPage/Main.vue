@@ -50,7 +50,9 @@ const IPPosition = async () => {
         <div class="tabs"></div>
       </el-header>
       <el-main>
-        <div class="main-container"></div>
+        <div class="main-container">
+          <router-view></router-view>
+        </div>
       </el-main>
     </el-container>
   </div>

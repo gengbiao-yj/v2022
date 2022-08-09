@@ -74,14 +74,6 @@ const optionDrawer = ref<boolean>(false);
             <span>个人信息</span>
           </div>
           <div>
-            <SetUp class="svg-16" />
-            <span>后台管理</span>
-          </div>
-          <div>
-            <DataLine class="svg-16" />
-            <span>企业驾驶舱</span>
-          </div>
-          <div>
             <VideoCamera class="svg-16" />
             <span>帮助视频</span>
           </div>

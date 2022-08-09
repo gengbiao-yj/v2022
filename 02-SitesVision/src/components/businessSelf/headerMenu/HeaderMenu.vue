@@ -13,7 +13,7 @@ watch(
 
 // 细分组件
 import SmartRecommend from '@comps/businessSelf/headerMenu/SmartRecommend.vue';
-import { SmartReportType, DataTableType } from '@/data/headerMenu';
+import { DataTableType, SystemManagement } from '@/data/headerMenu';
 
 // header下拉菜单展开收缩标志位
 const smartRecommendShow = ref<boolean>(false); // 智能推荐
@@ -29,11 +29,12 @@ const menuSelect = (e: any) => {
   <div class="header-menu-root">
     <el-menu
       mode="horizontal"
+      router
       style="height: 50px"
       :active-text-color="systemSettings.primaryColor || '#000'"
       @select="menuSelect"
     >
-      <el-menu-item index="1">
+      <el-menu-item>
         <el-popover
           placement="bottom-end"
           title=""
@@ -52,28 +53,18 @@ const menuSelect = (e: any) => {
                   activeIndex == 1 ? systemSettings.primaryColor : '#303133'
               }"
             >
-              <span> 智能推荐 </span>
+              <Guide class="svg-16 mg-r-5" />
+              <span>智能推荐</span>
               <ArrowDown class="svg-12" v-rotate:180="smartRecommendShow" />
             </div>
           </template>
           <SmartRecommend />
         </el-popover>
       </el-menu-item>
-      <el-sub-menu index="2">
-        <template #title>评估报告</template>
-        <el-menu-item
-          :index="`2-${i}`"
-          v-for="(e, i) in SmartReportType"
-          :key="`2-${i}`"
-        >
-          <Operation class="svg-16 mg-r-10" />
-          {{ e.label }}
-        </el-menu-item>
-      </el-sub-menu>
       <el-sub-menu index="3">
-        <template #title>数据管理</template>
+        <template #title><Coin class="svg-16 mg-r-5" />数据管理</template>
         <el-menu-item
-          :index="`3-${i}`"
+          :index="e.path"
           v-for="(e, i) in DataTableType"
           :key="`3-${i}`"
         >
@@ -81,6 +72,20 @@ const menuSelect = (e: any) => {
           {{ e.label }}
         </el-menu-item>
       </el-sub-menu>
+      <el-sub-menu index="4">
+        <template #title><SetUp class="svg-16 mg-r-5" />系统维护</template>
+        <el-menu-item
+          :index="e.path"
+          v-for="(e, i) in SystemManagement"
+          :key="`4-${i}`"
+        >
+          <Operation class="svg-16 mg-r-10" />
+          {{ e.label }}
+        </el-menu-item>
+      </el-sub-menu>
+      <el-menu-item index="/Main/ManagementCockpit">
+        <template #title><DataLine class="svg-16 mg-r-5" />企业驾驶舱</template>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

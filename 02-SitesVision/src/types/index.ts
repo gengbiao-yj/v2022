@@ -1,4 +1,4 @@
-import type { POIItem, SystemSetType } from './Components';
+import type { POIItem, SystemSetType, MenuItem } from './Components';
 import type { UserLoginParams } from './RequestParams';
 import type { ResponseResult, UserLogin, AmapV3IP } from './ResponseResult';
 import type {
@@ -12,6 +12,7 @@ import type { rgbType } from './Utils';
 export type {
   POIItem,
   SystemSetType,
+  MenuItem,
   UserLoginParams,
   ResponseResult,
   UserLogin,

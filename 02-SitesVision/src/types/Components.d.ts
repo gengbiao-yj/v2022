@@ -4,13 +4,15 @@
 
 /*  components 》 businessSelf 》 headerMenu
 ------------------------------------------------ */
+interface MenuItem {
+  label: string;
+  value?: string;
+  path?: string;
+}
 interface POIItem {
   name: string;
   title: string;
-  items: Array<{
-    label: string;
-    value: string;
-  }>;
+  items: Array<MenuItem>;
 }
 
 interface SystemSetType {
@@ -18,4 +20,4 @@ interface SystemSetType {
   historyPrimaryCol: Array<string>; // 历史主题色, max: 5
 }
 
-export type { POIItem, SystemSetType };
+export type { POIItem, SystemSetType, MenuItem };

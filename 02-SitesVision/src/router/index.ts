@@ -17,11 +17,12 @@ router.beforeEach((to, from, next) => {
     // 登录返回的用户信息包含了 token
     if (storage.getLocal('userInfo')) {
       if (to.meta.title) {
-        document.title = to.meta.title as string;
+        // document.title = to.meta.title as string;
+        document.title = '址见-智慧选址';
       }
       next();
     } else {
-      document.title = '登录';
+      document.title = '址见-智慧选址';
       next('/Login');
     }
   } else {

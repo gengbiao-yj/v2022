@@ -1,4 +1,5 @@
-import type { POIItem } from '@/types/index';
+import type { POIItem, MenuItem } from '@/types/index';
+// 智能推荐POIs
 export const POIs: Array<POIItem> = [
   {
     name: 'traffic',
@@ -80,21 +81,31 @@ export const POIs: Array<POIItem> = [
   }
 ];
 
-export const SmartReportType: Array<{
-  label: string;
-  value: string;
-}> = [
+// 评估报告
+export const SmartReportType: Array<MenuItem> = [
   { label: '缓冲区', value: 'bufferArea' },
   { label: '等时圈', value: 'timeCircle' },
   { label: '自定义', value: 'userDefined' }
 ];
 
-export const DataTableType: Array<{
-  label: string;
-  value: string;
-}> = [
-  { label: '机会项目', value: 'opportunityPoint' },
-  { label: '已开门店', value: 'openingStorePoint' },
-  { label: '关注品牌', value: 'competitiveBrand' },
-  { label: '已有商圈', value: 'businessCircle' }
+// 数据管理
+export const DataTableType: Array<MenuItem> = [
+  { label: '机会项目', path: '/Main/ListPipeline' },
+  { label: '已开门店', path: '/Main/ListStore' },
+  { label: '关注品牌', path: '/Main/ListCompetitor' },
+  { label: '已有商圈', path: '/Main/ListBusinessCircle' }
+];
+
+// 系统管理
+export const SystemManagement: Array<MenuItem> = [
+  { label: '企业维护', path: '/Main/CompanyMaintain' },
+  { label: '品牌维护', path: '/Main/BrandMaintain' },
+  { label: '用户维护', path: '/Main/UserMaintain' },
+  { label: '数据项维护', path: '/Main/DataMaintain' },
+  { label: '字段管理', path: '/Main/FieldMaintain' },
+  { label: '自定义图层', path: '/Main/LayerMaintain' },
+  { label: '城市维护', path: '/Main/CityMaintain' },
+  { label: '竞品维护', path: '/Main/CompititerMaintain' },
+  { label: '报告统计', path: '/Main/ReportStatistics' },
+  { label: '日志统计', path: '/Main/LogStatistics' }
 ];
