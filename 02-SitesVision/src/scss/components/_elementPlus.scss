@@ -28,11 +28,12 @@
     border-radius: 2px;
     font-size: 12px;
     &:hover {
-      border-color: var(--el-color-primary) !important;
+      border-color: var(--primary-color) !important;
+      color: var(--primary-color) !important;
     }
     &.is-active {
-      border-color: var(--el-color-primary) !important;
-      background: var(--el-color-primary) !important;
+      border-color: var(--primary-color) !important;
+      background: var(--primary-color) !important;
       color: white !important;
     }
   }

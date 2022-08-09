@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { UserLogin, SystemSetType, rgbType } from '@/types/index';
+import type {
+  UserLogin,
+  SystemSetType,
+  rgbType,
+  TabsItem
+} from '@/types/index';
 import { storage, colorTransition } from '@/utils';
 
 export default defineStore('basicPinia', () => {
@@ -47,6 +52,29 @@ export default defineStore('basicPinia', () => {
     storage.setLocal('systemSetting', data, 480);
   }
 
+  /*  header tabs 导航标签页持久化存储
+  ------------------------------------------------ */
+  const tabs = ref<Array<TabsItem>>([
+    {
+      title: '地图主页',
+      name: '1',
+      path: '/Main'
+    }
+  ]);
+
+  function setTabs(data: Array<TabsItem>) {
+    tabs.value = data;
+    storage.setLocal('routerTabs', data, 480);
+  }
+
+  function getTabs() {
+    const storageValue = storage.getLocal('routerTabs').value;
+    if (storageValue) {
+      tabs.value = storageValue;
+    }
+    return tabs.value;
+  }
+
   return {
     getUserInfo,
     setUserInfo,
@@ -54,6 +82,9 @@ export default defineStore('basicPinia', () => {
     userInfo,
     systemParams,
     getSystemParams,
-    setSystemParams
+    setSystemParams,
+    tabs,
+    setTabs,
+    getTabs
   };
 });

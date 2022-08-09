@@ -1,7 +1,15 @@
 <!-- Tabs- 导航标签页 -->
 <script lang="ts" setup>
 import type { TabsItem } from '@/types/index';
-// const router = useRouter();
+import type { TabsPaneContext } from 'element-plus';
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const { setTabs, getTabs } = basicStore;
+
+// 初始数据
+const editableTabsValue = ref('1');
+const editableTabs = ref<Array<TabsItem>>(getTabs());
+const router = useRouter();
 const route = useRoute();
 
 // 监视路由变化动态增减 tabs
@@ -13,8 +21,8 @@ watch(route, newV => {
       name: editableTabs.value.length + 1 + '',
       path: newV.fullPath
     });
-    console.log(editableTabs.value);
     editableTabsValue.value = editableTabs.value.length + '';
+    setTabs(editableTabs.value);
   } else {
     let index = editableTabs.value.findIndex(e => e.path === newV.fullPath);
     if (index !== -1) {
@@ -23,14 +31,7 @@ watch(route, newV => {
   }
 });
 
-const editableTabsValue = ref('1');
-const editableTabs = ref<Array<TabsItem>>([
-  {
-    title: '地图主页',
-    name: '1',
-    path: '/Main'
-  }
-]);
+// 移除 tab
 const removeTab = (targetName: string) => {
   const tabs = editableTabs.value;
   let activeName = editableTabsValue.value;
@@ -46,6 +47,21 @@ const removeTab = (targetName: string) => {
   }
   editableTabsValue.value = activeName;
   editableTabs.value = tabs.filter(tab => tab.name !== targetName);
+  setTabs(editableTabs.value);
+  activeTabRouter(activeName);
+};
+
+// 点击 tab
+const clickTab = (e: TabsPaneContext) => {
+  activeTabRouter(e.paneName as string);
+};
+
+// 过滤当前激活中tab，并跳转路由
+const activeTabRouter = (activePaneName: string) => {
+  let activeItem = editableTabs.value.find(k => k.name === activePaneName);
+  if (activeItem!.path) {
+    router.push(activeItem!.path);
+  }
 };
 </script>
 <template>
@@ -54,6 +70,7 @@ const removeTab = (targetName: string) => {
     type="card"
     class="header-tabs"
     @tab-remove="removeTab"
+    @tab-click="clickTab"
   >
     <el-tab-pane
       v-for="item in editableTabs"

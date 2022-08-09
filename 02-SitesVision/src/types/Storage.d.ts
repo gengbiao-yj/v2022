@@ -5,7 +5,8 @@
 const storageKey = [
   'userInfo', // 用户信息
   'currentPosition', // 当前位置信息
-  'systemSetting' // 系统设置参数
+  'systemSetting', // 系统设置参数
+  'routerTabs' // 导航标签页
 ] as const;
 type StorageKeyType = typeof storageKey[number];
 // session 值类型
