@@ -1,7 +1,18 @@
+// 阿里图标库 svg 公共样式
+.icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: center;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+// svg 大小设置
 @mixin _svg-size($wh: 12px) {
   width: $wh;
   height: $wh;
 }
+
 .svg-12 {
   @include _svg-size();
 }

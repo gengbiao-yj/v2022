@@ -8,6 +8,7 @@ import type {
   GetLocalStorage
 } from './Storage';
 import type { rgbType } from './Utils';
+import type { _HTMLDivElement, _SVGElement } from '@/types/HtmlElement';
 
 export type {
   POIItem,
@@ -22,5 +23,7 @@ export type {
   SessionStorageValue,
   LocalStorageValue,
   GetLocalStorage,
-  rgbType
+  rgbType,
+  _HTMLDivElement,
+  _SVGElement
 };

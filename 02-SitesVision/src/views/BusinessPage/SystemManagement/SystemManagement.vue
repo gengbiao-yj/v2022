@@ -1,9 +1,25 @@
 <!-- 系统维护 -->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { _HTMLDivElement, _SVGElement } from '@/types';
+import { CollapseWidth } from '@/utils';
+const asideCollapse = ref() as _HTMLDivElement;
+const iconCollapse = ref() as _SVGElement;
+</script>
 <template>
   <div class="Sys-Mg-root">
     <div class="Sys-Mg-content">
-      <div class="content-aside"></div>
+      <div class="content-aside" ref="asideCollapse">
+        <svg
+          ref="iconCollapse"
+          class="icon svg-40"
+          aria-hidden="true"
+          @click="
+            CollapseWidth(asideCollapse, iconCollapse, 200, 'Left', '#f1f1f1')
+          "
+        >
+          <use href="#icon-zuohua"></use>
+        </svg>
+      </div>
       <div class="content-main"></div>
     </div>
     <CopyrightLine />
@@ -26,11 +42,22 @@
     }
     .content-aside {
       @include box-size(200px, 100%);
+      position: relative;
+      > svg {
+        position: absolute;
+        right: -15px;
+        top: calc(50% - 20px);
+        cursor: pointer;
+        &:hover {
+          //animation: ShakeUpDown-sm 0.4s ease;
+        }
+      }
     }
 
     .content-main {
+      height: 100%;
       margin-left: 5px;
-      @include box-size(calc(100% - 205px), 100%);
+      flex: 1;
     }
   }
 }

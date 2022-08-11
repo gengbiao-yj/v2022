@@ -1,0 +1,24 @@
+/*  动画
+------------------------------------------------ */
+@keyframes ShakeUpDown-sm {
+  0% {
+    transition: all ease-in-out;
+    transform: translateY(0px);
+  }
+
+  25% {
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(0px);
+  }
+
+  75% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}

@@ -200,3 +200,36 @@ export class JudgeDataType {
     return type.toLowerCase() === this.getType(o);
   }
 }
+
+/*  变宽折叠面板实现
+------------------------------------------------ */
+export function CollapseWidth(
+  dom: HTMLDivElement, // 面板
+  iconDom: SVGElement, // 面板折叠按钮
+  openWidth: number, // 展开宽度
+  direction: 'Left' | 'Right', // 收缩方向
+  backGround: string // 面板所属父元素背景色
+) {
+  if (dom) {
+    dom.style.transition = 'all 0.3s ease-in-out';
+    iconDom.style.transition = 'all 0.3s ease-in-out';
+    console.log([dom]);
+    if (dom.dataset.sign === undefined) {
+      dom.dataset.sign = '0';
+      dom.style.willChange = 'width';
+      dom.style.width = '0px';
+      dom.style[`margin${direction}`] = '8px';
+      dom.style.borderColor = backGround;
+      iconDom.style.transform = 'rotateY(180deg)';
+    } else {
+      dom.dataset.sign = dom.dataset.sign === '0' ? '1' : '0';
+      const sign = dom.dataset.sign;
+      dom.style.willChange = 'width';
+      dom.style.width = sign === '0' ? '0px' : `${openWidth}px`;
+      dom.style.marginLeft = sign === '0' ? '8px' : `0px`;
+      dom.style.borderColor = sign === '0' ? backGround : '';
+      iconDom.style.transform =
+        sign === '0' ? 'rotateY(180deg)' : 'rotateY(0deg)';
+    }
+  }
+}

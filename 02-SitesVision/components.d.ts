@@ -6,7 +6,6 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Copyright: typeof import('./src/components/publicGlobal/Copyright.vue')['default']
-    ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
@@ -15,7 +14,6 @@ declare module '@vue/runtime-core' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
-    ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
@@ -38,8 +36,8 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SLMBadge: typeof import('./src/components/publicGlobal/SLMBadge.vue')['default']
-    SmartRecommend: typeof import('./src/components/businessSelf/headerMenu/SmartRecommend.vue')['default']
-    SystemSetting: typeof import('./src/components/businessSelf/headerMenu/SystemSetting.vue')['default']
+    SmartRecommend: typeof import('./src/components/businessSelf/Main/SmartRecommend.vue')['default']
+    SystemSetting: typeof import('./src/components/businessSelf/Main/SystemSetting.vue')['default']
   }
 }
 
