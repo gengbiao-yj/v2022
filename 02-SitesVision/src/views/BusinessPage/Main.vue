@@ -2,10 +2,10 @@
 <script setup lang="ts">
 import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
-import HeaderTitle from '@comps/businessSelf/headerMenu/HeaderTitle.vue';
-import HeaderMenu from '@comps/businessSelf/headerMenu/HeaderMenu.vue';
-import HeaderOption from '@comps/businessSelf/headerMenu/HeaderOption.vue';
-import HeaderTabs from '@comps/businessSelf/headerMenu/HeaderTabs.vue';
+import HeaderTitle from '@comps/businessSelf/Main/HeaderTitle.vue';
+import HeaderMenu from '@comps/businessSelf/Main/HeaderMenu.vue';
+import HeaderOption from '@comps/businessSelf/Main/HeaderOption.vue';
+import HeaderTabs from '@comps/businessSelf/Main/HeaderTabs.vue';
 
 // 浏览器宽度监视
 import { getWatchBrowserWidth } from '@/utils/hooks';
@@ -96,13 +96,13 @@ const IPPosition = async () => {
         padding-bottom: 10px;
       }
       &-menu {
-        @include box-size(calc(100% - 500px), 100%);
+        @include box-size(calc(100% - 520px), 100%);
         border-bottom: 1px solid #dcdfe6;
       }
       &-right {
-        @include box-size(280px, 100%);
+        @include box-size(300px, 100%);
         border-bottom: 1px solid #dcdfe6;
-        padding-right: 20px;
+        padding-right: 5px;
       }
     }
     .tabs {

@@ -14,12 +14,13 @@ const route = useRoute();
 
 // 监视路由变化动态增减 tabs
 watch(route, newV => {
-  const isRecord = editableTabs.value.some(e => newV.fullPath === e.path);
+  console.log(newV);
+  const isRecord = editableTabs.value.some(e => newV.path === e.path);
   if (!isRecord) {
     editableTabs.value.push({
       title: newV.meta.title + '',
       name: editableTabs.value.length + 1 + '',
-      path: newV.fullPath
+      path: newV.path
     });
     editableTabsValue.value = editableTabs.value.length + '';
     setTabs(editableTabs.value);

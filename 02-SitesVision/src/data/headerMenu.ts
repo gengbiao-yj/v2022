@@ -98,14 +98,14 @@ export const DataTableType: Array<MenuItem> = [
 
 // 系统管理
 export const SystemManagement: Array<MenuItem> = [
-  { label: '企业维护', path: '/Main/CompanyMaintain' },
-  { label: '品牌维护', path: '/Main/BrandMaintain' },
-  { label: '用户维护', path: '/Main/UserMaintain' },
-  { label: '数据项维护', path: '/Main/DataMaintain' },
-  { label: '字段管理', path: '/Main/FieldMaintain' },
-  { label: '自定义图层', path: '/Main/LayerMaintain' },
-  { label: '城市维护', path: '/Main/CityMaintain' },
-  { label: '竞品维护', path: '/Main/CompititerMaintain' },
-  { label: '报告统计', path: '/Main/ReportStatistics' },
-  { label: '日志统计', path: '/Main/LogStatistics' }
+  { label: '企业维护', path: '/Main/SystemManagement' },
+  { label: '品牌维护', path: '/Main/SystemManagement' },
+  { label: '用户维护', path: '/Main/SystemManagement' },
+  { label: '数据项维护', path: '/Main/SystemManagement' },
+  { label: '字段管理', path: '/Main/SystemManagement' },
+  { label: '自定义图层', path: '/Main/SystemManagement' },
+  { label: '城市维护', path: '/Main/SystemManagement' },
+  { label: '竞品维护', path: '/Main/SystemManagement' },
+  { label: '报告统计', path: '/Main/SystemManagement' },
+  { label: '日志统计', path: '/Main/SystemManagement' }
 ];

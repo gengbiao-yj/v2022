@@ -54,6 +54,16 @@ const routes = [
           requireAuth: true
         }
       },
+      {
+        path: '/Main/SystemManagement',
+        name: 'ListBusinessCircle',
+        component: () =>
+          import('@/views/BusinessPage/SystemManagement/SystemManagement.vue'),
+        meta: {
+          title: '系统维护',
+          requireAuth: true
+        }
+      },
       /*  功能页面
       ------------------------------------------------ */
       {

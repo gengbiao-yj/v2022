@@ -5,6 +5,8 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Copyright: typeof import('./src/components/publicGlobal/Copyright.vue')['default']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
@@ -13,6 +15,7 @@ declare module '@vue/runtime-core' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
+    ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
@@ -27,10 +30,10 @@ declare module '@vue/runtime-core' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    HeaderMenu: typeof import('./src/components/businessSelf/headerMenu/HeaderMenu.vue')['default']
-    HeaderOption: typeof import('./src/components/businessSelf/headerMenu/HeaderOption.vue')['default']
-    HeaderTabs: typeof import('./src/components/businessSelf/headerMenu/HeaderTabs.vue')['default']
-    HeaderTitle: typeof import('./src/components/businessSelf/headerMenu/HeaderTitle.vue')['default']
+    HeaderMenu: typeof import('./src/components/businessSelf/Main/HeaderMenu.vue')['default']
+    HeaderOption: typeof import('./src/components/businessSelf/Main/HeaderOption.vue')['default']
+    HeaderTabs: typeof import('./src/components/businessSelf/Main/HeaderTabs.vue')['default']
+    HeaderTitle: typeof import('./src/components/businessSelf/Main/HeaderTitle.vue')['default']
     ListMenus: typeof import('./src/components/publicGlobal/ListMenus.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -12,7 +12,7 @@ watch(
 );
 
 // 细分组件
-import SmartRecommend from '@comps/businessSelf/headerMenu/SmartRecommend.vue';
+import SmartRecommend from './SmartRecommend.vue';
 import { DataTableType, SystemManagement } from '@/data/headerMenu';
 
 // header下拉菜单展开收缩标志位
@@ -75,7 +75,7 @@ const menuSelect = (e: any) => {
       <el-sub-menu index="4">
         <template #title><SetUp class="svg-16 mg-r-5" />系统维护</template>
         <el-menu-item
-          :index="e.path"
+          :index="`${e.path}?index=${i}`"
           v-for="(e, i) in SystemManagement"
           :key="`4-${i}`"
         >

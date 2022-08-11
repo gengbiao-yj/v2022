@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import basicPinia from '@/pinia/storagePinia';
 import { fullScreen } from '@/utils/index';
-import SystemSetting from '@comps/businessSelf/headerMenu/SystemSetting.vue';
+import SystemSetting from './SystemSetting.vue';
 
 // 获取用户信息
 const basicStore = basicPinia();
@@ -16,6 +16,24 @@ const optionDrawer = ref<boolean>(false);
 </script>
 <template>
   <div class="header-option-root">
+    <!-- 事项(待办、已办、完结、我提交的) -->
+    <el-popover
+      placement="bottom-end"
+      title=""
+      :width="110"
+      trigger="click"
+      :hide-after="120"
+      transition="el-zoom-in-top"
+    >
+      <template #reference>
+        <SLMBadge :content="8">
+          <span class="svg-item">
+            <AlarmClock class="svg-20" />
+          </span>
+        </SLMBadge>
+      </template>
+      <div>~~~~~~~~~~~</div>
+    </el-popover>
     <!-- 通知 -->
     <el-popover
       placement="bottom-end"
@@ -28,7 +46,7 @@ const optionDrawer = ref<boolean>(false);
       <template #reference>
         <SLMBadge :content="11">
           <span class="svg-item">
-            <Bell style="color: #303133" class="svg-20" />
+            <Bell class="svg-20" />
           </span>
         </SLMBadge>
       </template>
@@ -36,15 +54,15 @@ const optionDrawer = ref<boolean>(false);
     </el-popover>
     <!-- 刷新 -->
     <span class="svg-item">
-      <Refresh style="color: #303133" class="svg-20" />
+      <Refresh class="svg-20" />
     </span>
     <!-- 全屏 -->
     <span class="svg-item" @click="setRestFullScreen">
-      <FullScreen style="color: #303133" class="svg-20" />
+      <FullScreen class="svg-20" />
     </span>
     <!-- 设置 -->
     <span class="svg-item" @click="optionDrawer = true">
-      <Setting style="color: #303133" class="svg-20" />
+      <Setting class="svg-20" />
     </span>
     <!-- 用户操作 -->
     <el-popover
@@ -57,9 +75,7 @@ const optionDrawer = ref<boolean>(false);
       popper-class="header-option-popover"
     >
       <template #reference>
-        <span class="svg-item svg-bg"
-          ><Avatar style="color: #777879" class="svg-20"
-        /></span>
+        <span class="svg-item svg-bg"><Avatar class="svg-20" /></span>
       </template>
       <div class="user-option">
         <div class="user-option-header">
@@ -100,7 +116,18 @@ const optionDrawer = ref<boolean>(false);
     cursor: pointer;
     position: relative;
     margin-right: 10px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    color: #303133;
+
+    &:hover {
+      color: rgba(
+        var(--primary-color-r),
+        var(--primary-color-g),
+        var(--primary-color-b),
+        0.7
+      );
+    }
 
     &:last-child {
       margin-right: 5px;

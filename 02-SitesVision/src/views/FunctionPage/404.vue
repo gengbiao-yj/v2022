@@ -1,5 +1,4 @@
 <script setup>
-const year = ref(new Date().getFullYear());
 const router = useRouter();
 </script>
 <template>
@@ -10,9 +9,7 @@ const router = useRouter();
         >返回</el-button
       >
     </div>
-    <div>
-      <span>Copyright© SitesVision X {{ year }}</span>
-    </div>
+    <CopyrightLine />
   </div>
 </template>
 
@@ -47,21 +44,19 @@ export default {
         padding: 0px 20px !important;
         height: 22px;
         font-size: 13px;
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        transition: all 0.1s ease-in-out;
+        &:hover {
+          background: rgba(
+            var(--primary-color-r),
+            var(--primary-color-g),
+            var(--primary-color-b),
+            0.7
+          );
+        }
       }
     }
-  }
-  > div:nth-child(2) {
-    width: 98vw;
-    height: 40px;
-    position: absolute;
-    bottom: 10px;
-    left: 1vw;
-    background: white;
-    border-radius: 5px;
-    border: 1px dashed #d0d0d0;
-    @include flex(row, center, center);
-    font-size: 13px;
-    color: #333;
   }
 }
 </style>
