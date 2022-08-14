@@ -11,12 +11,19 @@ const editableTabsValue = ref('1');
 const editableTabs = ref<Array<TabsItem>>(getTabs());
 const router = useRouter();
 const route = useRoute();
+onBeforeMount(() => {
+  let index = editableTabs.value.findIndex(
+    e => e.path === router.currentRoute.value.path
+  );
+  if (index !== -1) {
+    editableTabsValue.value = index + 1 + '';
+  }
+});
 
 // 监视路由变化动态增减 tabs
 watch(route, newV => {
-  console.log(newV);
-  const isRecord = editableTabs.value.some(e => newV.path === e.path);
-  if (!isRecord) {
+  const isRecord = editableTabs.value.some(e => e.path === newV.path);
+  if (!isRecord && newV.path.indexOf('/404') === -1) {
     editableTabs.value.push({
       title: newV.meta.title + '',
       name: editableTabs.value.length + 1 + '',
@@ -25,7 +32,7 @@ watch(route, newV => {
     editableTabsValue.value = editableTabs.value.length + '';
     setTabs(editableTabs.value);
   } else {
-    let index = editableTabs.value.findIndex(e => e.path === newV.fullPath);
+    let index = editableTabs.value.findIndex(e => e.path === newV.path);
     if (index !== -1) {
       editableTabsValue.value = index + 1 + '';
     }

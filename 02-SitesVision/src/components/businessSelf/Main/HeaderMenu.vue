@@ -13,7 +13,7 @@ watch(
 
 // 细分组件
 import SmartRecommend from './SmartRecommend.vue';
-import { DataTableType, SystemManagement } from '@/data/headerMenu';
+import { DataTableType } from '@/data/headerMenu';
 
 // header下拉菜单展开收缩标志位
 const smartRecommendShow = ref<boolean>(false); // 智能推荐
@@ -23,6 +23,17 @@ const activeIndex = ref('0');
 const menuSelect = (e: any) => {
   activeIndex.value = e;
 };
+
+// 路由刷新，动态激活默认选项
+const router = useRouter();
+const route = useRoute();
+const defaultActive = ref<string>('');
+onBeforeMount(() => {
+  defaultActive.value = router.currentRoute.value.path;
+});
+watch(route, newV => {
+  defaultActive.value = newV.path;
+});
 </script>
 
 <template>
@@ -31,6 +42,7 @@ const menuSelect = (e: any) => {
       mode="horizontal"
       router
       style="height: 50px"
+      :default-active="defaultActive"
       :active-text-color="systemSettings.primaryColor || '#000'"
       @select="menuSelect"
     >
@@ -72,17 +84,9 @@ const menuSelect = (e: any) => {
           {{ e.label }}
         </el-menu-item>
       </el-sub-menu>
-      <el-sub-menu index="4">
+      <el-menu-item index="/Main/SystemManagement">
         <template #title><SetUp class="svg-16 mg-r-5" />系统维护</template>
-        <el-menu-item
-          :index="`${e.path}?index=${i}`"
-          v-for="(e, i) in SystemManagement"
-          :key="`4-${i}`"
-        >
-          <Operation class="svg-16 mg-r-10" />
-          {{ e.label }}
-        </el-menu-item>
-      </el-sub-menu>
+      </el-menu-item>
       <el-menu-item index="/Main/ManagementCockpit">
         <template #title><DataLine class="svg-16 mg-r-5" />企业驾驶舱</template>
       </el-menu-item>

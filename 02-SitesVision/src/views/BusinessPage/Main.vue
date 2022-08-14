@@ -54,7 +54,11 @@ const IPPosition = async () => {
       </el-header>
       <el-main>
         <div class="main-container">
-          <router-view></router-view>
+          <router-view v-slot="{ Component }">
+            <transition name="fade-transform" mode="out-in" appear>
+              <component :is="Component"></component>
+            </transition>
+          </router-view>
         </div>
       </el-main>
     </el-container>
@@ -62,6 +66,21 @@ const IPPosition = async () => {
 </template>
 
 <style scoped lang="scss">
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.5s;
+}
+
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
 .main-root {
   @include box-size(100vw, 100vh);
   overflow: hidden;

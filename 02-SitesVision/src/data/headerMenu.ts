@@ -95,17 +95,3 @@ export const DataTableType: Array<MenuItem> = [
   { label: '关注品牌', path: '/Main/ListCompetitor' },
   { label: '已有商圈', path: '/Main/ListBusinessCircle' }
 ];
-
-// 系统管理
-export const SystemManagement: Array<MenuItem> = [
-  { label: '企业维护', path: '/Main/SystemManagement' },
-  { label: '品牌维护', path: '/Main/SystemManagement' },
-  { label: '用户维护', path: '/Main/SystemManagement' },
-  { label: '数据项维护', path: '/Main/SystemManagement' },
-  { label: '字段管理', path: '/Main/SystemManagement' },
-  { label: '自定义图层', path: '/Main/SystemManagement' },
-  { label: '城市维护', path: '/Main/SystemManagement' },
-  { label: '竞品维护', path: '/Main/SystemManagement' },
-  { label: '报告统计', path: '/Main/SystemManagement' },
-  { label: '日志统计', path: '/Main/SystemManagement' }
-];

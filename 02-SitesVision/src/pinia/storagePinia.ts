@@ -58,7 +58,7 @@ export default defineStore('basicPinia', () => {
     {
       title: '地图主页',
       name: '1',
-      path: '/Main'
+      path: '/Main/MainMap'
     }
   ]);
 

@@ -21,7 +21,7 @@ const routes = [
         component: () =>
           import('@/views/BusinessPage/DataTable/ListPipeline.vue'),
         meta: {
-          title: '机会点列表',
+          title: '机会项目列表',
           requireAuth: true
         }
       },
@@ -56,11 +56,22 @@ const routes = [
       },
       {
         path: '/Main/SystemManagement',
-        name: 'ListBusinessCircle',
+        name: 'SystemManagement',
         component: () =>
           import('@/views/BusinessPage/SystemManagement/SystemManagement.vue'),
         meta: {
           title: '系统维护',
+          requireAuth: true
+        }
+      },
+      /*  地图页面
+      ------------------------------------------------ */
+      {
+        path: '/Main/MainMap',
+        name: 'ListBusinessCircle',
+        component: () => import('@/views/BusinessPage/Map/Map.vue'),
+        meta: {
+          title: '地图主页',
           requireAuth: true
         }
       },
