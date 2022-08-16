@@ -17,9 +17,10 @@ const year = ref(new Date().getFullYear());
 div {
   width: calc(100% - 12px);
   height: 40px;
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   left: 6px;
+  //margin: 5px auto 0;
   background: white;
   border-radius: 5px;
   border: 1px dashed #d0d0d0;

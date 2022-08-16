@@ -1,5 +1,15 @@
 <!-- 操作菜单 -->
 <script setup lang="ts">
+import { defineProps } from 'vue';
+const props = defineProps({
+  isAside: {
+    type: String,
+    default: 'horizontal',
+    validator(value: string) {
+      return ['horizontal', 'vertical'].includes(value);
+    }
+  }
+});
 // 获取主体颜色
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
@@ -39,16 +49,19 @@ watch(route, newV => {
 <template>
   <div class="header-menu-root">
     <el-menu
-      mode="horizontal"
+      :mode="props.isAside"
       router
-      style="height: 50px"
       :default-active="defaultActive"
       :active-text-color="systemSettings.primaryColor || '#000'"
+      :class="{
+        'header-height': props.isAside === 'horizontal',
+        'aside-height': props.isAside === 'vertical',
+        'remove-border': props.isAside === 'vertical'
+      }"
       @select="menuSelect"
     >
       <el-menu-item>
         <el-popover
-          placement="bottom-end"
           title=""
           :width="700"
           trigger="hover"
@@ -60,6 +73,7 @@ watch(route, newV => {
           <template #reference>
             <div
               class="select-menu"
+              :class="{ 'select-menu-asside': props.isAside === 'vertical' }"
               :style="{
                 color:
                   activeIndex == 1 ? systemSettings.primaryColor : '#303133'
@@ -96,18 +110,33 @@ watch(route, newV => {
 
 <style lang="scss" scoped>
 .header-menu-root {
-  padding-left: 20px;
   .select-menu {
     height: 100%;
     min-width: 85px;
-    @include flex(row, center, center);
+    position: relative;
+    @include flex(row, flex-start, center);
     color: #303133;
     cursor: pointer;
-    > span {
+    span {
       font-size: 15px;
-      //font-weight: bold;
       margin-right: 5px;
     }
+  }
+}
+.header-height {
+  height: 50px;
+}
+.aside-height {
+  height: calc(100% - 50px);
+}
+.remove-border {
+  border: none !important;
+}
+.select-menu-asside {
+  width: 100% !important;
+  > svg:nth-child(3) {
+    position: absolute;
+    right: 1px;
   }
 }
 </style>

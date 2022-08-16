@@ -50,6 +50,12 @@ const selectOldPrimary = (e: string) => {
   systemSettings.value.primaryColor = e;
   setSystemParams(systemSettings.value);
 };
+
+// 选择布局方式
+const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
+  systemSettings.value.layoutType = e;
+  setSystemParams(systemSettings.value);
+};
 </script>
 
 <template>
@@ -77,7 +83,32 @@ const selectOldPrimary = (e: string) => {
           ></span>
           <span
             v-if="e === systemSettings.primaryColor"
-            class="primary-circle-tip"
+            class="circle-tip"
+          ></span>
+        </div>
+      </div>
+      <el-divider> 布局方式 </el-divider>
+      <div class="layout-type-box">
+        <!-- 左右 -->
+        <div class="layout-type">
+          <div @click="selectLayoutType('LeftRight')">
+            <div class="layout-aside"></div>
+          </div>
+          <span>左右</span>
+          <span
+            v-if="systemSettings.layoutType === 'LeftRight'"
+            class="circle-tip"
+          ></span>
+        </div>
+        <!-- 上下 -->
+        <div class="layout-type">
+          <div @click="selectLayoutType('UpDown')">
+            <div class="layout-header"></div>
+          </div>
+          <span>上下</span>
+          <span
+            v-if="systemSettings.layoutType === 'UpDown'"
+            class="circle-tip"
           ></span>
         </div>
       </div>
@@ -92,6 +123,14 @@ const selectOldPrimary = (e: string) => {
     height: 100%;
     @include flex(column, flex-start, center);
   }
+}
+
+.circle-tip {
+  margin-top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #03be32;
 }
 
 .primary-box {
@@ -112,12 +151,42 @@ const selectOldPrimary = (e: string) => {
       border: 1px solid #afafaf;
       cursor: pointer;
     }
-    > .primary-circle-tip {
-      margin-top: 5px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #03be32;
+  }
+}
+
+.layout-type-box {
+  width: 100%;
+  height: auto;
+  @include flex(row, space-around, center);
+  > .layout-type {
+    height: 80px;
+    @include flex(column, flex-start, center);
+    > div {
+      width: 50px;
+      height: 40px;
+      position: relative;
+      background: #d4d4d4;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0px 0px 10px 2px #ededed;
+      .layout-aside {
+        width: 15px;
+        height: 100%;
+        background: #1a1a1a;
+        position: absolute;
+        left: 0px;
+      }
+      .layout-header {
+        height: 10px;
+        width: 100%;
+        background: #ffffff;
+        position: absolute;
+        top: 0px;
+      }
+    }
+    > span:nth-child(2) {
+      font-size: 12px;
+      color: #333333;
     }
   }
 }

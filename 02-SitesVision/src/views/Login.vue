@@ -243,7 +243,7 @@ const apiUserLogin = async (
       border-radius: 16px;
       overflow: hidden;
       background: {
-        image: url('../../../public/resource/imgs/loginCard.png');
+        image: url('../../public/resource/imgs/loginCard.png');
         repeat: no-repeat;
         size: 100% auto;
         position: 50%;

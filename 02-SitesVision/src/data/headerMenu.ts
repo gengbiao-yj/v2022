@@ -90,8 +90,8 @@ export const SmartReportType: Array<MenuItem> = [
 
 // 数据管理
 export const DataTableType: Array<MenuItem> = [
-  { label: '机会项目', path: '/Main/ListPipeline' },
-  { label: '已开门店', path: '/Main/ListStore' },
-  { label: '关注品牌', path: '/Main/ListCompetitor' },
-  { label: '已有商圈', path: '/Main/ListBusinessCircle' }
+  { label: '机会项目', path: '/Main/DataList/Pipeline' },
+  { label: '已开门店', path: '/Main/DataList/Store' },
+  { label: '关注品牌', path: '/Main/DataList/Competitor' },
+  { label: '已有商圈', path: '/Main/DataList/BusinessCircle' }
 ];

@@ -5,7 +5,11 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Breadcrumb: typeof import('./src/components/layout/Main/Breadcrumb.vue')['default']
     Copyright: typeof import('./src/components/publicGlobal/Copyright.vue')['default']
+    ElAside: typeof import('element-plus/es')['ElAside']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
@@ -28,16 +32,18 @@ declare module '@vue/runtime-core' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    HeaderMenu: typeof import('./src/components/businessSelf/Main/HeaderMenu.vue')['default']
-    HeaderOption: typeof import('./src/components/businessSelf/Main/HeaderOption.vue')['default']
-    HeaderTabs: typeof import('./src/components/businessSelf/Main/HeaderTabs.vue')['default']
-    HeaderTitle: typeof import('./src/components/businessSelf/Main/HeaderTitle.vue')['default']
+    HeaderMenu: typeof import('./src/components/layout/Main/HeaderMenu.vue')['default']
+    HeaderOption: typeof import('./src/components/layout/Main/HeaderOption.vue')['default']
+    HeaderTabs: typeof import('./src/components/layout/Main/HeaderTabs.vue')['default']
+    HeaderTitle: typeof import('./src/components/layout/Main/HeaderTitle.vue')['default']
+    LayoutLeftRight: typeof import('./src/components/layout/LayoutLeftRight.vue')['default']
+    LayoutUpDown: typeof import('./src/components/layout/LayoutUpDown.vue')['default']
     ListMenus: typeof import('./src/components/publicGlobal/ListMenus.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SLMBadge: typeof import('./src/components/publicGlobal/SLMBadge.vue')['default']
-    SmartRecommend: typeof import('./src/components/businessSelf/Main/SmartRecommend.vue')['default']
-    SystemSetting: typeof import('./src/components/businessSelf/Main/SystemSetting.vue')['default']
+    SmartRecommend: typeof import('./src/components/layout/Main/SmartRecommend.vue')['default']
+    SystemSetting: typeof import('./src/components/layout/Main/SystemSetting.vue')['default']
   }
 }
 

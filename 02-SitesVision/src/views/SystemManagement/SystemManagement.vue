@@ -34,7 +34,6 @@ const iconCollapse = ref() as _SVGElement;
     @include box-size(calc(100% - 12px), calc(100% - 55px));
     @include flex(row, flex-start, flex-start);
     margin: 0 auto;
-    padding-top: 5px;
     > div {
       border-radius: 5px;
       background: white;
