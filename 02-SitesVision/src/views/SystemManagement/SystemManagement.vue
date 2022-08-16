@@ -4,6 +4,7 @@ import type { _HTMLDivElement, _SVGElement } from '@/types';
 import { CollapseWidth } from '@/utils';
 const asideCollapse = ref() as _HTMLDivElement;
 const iconCollapse = ref() as _SVGElement;
+const _CollapseWidth = CollapseWidth;
 </script>
 <template>
   <div class="Sys-Mg-root">
@@ -14,7 +15,7 @@ const iconCollapse = ref() as _SVGElement;
           class="icon svg-40"
           aria-hidden="true"
           @click="
-            CollapseWidth(asideCollapse, iconCollapse, 200, 'Left', '#f1f1f1')
+            _CollapseWidth(asideCollapse, iconCollapse, 200, 'Left', '#f1f1f1')
           "
         >
           <use href="#icon-zuohua"></use>

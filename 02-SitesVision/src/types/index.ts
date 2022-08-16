@@ -9,6 +9,7 @@ import type {
 } from './Storage';
 import type { rgbType } from './Utils';
 import type { _HTMLDivElement, _SVGElement } from '@/types/HtmlElement';
+import type { eventBusName } from '@/types/EventBus';
 
 export type {
   POIItem,
@@ -25,5 +26,6 @@ export type {
   GetLocalStorage,
   rgbType,
   _HTMLDivElement,
-  _SVGElement
+  _SVGElement,
+  eventBusName
 };

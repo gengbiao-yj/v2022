@@ -48,12 +48,7 @@ export default {
         border-color: var(--primary-color);
         transition: all 0.1s ease-in-out;
         &:hover {
-          background: rgba(
-            var(--primary-color-r),
-            var(--primary-color-g),
-            var(--primary-color-b),
-            0.7
-          );
+          @include primary-bg-color(0.7);
         }
       }
     }

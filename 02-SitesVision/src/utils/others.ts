@@ -204,13 +204,13 @@ export class JudgeDataType {
 /*  变宽折叠面板实现
 ------------------------------------------------ */
 export function CollapseWidth(
-  dom: HTMLDivElement, // 面板
-  iconDom: SVGElement, // 面板折叠按钮
+  dom: HTMLDivElement | null, // 面板
+  iconDom: SVGElement | null, // 面板折叠按钮
   openWidth: number, // 展开宽度
   direction: 'Left' | 'Right', // 收缩方向
   backGround: string // 面板所属父元素背景色
 ) {
-  if (dom) {
+  if (dom && iconDom) {
     dom.style.transition = 'all 0.3s ease-in-out';
     iconDom.style.transition = 'all 0.3s ease-in-out';
     console.log([dom]);
@@ -231,5 +231,7 @@ export function CollapseWidth(
       iconDom.style.transform =
         sign === '0' ? 'rotateY(180deg)' : 'rotateY(0deg)';
     }
+    dom = null;
+    iconDom = null;
   }
 }

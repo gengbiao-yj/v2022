@@ -76,7 +76,7 @@ const routes = [
       ------------------------------------------------ */
       {
         path: '/Main/MainMap',
-        name: 'ListBusinessCircle',
+        name: 'MainMap',
         component: () => import('@/views/Map/Map.vue'),
         meta: {
           title: '地图主页',

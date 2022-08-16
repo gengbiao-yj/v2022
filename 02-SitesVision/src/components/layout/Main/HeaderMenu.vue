@@ -1,6 +1,8 @@
 <!-- 操作菜单 -->
 <script setup lang="ts">
+import { busOn } from '@/utils/hooks';
 import { defineProps } from 'vue';
+// props
 const props = defineProps({
   isAside: {
     type: String,
@@ -10,6 +12,13 @@ const props = defineProps({
     }
   }
 });
+
+// 订阅总线事件
+busOn('menuCollapse', (param: boolean) => {
+  menuCollapseState.value = param;
+});
+const menuCollapseState = ref(false);
+
 // 获取主体颜色
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
@@ -50,6 +59,7 @@ watch(route, newV => {
   <div class="header-menu-root">
     <el-menu
       :mode="props.isAside"
+      :collapse="menuCollapseState"
       router
       :default-active="defaultActive"
       :active-text-color="systemSettings.primaryColor || '#000'"
@@ -60,7 +70,7 @@ watch(route, newV => {
       }"
       @select="menuSelect"
     >
-      <el-menu-item>
+      <el-menu-item v-if="false">
         <el-popover
           title=""
           :width="700"

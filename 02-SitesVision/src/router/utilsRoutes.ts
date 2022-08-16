@@ -21,6 +21,10 @@ const routes = [
   {
     path: '/Main',
     redirect: '/Main/MainMap'
+  },
+  {
+    path: '/Main/DataList',
+    redirect: '/Main/DataList/Pipeline'
   }
 ] as RouteRecordRaw[];
 

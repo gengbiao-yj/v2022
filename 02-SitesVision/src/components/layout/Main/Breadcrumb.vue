@@ -1,6 +1,7 @@
 <!-- name:面包屑导航 -->
 <script lang="ts" setup>
 import type { RouteLocationMatched } from 'vue-router';
+import { busEmit } from '@/utils/hooks';
 // 监视路由变化
 const route = useRoute();
 const breadcrumbs = shallowReactive([] as Array<RouteLocationMatched>);
@@ -19,9 +20,21 @@ breadcrumbs.push(
     return it.meta && it.meta.title;
   })
 );
+
+// 反转菜单的折叠状态 HeaderMenu -> menu
+const menuCollapse = ref<boolean>(false);
+const reverseState = () => {
+  menuCollapse.value = !menuCollapse.value;
+  busEmit('menuCollapse', menuCollapse.value);
+};
 </script>
 
 <template>
+  <Fold
+    class="svg-18 mg-r-10 menu-collapse-icon"
+    v-rotate:180="menuCollapse"
+    @click="reverseState"
+  />
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="item of breadcrumbs" :key="item.path">
@@ -31,7 +44,12 @@ breadcrumbs.push(
   </el-breadcrumb>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.menu-collapse-icon {
+  @include primary-color();
+  cursor: pointer;
+}
+</style>
 
 <script lang="ts">
 export default {
