@@ -9,5 +9,6 @@ export function setupGlobalDirective(app: App) {
     } else if (binding.value === true) {
       el.style.transform = `rotate(${binding.arg}deg)`;
     }
+    el = null;
   });
 }

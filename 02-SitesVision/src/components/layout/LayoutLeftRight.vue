@@ -1,9 +1,21 @@
 <!-- name:左右布局 -->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { busOn } from '@/utils/hooks';
+// 订阅总线事件
+const isAsideMenuCollapse = ref<boolean>(false);
+busOn('menuCollapse', (param: boolean) => {
+  isAsideMenuCollapse.value = param;
+});
+</script>
 
 <template>
   <el-container>
-    <el-aside>
+    <el-aside
+      :class="{
+        asideCollapse: isAsideMenuCollapse,
+        asideOpen: !isAsideMenuCollapse
+      }"
+    >
       <div class="aside-title">
         <slot name="Title"></slot>
       </div>
@@ -11,7 +23,7 @@
         <slot name="Menu"></slot>
       </div>
     </el-aside>
-    <el-container>
+    <el-container style="width: 100%">
       <el-header height="50px">
         <div class="header">
           <div class="header-left">
@@ -37,7 +49,7 @@
 <style scoped lang="scss">
 .el-aside {
   height: 100vh;
-  max-width: 210px;
+  //width: 210px;
   padding: 0px;
   background: white;
   box-shadow: 2px 5px 10px rgb(0 0 0 / 12%);
@@ -46,6 +58,7 @@
   .aside-title {
     @include box-size(100%, 50px);
     @include flex(row, flex-start, flex-end);
+    overflow: hidden;
     background: linear-gradient(
       90deg,
       var(--primary-color),
@@ -60,8 +73,20 @@
     padding-bottom: 10px;
   }
   .aside-menu {
+    overflow: hidden;
     @include box-size(100%, calc(100% - 50px));
   }
+}
+
+// 左右布局时，menu菜单折叠，aside 侧边宽度也跟随折叠
+.el-aside.asideCollapse {
+  will-change: width;
+  width: 64px;
+}
+
+.el-aside.asideOpen {
+  will-change: width;
+  width: 210px;
 }
 
 .el-header {

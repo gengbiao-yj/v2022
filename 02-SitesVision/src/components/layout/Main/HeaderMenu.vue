@@ -68,7 +68,9 @@ watch(route, newV => {
         'aside-height': props.isAside === 'vertical',
         'remove-border': props.isAside === 'vertical'
       }"
+      class="menuCollapse"
       @select="menuSelect"
+      collapse-transition
     >
       <el-menu-item v-if="false">
         <el-popover
@@ -97,8 +99,11 @@ watch(route, newV => {
           <SmartRecommend />
         </el-popover>
       </el-menu-item>
+
       <el-sub-menu index="3">
-        <template #title><Coin class="svg-16 mg-r-5" />数据管理</template>
+        <template #title
+          ><Coin class="svg-18 mg-r-5" /><span>数据管理</span></template
+        >
         <el-menu-item
           :index="e.path"
           v-for="(e, i) in DataTableType"
@@ -108,11 +113,15 @@ watch(route, newV => {
           {{ e.label }}
         </el-menu-item>
       </el-sub-menu>
+
       <el-menu-item index="/Main/SystemManagement">
-        <template #title><SetUp class="svg-16 mg-r-5" />系统维护</template>
+        <SetUp class="svg-18 mg-r-5" />
+        <template #title><span>系统维护</span></template>
       </el-menu-item>
+
       <el-menu-item index="/Main/ManagementCockpit">
-        <template #title><DataLine class="svg-16 mg-r-5" />企业驾驶舱</template>
+        <DataLine class="svg-18 mg-r-5" />
+        <template #title><span>企业驾驶舱</span></template>
       </el-menu-item>
     </el-menu>
   </div>
@@ -148,6 +157,10 @@ watch(route, newV => {
     position: absolute;
     right: 1px;
   }
+}
+
+.menuCollapse:not(.el-menu--collapse) {
+  width: 210px !important;
 }
 </style>
 

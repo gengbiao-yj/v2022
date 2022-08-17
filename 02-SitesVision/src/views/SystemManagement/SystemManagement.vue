@@ -15,7 +15,14 @@ const _CollapseWidth = CollapseWidth;
           class="icon svg-40"
           aria-hidden="true"
           @click="
-            _CollapseWidth(asideCollapse, iconCollapse, 200, 'Left', '#f1f1f1')
+            _CollapseWidth(
+              asideCollapse,
+              iconCollapse,
+              200,
+              0,
+              'Left',
+              '#f1f1f1'
+            )
           "
         >
           <use href="#icon-zuohua"></use>
