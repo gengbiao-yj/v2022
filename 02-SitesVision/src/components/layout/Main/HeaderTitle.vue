@@ -1,15 +1,18 @@
 <!-- name: -->
 <script lang="ts" setup>
 import { busOn } from '@/utils/hooks';
-// 订阅总线事件
+// 订阅总线事件，左右布局宽度跟随菜单栏变化
 const isAsideMenuCollapse = ref<boolean>(false);
+let ti: any = null;
 busOn('menuCollapse', (param: boolean) => {
   if (!param) {
-    let ti = setTimeout(() => {
+    if (ti) clearTimeout(ti);
+    ti = setTimeout(() => {
       isAsideMenuCollapse.value = param;
       clearTimeout(ti);
-    }, 300);
+    }, 200);
   } else {
+    clearTimeout(ti);
     isAsideMenuCollapse.value = param;
   }
 });

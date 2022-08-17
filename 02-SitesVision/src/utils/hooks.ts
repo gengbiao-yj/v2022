@@ -7,14 +7,16 @@ import type { eventBusName } from '@/types';
 /*  通用 start
 ------------------------------------------------ */
 // 浏览器宽度监视
-export function getWatchBrowserWidth() {
+export function getWatchBrowserWidth(callBack: any) {
   const browserWidth = ref<number>(window.innerWidth - 0);
   const watchBrowserWidth = (e: any) => {
     browserWidth.value = e.target.innerWidth;
+    callBack(browserWidth.value);
   };
-  onMounted(() => {
-    window.addEventListener('resize', watchBrowserWidth);
-  });
+
+  // onBeforeMount(() => {
+  window.addEventListener('resize', watchBrowserWidth);
+  // });
 
   onBeforeUnmount(() => {
     window.removeEventListener('resize', watchBrowserWidth);

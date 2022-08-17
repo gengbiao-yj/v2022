@@ -13,7 +13,7 @@ const props = defineProps({
   }
 });
 
-// 订阅总线事件
+// 订阅总线事件,左右布局时监控收缩展开请求
 busOn('menuCollapse', (param: boolean) => {
   menuCollapseState.value = param;
 });
@@ -66,9 +66,9 @@ watch(route, newV => {
       :class="{
         'header-height': props.isAside === 'horizontal',
         'aside-height': props.isAside === 'vertical',
+        'aside-open-width': props.isAside === 'vertical',
         'remove-border': props.isAside === 'vertical'
       }"
-      class="menuCollapse"
       @select="menuSelect"
       collapse-transition
     >
@@ -159,7 +159,7 @@ watch(route, newV => {
   }
 }
 
-.menuCollapse:not(.el-menu--collapse) {
+.aside-open-width {
   width: 210px !important;
 }
 </style>

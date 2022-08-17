@@ -21,6 +21,18 @@ breadcrumbs.push(
   })
 );
 
+// 浏览器宽度监视
+import { getWatchBrowserWidth } from '@/utils/hooks';
+getWatchBrowserWidth((val: number) => {
+  if (val <= 800) {
+    menuCollapse.value = true;
+    busEmit('menuCollapse', menuCollapse.value);
+  } else if (val > 800) {
+    menuCollapse.value = false;
+    busEmit('menuCollapse', menuCollapse.value);
+  }
+});
+
 // 反转菜单的折叠状态 HeaderMenu -> menu
 const menuCollapse = ref<boolean>(false);
 const reverseState = () => {

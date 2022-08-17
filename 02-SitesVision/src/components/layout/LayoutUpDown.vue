@@ -1,17 +1,17 @@
 <!-- name:上下布局 -->
 <script lang="ts" setup>
+import HeaderTitle from '@comps/layout/Main/HeaderTitle.vue';
+import HeaderMenu from '@comps/layout/Main/HeaderMenu.vue';
+import HeaderOption from '@comps/layout/Main/HeaderOption.vue';
+import HeaderTabs from '@comps/layout/Main/HeaderTabs.vue';
 // 浏览器宽度监视
 import { getWatchBrowserWidth } from '@/utils/hooks';
-const browserWidth = getWatchBrowserWidth();
 const headerMenu = ref<HTMLDivElement>();
-watch(
-  () => browserWidth.value,
-  val => {
-    if (val <= 765) {
-      headerMenu.value!.style.width = `calc(100% - 280px)`;
-    }
+const browserWidth = getWatchBrowserWidth((val: number) => {
+  if (val <= 765) {
+    headerMenu.value!.style.width = `calc(100% - 280px)`;
   }
-);
+});
 </script>
 
 <template>
@@ -19,22 +19,26 @@ watch(
     <el-header height="50px">
       <div class="header">
         <div class="header-left" v-show="browserWidth > 765">
-          <slot name="Title"></slot>
+          <HeaderTitle />
         </div>
         <div ref="headerMenu" class="header-menu">
-          <slot name="Menu"></slot>
+          <HeaderMenu />
         </div>
         <div class="header-right">
-          <slot name="Option"></slot>
+          <HeaderOption />
         </div>
       </div>
     </el-header>
     <el-main>
       <div class="tabs">
-        <slot name="Tabs"></slot>
+        <HeaderTabs />
       </div>
       <div class="main-container">
-        <slot name="Container"></slot>
+        <router-view v-slot="{ Component }">
+          <transition name="fade-transform" mode="out-in" appear>
+            <component :is="Component"></component>
+          </transition>
+        </router-view>
       </div>
     </el-main>
   </el-container>
