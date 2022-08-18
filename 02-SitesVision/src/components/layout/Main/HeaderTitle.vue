@@ -1,6 +1,6 @@
 <!-- name: -->
 <script lang="ts" setup>
-import { busOn } from '@/utils/hooks';
+import { busOn, getWatchBrowserWidth } from '@/utils/hooks';
 
 /*  订阅总线事件
 ------------------------------------------------ */
@@ -22,12 +22,15 @@ const time = (val: boolean) => {
 // 事件-- 左右布局时 menu 折叠、展开状态交替
 busOn('menuCollapse', (param: boolean) => {
   time(param)();
-  // isAsideMenuCollapse.value = param;
 });
-// 事件-- 左右布局时屏宽800px界限，menu 折叠、展开状态交替
-busOn('leftRightWidth800', (param: boolean) => {
-  time(param)();
-  // isAsideMenuCollapse.value = param;
+getWatchBrowserWidth((val: number) => {
+  if (val <= 800 && val > 700) {
+    isAsideMenuCollapse.value = true; // 折叠
+  } else if (val > 800) {
+    isAsideMenuCollapse.value = false; // 展开
+  } else if (val < 700) {
+    isAsideMenuCollapse.value = false; // 展开
+  }
 });
 </script>
 

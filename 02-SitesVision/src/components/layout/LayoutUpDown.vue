@@ -8,8 +8,12 @@ import HeaderTabs from '@comps/layout/Main/HeaderTabs.vue';
 import { getWatchBrowserWidth } from '@/utils/hooks';
 const headerMenu = ref<HTMLDivElement>();
 const browserWidth = getWatchBrowserWidth((val: number) => {
-  if (val <= 765) {
+  if (val <= 700 && val > 550) {
     headerMenu.value!.style.width = `calc(100% - 280px)`;
+  } else if (val <= 550) {
+    headerMenu.value!.style.width = '120px';
+  } else if (val > 700) {
+    headerMenu.value!.style.width = `calc(100% - 510px)`;
   }
 });
 </script>
@@ -18,7 +22,7 @@ const browserWidth = getWatchBrowserWidth((val: number) => {
   <el-container>
     <el-header height="50px">
       <div class="header">
-        <div class="header-left" v-show="browserWidth > 765">
+        <div class="header-left" v-show="browserWidth > 700">
           <HeaderTitle />
         </div>
         <div ref="headerMenu" class="header-menu">
