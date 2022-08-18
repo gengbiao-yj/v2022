@@ -41,6 +41,22 @@
   transform: translateX(50px);
 }
 
+/* layOut-transform */
+.layOut-transform-leave-active,
+.layOut-transform-enter-active {
+  transition: all 0.5s;
+}
+
+.layOut-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.layOut-transform-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
 /* breadcrumb transition */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
@@ -50,6 +66,7 @@
 .breadcrumb-enter-from {
   opacity: 0;
   transform: translateX(20px);
+  position: absolute;
 }
 
 .breadcrumb-leave-active {

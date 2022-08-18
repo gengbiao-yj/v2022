@@ -6,87 +6,93 @@ import HeaderOption from '@comps/layout/Main/HeaderOption.vue';
 import HeaderTabs from '@comps/layout/Main/HeaderTabs.vue';
 import Breadcrumb from '@comps/layout/Main/Breadcrumb.vue';
 
-import { busOn } from '@/utils/hooks';
-// 订阅总线事件，左右布局，el-aside 宽度跟随 menu菜单变化
-const isAsideMenuCollapse = ref<boolean>(false);
+import { busOn, busEmit } from '@/utils/hooks';
+/*  订阅总线事件
+------------------------------------------------ */
+const isAsideDrawer = ref(false); // aside 是否隐藏，并转为侧滑抽屉
+const showAsideDrawer = ref(false); // 侧滑抽屉状态
+const isAsideMenuCollapse = ref<boolean>(false); // aside 是否跟随 menu 折叠变宽
+// 事件-- aside menu折叠状态通知
 busOn('menuCollapse', (param: boolean) => {
   isAsideMenuCollapse.value = param;
-  if (browserWidth.value < 700) {
-    asideDrawer.value = param;
-    isAsideMenuCollapse.value = !param;
-  }
+  if (isAsideDrawer.value) showAsideDrawer.value = param;
 });
-
-// aside 侧边栏转为 draw 左侧抽屉
-const asideDrawer = ref(false);
-// 浏览器宽度监视
-import { getWatchBrowserWidth } from '@/utils/hooks';
-const browserWidth = getWatchBrowserWidth((val: number) => {
-  let a = val;
+// 事件-- 屏宽800px界限，menu 折叠、展开状态交替
+busOn('leftRightWidth800', (param: boolean) => {
+  isAsideMenuCollapse.value = param;
 });
+// 事件-- 屏宽700px界限，aside隐藏、转侧滑抽屉状态交替
+busOn('leftRightWidth700', (param: boolean) => {
+  isAsideDrawer.value = param;
+});
+const drawClosed = () => {
+  showAsideDrawer.value = false;
+  busEmit('menuCollapse', showAsideDrawer.value);
+};
 </script>
 
 <template>
-  <el-container>
-    <el-aside
-      v-if="browserWidth > 700"
-      :class="{
-        asideCollapse: isAsideMenuCollapse,
-        asideOpen: !isAsideMenuCollapse
-      }"
-    >
-      <div class="aside-title">
-        <HeaderTitle />
-      </div>
-      <div class="aside-menu">
-        <HeaderMenu is-aside="vertical" />
-      </div>
-    </el-aside>
-    <el-container style="width: 100%">
-      <el-header height="50px">
-        <div class="header">
-          <div class="header-left">
-            <Breadcrumb />
+  <div>
+    <el-container>
+      <el-aside
+        v-show="!isAsideDrawer"
+        :class="{
+          asideCollapse: isAsideMenuCollapse,
+          asideOpen: !isAsideMenuCollapse
+        }"
+      >
+        <div class="aside-title">
+          <HeaderTitle />
+        </div>
+        <div class="aside-menu">
+          <HeaderMenu is-aside="vertical" />
+        </div>
+      </el-aside>
+      <el-container style="width: 100%">
+        <el-header height="50px">
+          <div class="header">
+            <div class="header-left">
+              <Breadcrumb />
+            </div>
+            <div class="header-right">
+              <HeaderOption />
+            </div>
           </div>
-          <div class="header-right">
-            <HeaderOption />
+        </el-header>
+        <el-main>
+          <div class="tabs">
+            <HeaderTabs />
           </div>
-        </div>
-      </el-header>
-      <el-main>
-        <div class="tabs">
-          <HeaderTabs />
-        </div>
-        <div class="main-container">
-          <router-view v-slot="{ Component }">
-            <transition name="fade-transform" mode="out-in" appear>
-              <component :is="Component"></component>
-            </transition>
-          </router-view>
-        </div>
-      </el-main>
+          <div class="main-container">
+            <router-view v-slot="{ Component }">
+              <transition name="fade-transform" mode="out-in" appear>
+                <component :is="Component"></component>
+              </transition>
+            </router-view>
+          </div>
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
-  <el-drawer
-    custom-class="menu-draw"
-    v-model="asideDrawer"
-    :with-header="false"
-    direction="ltr"
-  >
-    <el-aside
-      :class="{
-        asideCollapse: isAsideMenuCollapse,
-        asideOpen: !isAsideMenuCollapse
-      }"
-    >
-      <div class="aside-title">
-        <HeaderTitle />
-      </div>
-      <div class="aside-menu">
-        <HeaderMenu is-aside="vertical" />
-      </div>
-    </el-aside>
-  </el-drawer>
+    <div class="menu-draw">
+      <el-drawer
+        v-if="isAsideDrawer"
+        v-model="showAsideDrawer"
+        :with-header="false"
+        direction="ltr"
+        :destroy-on-close="true"
+        @close="drawClosed"
+      >
+        <el-aside class="asideOpen">
+          <div class="aside-title">
+            <HeaderTitle />
+          </div>
+          <div class="aside-menu">
+            <HeaderMenu is-aside="vertical" />
+          </div>
+        </el-aside>
+      </el-drawer>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -168,8 +174,15 @@ const browserWidth = getWatchBrowserWidth((val: number) => {
   }
 }
 
-.menu-draw > .el-drawer__body {
-  padding: 0px !important;
+.menu-draw {
+  &::v-deep {
+    .el-drawer {
+      width: 210px !important;
+    }
+    .el-drawer__body {
+      padding: 0px !important;
+    }
+  }
 }
 </style>
 

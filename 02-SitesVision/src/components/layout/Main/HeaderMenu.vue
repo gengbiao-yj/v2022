@@ -2,7 +2,9 @@
 <script setup lang="ts">
 import { busOn } from '@/utils/hooks';
 import { defineProps } from 'vue';
-// props
+
+/*  props
+------------------------------------------------ */
 const props = defineProps({
   isAside: {
     type: String,
@@ -13,13 +15,26 @@ const props = defineProps({
   }
 });
 
-// 订阅总线事件,左右布局时监控收缩展开请求
+/*  订阅总线事件
+------------------------------------------------ */
+const menuCollapseState = ref(false); // menu 折叠展开状态
+const isShowAsideDraw = ref(false);
+// 事件-- 左右布局时 menu 折叠、展开状态交替
 busOn('menuCollapse', (param: boolean) => {
+  if (!isShowAsideDraw.value) menuCollapseState.value = param;
+});
+// 事件-- 左右布局时屏宽800px界限，menu 折叠、展开状态交替
+busOn('leftRightWidth800', (param: boolean) => {
   menuCollapseState.value = param;
 });
-const menuCollapseState = ref(false);
 
-// 获取主体颜色
+// 事件-- 屏宽700px界限，aside隐藏、转侧滑抽屉状态交替
+busOn('leftRightWidth700', (param: boolean) => {
+  isShowAsideDraw.value = param;
+});
+
+/*  获取主题颜色
+------------------------------------------------ */
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
 const systemSettings = ref(basicStore.systemParams);
@@ -30,14 +45,16 @@ watch(
   }
 );
 
+/*  界面渲染
+------------------------------------------------ */
 // 细分组件
 import SmartRecommend from './SmartRecommend.vue';
 import { DataTableType } from '@/data/headerMenu';
 
-// header下拉菜单展开收缩标志位
-const smartRecommendShow = ref<boolean>(false); // 智能推荐
+// 智能推荐下拉，展开收缩标志位
+const smartRecommendShow = ref<boolean>(false);
 
-// 菜单栏
+// 菜单栏激活状态
 const activeIndex = ref('0');
 const menuSelect = (e: any) => {
   activeIndex.value = e;

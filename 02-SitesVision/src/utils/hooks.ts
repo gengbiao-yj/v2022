@@ -13,11 +13,10 @@ export function getWatchBrowserWidth(callBack: any) {
     browserWidth.value = e.target.innerWidth;
     callBack(browserWidth.value);
   };
-
-  // onBeforeMount(() => {
   window.addEventListener('resize', watchBrowserWidth);
-  // });
-
+  onMounted(() => {
+    callBack(window.innerWidth - 0);
+  });
   onBeforeUnmount(() => {
     window.removeEventListener('resize', watchBrowserWidth);
   });
@@ -31,10 +30,8 @@ export function getWatchBrowserWidth(callBack: any) {
 // 订阅事件
 export function busOn(name: eventBusName, callBack: any) {
   if (!name) return;
-  onMounted(() => {
-    EventBus.off(name, callBack);
-    EventBus.on(name, callBack);
-  });
+  EventBus.off(name, callBack);
+  EventBus.on(name, callBack);
   onBeforeUnmount(() => {
     EventBus.off(name, callBack);
   });

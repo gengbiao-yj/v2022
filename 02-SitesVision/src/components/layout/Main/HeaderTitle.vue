@@ -1,20 +1,33 @@
 <!-- name: -->
 <script lang="ts" setup>
 import { busOn } from '@/utils/hooks';
-// 订阅总线事件，左右布局宽度跟随菜单栏变化
-const isAsideMenuCollapse = ref<boolean>(false);
-let ti: any = null;
+
+/*  订阅总线事件
+------------------------------------------------ */
+const isAsideMenuCollapse = ref<boolean>(false); // 左右布局时 menu 折叠、展开状态
+const time = (val: boolean) => {
+  let ti: any = null;
+  return () => {
+    if (!val) {
+      if (ti) clearTimeout(ti);
+      ti = setTimeout(() => {
+        isAsideMenuCollapse.value = val;
+        clearTimeout(ti);
+      }, 200);
+    } else {
+      isAsideMenuCollapse.value = val;
+    }
+  };
+};
+// 事件-- 左右布局时 menu 折叠、展开状态交替
 busOn('menuCollapse', (param: boolean) => {
-  if (!param) {
-    if (ti) clearTimeout(ti);
-    ti = setTimeout(() => {
-      isAsideMenuCollapse.value = param;
-      clearTimeout(ti);
-    }, 200);
-  } else {
-    clearTimeout(ti);
-    isAsideMenuCollapse.value = param;
-  }
+  time(param)();
+  // isAsideMenuCollapse.value = param;
+});
+// 事件-- 左右布局时屏宽800px界限，menu 折叠、展开状态交替
+busOn('leftRightWidth800', (param: boolean) => {
+  time(param)();
+  // isAsideMenuCollapse.value = param;
 });
 </script>
 

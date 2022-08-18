@@ -1,7 +1,10 @@
 <!-- name:面包屑导航 -->
 <script lang="ts" setup>
 import type { RouteLocationMatched } from 'vue-router';
-import { busEmit } from '@/utils/hooks';
+import { busEmit, busOn } from '@/utils/hooks';
+
+/*  面包屑层级信息获取
+------------------------------------------------ */
 // 监视路由变化
 const route = useRoute();
 const breadcrumbs = shallowReactive([] as Array<RouteLocationMatched>);
@@ -21,24 +24,39 @@ breadcrumbs.push(
   })
 );
 
-// 浏览器宽度监视
+/*  aside、aside menu 布局方式判断与事件触发
+------------------------------------------------ */
+const menuCollapse = ref<boolean>(false);
+// 左右布局时，浏览器宽度监视
 import { getWatchBrowserWidth } from '@/utils/hooks';
 getWatchBrowserWidth((val: number) => {
-  if (val <= 800) {
-    menuCollapse.value = true;
-    busEmit('menuCollapse', menuCollapse.value);
+  // aside menu 展开、折叠交替
+  if (val <= 800 && val > 700) {
+    menuCollapse.value = true; // 折叠
+    busEmit('leftRightWidth800', menuCollapse.value);
   } else if (val > 800) {
-    menuCollapse.value = false;
-    busEmit('menuCollapse', menuCollapse.value);
+    menuCollapse.value = false; // 展开
+    busEmit('leftRightWidth800', menuCollapse.value);
+  }
+  // aside menu 隐藏、转为抽屉侧滑交替
+  if (val <= 700) {
+    menuCollapse.value = false; // 折叠
+    busEmit('leftRightWidth700', true); // 隐藏，转抽屉
+  } else if (val > 700) {
+    busEmit('leftRightWidth700', false); // 显示，转aside
   }
 });
 
 // 反转菜单的折叠状态 HeaderMenu -> menu
-const menuCollapse = ref<boolean>(false);
 const reverseState = () => {
   menuCollapse.value = !menuCollapse.value;
   busEmit('menuCollapse', menuCollapse.value);
 };
+
+// 左右布局时，aside转为侧滑抽屉，同步抽屉展开收缩状态
+busOn('menuCollapse', (param: boolean) => {
+  menuCollapse.value = param;
+});
 </script>
 
 <template>
