@@ -87,9 +87,11 @@ const tabMenuList = ref([
 const showTabMenu = ref(false); // tab menu 展现状态
 const tabMenuInstance = ref() as _HTMLDivElement; // tab menu 实例
 // 右键tab 计算left偏移位置，并显示
+const rightClickTab = ref('1');
 const drawTabMenu = (currentTab: string, e: any) => {
   tabMenuInstance.value.style.left = e.target.offsetLeft + 'px';
   showTabMenu.value = true;
+  rightClickTab.value = currentTab;
 };
 
 // 当前左键tab 弹出卡片，点击操作选项
@@ -98,8 +100,8 @@ const tabMenuClick = (e: { label: string; value: string }) => {
     [key: string]: () => void;
   } = {
     refresh: () => refreshRouter(),
-    closeLeft: () => removeTab('1'),
-    closeRight: () => removeTab('2'),
+    closeLeft: () => removeNextTab('lf'),
+    closeRight: () => removeNextTab('rg'),
     closeAll: () => closeAllTabs()
   };
   judge[e.value]();
@@ -108,6 +110,15 @@ const tabMenuClick = (e: { label: string; value: string }) => {
 // 刷新路由
 const refreshRouter = () => {
   router.replace(`/Main/Refresh`);
+};
+
+// 关闭附近 tab
+const removeNextTab = (param: 'lf' | 'rg') => {
+  if (param === 'lf') {
+    console.log(rightClickTab.value);
+  } else if (param === 'rg') {
+    console.log(rightClickTab.value);
+  }
 };
 
 // 关闭所有标签页，跳转到MainMap
