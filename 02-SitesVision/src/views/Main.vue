@@ -32,7 +32,7 @@ const IPPosition = async () => {
 
 <template>
   <div class="main-root">
-    <transition-group name="layOut-transform" mode="out-in" appear>
+    <transition-group name="fade-transform" mode="out-in" appear>
       <LayoutLeftRight v-if="systemSettings.layoutType === 'LeftRight'">
       </LayoutLeftRight>
 

@@ -4,28 +4,16 @@ import HeaderTitle from '@comps/layout/Main/HeaderTitle.vue';
 import HeaderMenu from '@comps/layout/Main/HeaderMenu.vue';
 import HeaderOption from '@comps/layout/Main/HeaderOption.vue';
 import HeaderTabs from '@comps/layout/Main/HeaderTabs.vue';
-// 浏览器宽度监视
-import { getWatchBrowserWidth } from '@/utils/hooks';
-const headerMenu = ref<HTMLDivElement>();
-const browserWidth = getWatchBrowserWidth((val: number) => {
-  if (val <= 700 && val > 550) {
-    headerMenu.value!.style.width = `calc(100% - 280px)`;
-  } else if (val <= 550) {
-    headerMenu.value!.style.width = '120px';
-  } else if (val > 700) {
-    headerMenu.value!.style.width = `calc(100% - 510px)`;
-  }
-});
 </script>
 
 <template>
   <el-container>
     <el-header height="50px">
       <div class="header">
-        <div class="header-left" v-show="browserWidth > 700">
+        <div class="header-left">
           <HeaderTitle />
         </div>
-        <div ref="headerMenu" class="header-menu">
+        <div class="header-menu">
           <HeaderMenu />
         </div>
         <div class="header-right">
@@ -56,6 +44,7 @@ const browserWidth = getWatchBrowserWidth((val: number) => {
   .tabs {
     @include box-size(100%, 40px);
     box-shadow: 0 5px 10px rgb(0 0 0 / 12%);
+    position: relative;
   }
 
   .main-container {
@@ -71,6 +60,7 @@ const browserWidth = getWatchBrowserWidth((val: number) => {
   .header {
     @include box-size(100%, 50px);
     @include flex(row, space-between, center);
+    border-bottom: 1px solid #dcdfe6;
     &-left {
       @include box-size(210px, 100%);
       @include flex(row, flex-start, flex-end);
@@ -89,14 +79,35 @@ const browserWidth = getWatchBrowserWidth((val: number) => {
     }
     &-menu {
       @include box-size(calc(100% - 510px), 100%);
-      border-bottom: 1px solid #dcdfe6;
       padding-left: 20px;
     }
     &-right {
       @include box-size(300px, 100%);
-      border-bottom: 1px solid #dcdfe6;
       padding-right: 5px;
     }
+  }
+}
+@media screen and (max-width: 550px) {
+  .header-menu {
+    width: 120px !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header-menu {
+    width: calc(100% - 280px) !important;
+  }
+  .header-left {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 2000px) {
+  .header-menu {
+    width: calc(100% - 510px) !important;
+  }
+  .header-left {
+    display: initial;
   }
 }
 </style>

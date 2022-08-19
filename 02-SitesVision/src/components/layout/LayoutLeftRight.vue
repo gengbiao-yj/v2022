@@ -108,6 +108,7 @@ const drawClosed = () => {
     @include box-size(100%, 50px);
     @include flex(row, flex-start, flex-end);
     overflow: hidden;
+    border-bottom: 1px dashed #a8a8a8;
     background: linear-gradient(
       90deg,
       var(--primary-color),
@@ -147,7 +148,7 @@ const drawClosed = () => {
     @include flex(row, space-between, center);
     border-bottom: 1px solid #dcdfe6;
     &-left {
-      @include box-size(210px, 100%);
+      @include box-size(calc(100% - 300px), 100%);
       @include flex(row, flex-start, center);
       padding-left: 15px;
     }
@@ -165,6 +166,7 @@ const drawClosed = () => {
   .tabs {
     @include box-size(100%, 40px);
     box-shadow: 0 5px 10px #ddd;
+    position: relative;
   }
 
   .main-container {

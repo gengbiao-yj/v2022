@@ -6,15 +6,6 @@ const routes = [
     redirect: '/Main/404'
   },
   {
-    path: '/Refresh', // 空页面，用于业务页面强制刷新
-    name: 'Refresh',
-    component: () => import('@/views/FunctionPage/Refresh.vue'),
-    meta: {
-      title: '',
-      requireAuth: true
-    }
-  },
-  {
     path: '/',
     redirect: '/Login'
   },

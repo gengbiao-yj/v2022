@@ -3,16 +3,17 @@
 import basicPinia from '@/pinia/storagePinia';
 import { fullScreen } from '@/utils/index';
 import SystemSetting from './SystemSetting.vue';
-
+const router = useRouter();
 // 获取用户信息
 const basicStore = basicPinia();
 const { getUserInfo } = basicStore;
 const userInfo = getUserInfo();
 const userName = ref(userInfo.userName);
-
 const setRestFullScreen = fullScreen();
-
 const optionDrawer = ref<boolean>(false);
+const refresh = () => {
+  router.replace(`/Main/Refresh`);
+};
 </script>
 <template>
   <div class="header-option-root">
@@ -53,7 +54,7 @@ const optionDrawer = ref<boolean>(false);
       <div>~~~~~~~~~~~</div>
     </el-popover>
     <!-- 刷新 -->
-    <span class="svg-item">
+    <span class="svg-item" @click="refresh">
       <Refresh class="svg-20" />
     </span>
     <!-- 全屏 -->

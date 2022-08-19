@@ -1,6 +1,6 @@
 <!-- Tabs- 导航标签页 -->
 <script lang="ts" setup>
-import type { TabsItem } from '@/types/index';
+import type { _HTMLDivElement, TabsItem } from '@/types/index';
 import type { TabsPaneContext } from 'element-plus';
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
@@ -23,7 +23,10 @@ onBeforeMount(() => {
 // 监视路由变化动态增减 tabs
 watch(route, newV => {
   const isRecord = editableTabs.value.some(e => e.path === newV.path);
-  if (!isRecord && newV.path.indexOf('/404') === -1) {
+  if (
+    !isRecord &&
+    ['/404', '/Refresh'].every(r => newV.path.indexOf(r) === -1)
+  ) {
     editableTabs.value.push({
       title: newV.meta.title + '',
       name: editableTabs.value.length + 1 + '',
@@ -39,6 +42,8 @@ watch(route, newV => {
   }
 });
 
+/*  tab 操作
+------------------------------------------------ */
 // 移除 tab
 const removeTab = (targetName: string) => {
   const tabs = editableTabs.value;
@@ -64,13 +69,73 @@ const clickTab = (e: TabsPaneContext) => {
   activeTabRouter(e.paneName as string);
 };
 
-// 过滤当前激活中tab，并跳转路由
+// 找出当前激活中tab，并跳转路由
 const activeTabRouter = (activePaneName: string) => {
   let activeItem = editableTabs.value.find(k => k.name === activePaneName);
   if (activeItem!.path) {
     router.push(activeItem!.path);
   }
 };
+
+// tab menu 操作项
+const tabMenuList = ref([
+  { label: '刷新页面', value: 'refresh', icon: '#icon-refresh' },
+  { label: '关闭左侧', value: 'closeLeft', icon: '#icon-arrowLeft' },
+  { label: '关闭右侧', value: 'closeRight', icon: '#icon-arrowRight' },
+  { label: '关闭所有', value: 'closeAll', icon: '#icon-remove' }
+]);
+const showTabMenu = ref(false); // tab menu 展现状态
+const tabMenuInstance = ref() as _HTMLDivElement; // tab menu 实例
+// 右键tab 计算left偏移位置，并显示
+const drawTabMenu = (currentTab: string, e: any) => {
+  tabMenuInstance.value.style.left = e.target.offsetLeft + 'px';
+  showTabMenu.value = true;
+};
+
+// 当前左键tab 弹出卡片，点击操作选项
+const tabMenuClick = (e: { label: string; value: string }) => {
+  let judge: {
+    [key: string]: () => void;
+  } = {
+    refresh: () => refreshRouter(),
+    closeLeft: () => removeTab('1'),
+    closeRight: () => removeTab('2'),
+    closeAll: () => closeAllTabs()
+  };
+  judge[e.value]();
+};
+
+// 刷新路由
+const refreshRouter = () => {
+  router.replace(`/Main/Refresh`);
+};
+
+// 关闭所有标签页，跳转到MainMap
+const closeAllTabs = () => {
+  editableTabs.value.length = 1;
+  editableTabsValue.value = '1';
+  setTabs(editableTabs.value);
+  router.replace('/Main/MainMap');
+};
+
+// tab menu 关闭逻辑
+const closeTabMenu = () => {
+  showTabMenu.value = false;
+};
+watch(
+  () => showTabMenu.value,
+  val => {
+    if (val) {
+      document.body.addEventListener('click', closeTabMenu);
+    } else {
+      document.body.removeEventListener('click', closeTabMenu);
+    }
+  }
+);
+
+onBeforeUnmount(() => {
+  document.body.removeEventListener('click', closeTabMenu);
+});
 </script>
 <template>
   <el-tabs
@@ -79,6 +144,7 @@ const activeTabRouter = (activePaneName: string) => {
     class="header-tabs"
     @tab-remove="removeTab"
     @tab-click="clickTab"
+    @contextmenu.prevent="drawTabMenu(editableTabsValue, $event)"
   >
     <el-tab-pane
       v-for="item in editableTabs"
@@ -89,9 +155,64 @@ const activeTabRouter = (activePaneName: string) => {
     >
     </el-tab-pane>
   </el-tabs>
+  <transition name="tab-menu" mode="out-in" appear>
+    <div class="list-menus-root" v-show="showTabMenu" ref="tabMenuInstance">
+      <div
+        class="type-item"
+        v-for="(e, i) in tabMenuList"
+        :key="i"
+        @click="tabMenuClick(e)"
+      >
+        <svg fill="currentColor" class="icon svg-14" aria-hidden="true">
+          <use :href="e.icon" fill=""></use>
+        </svg>
+        {{ e.label }}
+      </div>
+    </div>
+  </transition>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.list-menus-root {
+  position: absolute;
+  padding: 0px 0px;
+  border-radius: 6px;
+  width: 120px;
+  background: white;
+  box-shadow: 0px 0px 10px #c9c9c9;
+  z-index: 11;
+  .type-item {
+    padding: 0px 5px;
+    width: 100%;
+    height: 36px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    color: var(--primary-color);
+    @include flex(row, center, center);
+    svg {
+      color: var(--primary-color);
+      margin-right: 8px;
+    }
+    &:hover {
+      @include primary-bg-color(0.1);
+      transition: all 0.1s ease-in-out;
+    }
+  }
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    top: -5px;
+    right: calc(65%);
+    transform: rotate(45deg);
+  }
+}
+</style>
 
 <script lang="ts">
 export default {

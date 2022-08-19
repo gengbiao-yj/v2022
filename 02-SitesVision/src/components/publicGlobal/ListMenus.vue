@@ -1,19 +1,31 @@
 <!-- 操作菜单 - 选项列表 -->
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import type { PropType } from 'vue';
 
 const props = defineProps({
-  menus: {
-    type: Array as PropType<Array<{ label: string; value: string }>>,
+  list: {
+    type: Array as PropType<
+      Array<{ label: string; value: string; icon: string }>
+    >,
     required: true
   }
 });
+
+const emit = defineEmits(['select']);
 </script>
 
 <template>
   <div class="list-menus-root">
-    <div class="type-item" v-for="(e, i) in props.menus" :key="i">
+    <div
+      class="type-item"
+      v-for="(e, i) in props.list"
+      :key="i"
+      @click="emit('select', e)"
+    >
+      <svg fill="currentColor" class="icon svg-14" aria-hidden="true">
+        <use :href="e.icon" fill=""></use>
+      </svg>
       {{ e.label }}
     </div>
   </div>
@@ -21,32 +33,40 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .list-menus-root {
+  position: absolute;
+  padding: 0px 0px;
+  border-radius: 6px;
+  min-width: 120px;
+  background: white;
   .type-item {
+    padding: 0px 5px;
     width: 100%;
-    height: 35px;
-    text-align: center;
-    line-height: 35px;
-    font-size: 15px;
-    color: #666;
-    letter-spacing: 3px;
+    height: 36px;
+    font-size: 14px;
+    letter-spacing: 2px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
     position: relative;
-    &:hover {
+    color: var(--primary-color);
+    @include flex(row, center, center);
+    svg {
       color: var(--primary-color);
-      transition: all 0.3s ease-in-out;
+      margin-right: 5px;
     }
-    &:hover::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: var(--primary-color);
-      opacity: 0.18;
-      transition: all 0.3s ease-in-out;
+    &:hover {
+      @include primary-bg-color(0.1);
+      transition: all 0.1s ease-in-out;
     }
+  }
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    top: -5px;
+    right: calc(65%);
+    transform: rotate(45deg);
   }
 }
 </style>

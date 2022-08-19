@@ -83,11 +83,11 @@ watch(route, newV => {
       :class="{
         'header-height': props.isAside === 'horizontal',
         'aside-height': props.isAside === 'vertical',
-        'aside-open-width': props.isAside === 'vertical',
+        'aside-width': props.isAside === 'vertical' && !menuCollapseState,
         'remove-border': props.isAside === 'vertical'
       }"
       @select="menuSelect"
-      collapse-transition
+      :collapse-transition="true"
     >
       <el-menu-item v-if="false">
         <el-popover
@@ -126,8 +126,10 @@ watch(route, newV => {
           v-for="(e, i) in DataTableType"
           :key="`3-${i}`"
         >
-          <Operation class="svg-16 mg-r-10" />
-          {{ e.label }}
+          <template #title>
+            <Operation class="svg-16 mg-r-10" />
+            <span>{{ e.label }}</span>
+          </template>
         </el-menu-item>
       </el-sub-menu>
 
@@ -176,9 +178,14 @@ watch(route, newV => {
   }
 }
 
-.aside-open-width {
-  width: 210px !important;
+.aside-width {
+  width: 210px;
 }
+
+//.aside-width.el-aside {
+//  //background: $primary-color;
+//  transition: width 0.15s ease-in-out;
+//}
 </style>
 
 <script lang="ts">

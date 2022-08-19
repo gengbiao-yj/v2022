@@ -93,6 +93,15 @@ const routes = [
           title: '404',
           requireAuth: true
         }
+      },
+      {
+        path: '/Main/Refresh', // 空页面，用于业务页面强制刷新
+        name: 'Refresh',
+        component: () => import('@/views/FunctionPage/Refresh.vue'),
+        meta: {
+          title: '',
+          requireAuth: true
+        }
       }
     ]
   }
