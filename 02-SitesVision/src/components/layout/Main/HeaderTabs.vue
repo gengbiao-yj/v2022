@@ -7,16 +7,18 @@ const basicStore = basicPinia();
 const { setTabs, getTabs } = basicStore;
 
 // 初始数据
-const editableTabsValue = ref('1');
+const editableTabsValue = ref('/Main/MainMap');
 const editableTabs = ref<Array<TabsItem>>(getTabs());
 const router = useRouter();
 const route = useRoute();
+
+// 校准当前路由对应的tab
 onBeforeMount(() => {
   let index = editableTabs.value.findIndex(
     e => e.path === router.currentRoute.value.path
   );
   if (index !== -1) {
-    editableTabsValue.value = index + 1 + '';
+    editableTabsValue.value = editableTabs.value[index].path;
   }
 });
 
@@ -29,15 +31,15 @@ watch(route, newV => {
   ) {
     editableTabs.value.push({
       title: newV.meta.title + '',
-      name: editableTabs.value.length + 1 + '',
+      name: newV.path,
       path: newV.path
     });
-    editableTabsValue.value = editableTabs.value.length + '';
+    editableTabsValue.value = editableTabs.value.slice(-1)[0].path;
     setTabs(editableTabs.value);
   } else {
-    let index = editableTabs.value.findIndex(e => e.path === newV.path);
-    if (index !== -1) {
-      editableTabsValue.value = index + 1 + '';
+    let filterTab = editableTabs.value.filter(e => e.path === newV.path);
+    if (filterTab.length) {
+      editableTabsValue.value = filterTab[0].path;
     }
   }
 });
@@ -64,7 +66,7 @@ const removeTab = (targetName: string) => {
   activeTabRouter(activeName);
 };
 
-// 点击 tab
+// 点击 tab 切换页面
 const clickTab = (e: TabsPaneContext) => {
   activeTabRouter(e.paneName as string);
 };
@@ -87,14 +89,23 @@ const tabMenuList = ref([
 const showTabMenu = ref(false); // tab menu 展现状态
 const tabMenuInstance = ref() as _HTMLDivElement; // tab menu 实例
 // 右键tab 计算left偏移位置，并显示
-const rightClickTab = ref('1');
+const rightClickTab = ref(1); // 右击操作tab的数组下标
+const leftForbid = ref(false); // 关闭左侧按钮失效条件
+const rightForbid = ref(false); // 关闭右侧按钮失效条件
 const drawTabMenu = (currentTab: string, e: any) => {
   tabMenuInstance.value.style.left = e.target.offsetLeft + 'px';
   showTabMenu.value = true;
-  rightClickTab.value = currentTab;
+  rightClickTab.value =
+    [...e.target.parentNode.children].findIndex(k => k === e.target) + 1;
+  leftForbid.value = false;
+  rightForbid.value = false;
+  if (rightClickTab.value <= 2) leftForbid.value = true;
+  if (rightClickTab.value === editableTabs.value.length) {
+    rightForbid.value = true;
+  }
 };
 
-// 当前左键tab 弹出卡片，点击操作选项
+// 右击tab弹出操作卡片，各操作选项功能
 const tabMenuClick = (e: { label: string; value: string }) => {
   let judge: {
     [key: string]: () => void;
@@ -114,22 +125,35 @@ const refreshRouter = () => {
 
 // 关闭附近 tab
 const removeNextTab = (param: 'lf' | 'rg') => {
+  let index = editableTabs.value.findIndex(
+    e => e.name === editableTabsValue.value
+  ); // 当前激活tab的数组下标
+  const rightClickTabName = editableTabs.value[rightClickTab.value - 1].path;
+
   if (param === 'lf') {
-    console.log(rightClickTab.value);
+    if (leftForbid.value) return;
+    editableTabs.value.splice(1, rightClickTab.value - 2);
+    editableTabsValue.value = editableTabs.value[1].name;
   } else if (param === 'rg') {
-    console.log(rightClickTab.value);
+    if (rightForbid.value) return;
+    editableTabs.value.splice(rightClickTab.value, editableTabs.value.length);
+  }
+  setTabs(editableTabs.value);
+
+  if (rightClickTab.value - 1 !== index) {
+    activeTabRouter(rightClickTabName);
   }
 };
 
 // 关闭所有标签页，跳转到MainMap
 const closeAllTabs = () => {
   editableTabs.value.length = 1;
-  editableTabsValue.value = '1';
+  editableTabsValue.value = '/Main/MainMap';
   setTabs(editableTabs.value);
   router.replace('/Main/MainMap');
 };
 
-// tab menu 关闭逻辑
+// tab menu 关闭
 const closeTabMenu = () => {
   showTabMenu.value = false;
 };
@@ -159,10 +183,10 @@ onBeforeUnmount(() => {
   >
     <el-tab-pane
       v-for="item in editableTabs"
-      :key="item.name"
+      :key="item.path"
       :label="item.title"
       :name="item.name"
-      :closable="item.name !== '1'"
+      :closable="item.name !== '/Main/MainMap'"
     >
     </el-tab-pane>
   </el-tabs>
@@ -170,8 +194,9 @@ onBeforeUnmount(() => {
     <div class="list-menus-root" v-show="showTabMenu" ref="tabMenuInstance">
       <div
         class="type-item"
+        :class="{ forbid: (i == 1 && leftForbid) || (i === 2 && rightForbid) }"
         v-for="(e, i) in tabMenuList"
-        :key="i"
+        :key="e.name"
         @click="tabMenuClick(e)"
       >
         <svg fill="currentColor" class="icon svg-14" aria-hidden="true">
@@ -190,7 +215,7 @@ onBeforeUnmount(() => {
   border-radius: 6px;
   width: 120px;
   background: white;
-  box-shadow: 0px 0px 10px #c9c9c9;
+  //box-shadow: 0px 0px 10px #c9c9c9;
   z-index: 11;
   .type-item {
     padding: 0px 5px;
@@ -201,14 +226,19 @@ onBeforeUnmount(() => {
     cursor: pointer;
     position: relative;
     color: var(--primary-color);
+    transition: all 0.1s ease-in-out;
     @include flex(row, center, center);
     svg {
       color: var(--primary-color);
       margin-right: 8px;
     }
-    &:hover {
+    &:not(.forbid):hover {
       @include primary-bg-color(0.1);
-      transition: all 0.1s ease-in-out;
+    }
+    &.forbid {
+      background: #e8e8e8;
+      cursor: not-allowed;
+      color: #aaa;
     }
   }
   &:before {

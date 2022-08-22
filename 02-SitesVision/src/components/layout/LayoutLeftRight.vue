@@ -165,14 +165,14 @@ const drawClosed = () => {
 
   .tabs {
     @include box-size(100%, 40px);
-    box-shadow: 0 5px 10px #ddd;
+    box-shadow: 0 4px 4px rgba(124, 121, 121, 0.12);
     position: relative;
   }
 
   .main-container {
     @include box-size(100%, calc(100vh - 90px));
     background: #f1f1f1;
-    margin-top: 5px;
+    padding: 4px 5px 0px;
   }
 }
 

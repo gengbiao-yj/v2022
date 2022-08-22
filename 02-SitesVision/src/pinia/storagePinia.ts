@@ -58,7 +58,7 @@ export default defineStore('basicPinia', () => {
   const tabs = ref<Array<TabsItem>>([
     {
       title: '地图主页',
-      name: '1',
+      name: '/Main/MainMap',
       path: '/Main/MainMap'
     }
   ]);

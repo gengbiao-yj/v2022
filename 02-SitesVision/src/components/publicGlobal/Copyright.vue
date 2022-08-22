@@ -15,11 +15,11 @@ const year = ref(new Date().getFullYear());
 
 <style scoped lang="scss">
 div {
-  width: calc(100% - 12px);
+  width: calc(100% - 10px);
   height: 40px;
   position: absolute;
-  bottom: 10px;
-  left: 6px;
+  bottom: 5px;
+  left: 5px;
   //margin: 5px auto 0;
   background: white;
   border-radius: 5px;
