@@ -30,7 +30,7 @@ const iconCollapse = ref() as _SVGElement;
   @include box-size(100%, 100%);
   background: #f1f1f1;
   .Sys-Mg-content {
-    @include box-size(calc(100%), calc(100% - 50px));
+    @include box-size(calc(100%), calc(100% - 43px));
     @include flex(row, flex-start, flex-start);
     margin: 0 auto;
     > div {
