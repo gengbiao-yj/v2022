@@ -50,7 +50,7 @@ export default defineStore('basicPinia', () => {
       data.primaryColor
     );
     systemParams.value = data;
-    storage.setLocal('systemSetting', data, 480);
+    storage.setLocal('systemSetting', data, 2400);
   }
 
   /*  header tabs 导航标签页持久化存储

@@ -38,3 +38,25 @@
     }
   }
 }
+
+/*  form 表单组件，统一 input 与 select 宽度
+------------------------------------------------ */
+// size - small
+.el-form-item__content > .el-input.el-input--small .el-input__inner {
+  width: 168px !important;
+}
+
+// size - middle
+.el-form-item__content > .el-input.el-input--middle .el-input__inner {
+  width: 192px !important;
+}
+
+// size - large
+.el-form-item__content > .el-input.el-input--large .el-input__inner {
+  width: 192px !important;
+}
+
+// size - default
+.el-form-item__content > .el-input .el-input__inner {
+  width: 192px !important;
+}
