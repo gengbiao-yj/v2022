@@ -3,6 +3,8 @@
 import basicPinia from '@/pinia/storagePinia';
 import { fullScreen } from '@/utils/index';
 import SystemSetting from './SystemSetting.vue';
+import { ElMessageBox } from 'element-plus';
+
 const router = useRouter();
 // 获取用户信息
 const basicStore = basicPinia();
@@ -13,6 +15,21 @@ const setRestFullScreen = fullScreen();
 const optionDrawer = ref<boolean>(false);
 const refresh = () => {
   router.replace(`/Main/Refresh`);
+};
+
+// 退出系统
+const quitSystem = () => {
+  ElMessageBox.confirm('是否要退出登录？', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      router.replace(`/Login`);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 </script>
 <template>
@@ -94,7 +111,7 @@ const refresh = () => {
             <VideoCamera class="svg-16" />
             <span>帮助视频</span>
           </div>
-          <div>
+          <div @click="quitSystem">
             <SwitchButton class="svg-16" />
             <span>退出登录</span>
           </div>

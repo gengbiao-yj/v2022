@@ -9,10 +9,10 @@ import { ElConfigProvider } from 'element-plus';
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn';
 import en from 'element-plus/lib/locale/lang/en';
-import pt from 'element-plus/lib/locale/lang/pt';
-import fr from 'element-plus/lib/locale/lang/fr';
-import ja from 'element-plus/lib/locale/lang/ja';
-import ko from 'element-plus/lib/locale/lang/ko';
+// import pt from 'element-plus/lib/locale/lang/pt';
+// import fr from 'element-plus/lib/locale/lang/fr';
+// import ja from 'element-plus/lib/locale/lang/ja';
+// import ko from 'element-plus/lib/locale/lang/ko';
 
 import basicPinia from '@/pinia/storagePinia';
 import { colorTransition } from '@/utils';
@@ -34,7 +34,8 @@ document.documentElement.style.setProperty(
 
 /*  element plus 中英文切换
 ------------------------------------------------ */
-const languages = ref([zhCn, en, pt, fr, ja, ko]);
+// const languages = ref([zhCn, en, pt, fr, ja, ko]);
+const languages = ref([zhCn, en]);
 const locale = ref(
   languages.value[Math.floor(Math.random() * languages.value.length)]
 );

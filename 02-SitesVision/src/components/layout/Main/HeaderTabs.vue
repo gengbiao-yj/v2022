@@ -27,7 +27,7 @@ watch(route, newV => {
   const isRecord = editableTabs.value.some(e => e.path === newV.path);
   if (
     !isRecord &&
-    ['/404', '/Refresh'].every(r => newV.path.indexOf(r) === -1)
+    ['/404', '/Refresh', '/Login'].every(r => newV.path.indexOf(r) === -1)
   ) {
     editableTabs.value.push({
       title: newV.meta.title + '',

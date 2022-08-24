@@ -3,6 +3,7 @@ import mitt from 'mitt';
 const EventBus = mitt();
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import type { eventBusName } from '@/types';
+import { dataArea } from '@/apis/user';
 
 /*  通用 start
 ------------------------------------------------ */
@@ -22,8 +23,6 @@ export function getWatchBrowserWidth(callBack: any) {
   });
   return browserWidth;
 }
-/*  通用 end
------------------------------------------------- */
 
 /*  事件总线 start
 ------------------------------------------------ */
@@ -41,5 +40,22 @@ export function busEmit(name: eventBusName, params: any) {
   if (!name) return;
   EventBus.emit(name, params);
 }
-/*  事件总线 end
+
+/*  接口
 ------------------------------------------------ */
+// 省市区接口
+export const getDataArea = async (JoinCode: string, TypeID: number) => {
+  try {
+    const { code, data } = await dataArea({
+      JoinCode,
+      TypeID
+    });
+    if (code === 200) {
+      return reactive(data);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

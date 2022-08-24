@@ -4,6 +4,8 @@
 
 /*  业务 - 定义后台返回数据的泛型；<T> 业务数据泛型
 ------------------------------------------------ */
+import { ListSitesParams } from '@/types/RequestParams';
+
 interface ResponseResult<T> {
   code: number;
   message: string;
@@ -20,6 +22,29 @@ interface UserLogin {
   userName: string;
 }
 
+/*  业务 - 通用模块各接口返回数据泛型
+------------------------------------------------ */
+// 省市区查询接口
+interface DataArea {
+  cnName: string;
+  code: string;
+  createDate: string;
+  enName: null | string;
+  id: number;
+  joinCode: string;
+  remark: null | string;
+  selected: number;
+  typeID: number;
+}
+
+/*  业务 - 列表模块各接口的请求参数泛型
+------------------------------------------------ */
+// 机会点列表接口
+interface ListSites {
+  rows: Array; // 表格数据
+  total: number; // 总数
+}
+
 /*  第三方 - 高德地图
 ------------------------------------------------ */
 // IP 定位
@@ -32,4 +57,4 @@ interface AmapV3IP {
   centerLngLat: object; // rectangle 算出的中心点
 }
 
-export type { ResponseResult, UserLogin, AmapV3IP };
+export type { ResponseResult, UserLogin, AmapV3IP, DataArea, ListSites };

@@ -36,8 +36,10 @@ export default class Axios {
         const { value, status } = storage.getLocal('userInfo');
         if (status === 1) {
           config.headers!.token = value.token;
+          config.headers!.timestamp = value.timestamp;
         } else {
           config.headers!.token = '';
+          config.headers!.timestamp = '';
         }
         return config;
       },

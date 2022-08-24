@@ -10,7 +10,7 @@ const http = new Axios({
     'Content-Type': 'application/x-www-form-urlencoded',
     time: new Date().getTime(),
     token: '',
-    timestamp: sessionStorage.timestamp || '',
+    timestamp: '',
     mode: 'cors'
   }
 });

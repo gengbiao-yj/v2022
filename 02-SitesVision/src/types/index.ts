@@ -1,6 +1,16 @@
 import type { POIItem, SystemSetType, MenuItem, TabsItem } from './Components';
-import type { UserLoginParams } from './RequestParams';
-import type { ResponseResult, UserLogin, AmapV3IP } from './ResponseResult';
+import type {
+  UserLoginParams,
+  DataAreaParams,
+  ListSitesParams
+} from './RequestParams';
+import type {
+  ResponseResult,
+  UserLogin,
+  AmapV3IP,
+  DataArea,
+  ListSites
+} from './ResponseResult';
 import type {
   StorageKeyType,
   SessionStorageValue,
@@ -27,5 +37,9 @@ export type {
   rgbType,
   _HTMLDivElement,
   _SVGElement,
-  eventBusName
+  eventBusName,
+  DataAreaParams,
+  DataArea,
+  ListSitesParams,
+  ListSites
 };

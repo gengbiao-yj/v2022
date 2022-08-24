@@ -60,3 +60,9 @@
 .el-form-item__content > .el-input .el-input__inner {
   width: 192px !important;
 }
+
+/*  element 主体颜色修改
+------------------------------------------------ */
+:root {
+  --el-color-primary: var(--primary-color) !important;
+}
