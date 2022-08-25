@@ -5,8 +5,8 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Breadcrumb: typeof import('./src/components/layout/Main/Breadcrumb.vue')['default']
-    Copyright: typeof import('./src/components/publicGlobal/Copyright.vue')['default']
+    Breadcrumb: typeof import('./src/components/Layout/Main/Breadcrumb.vue')['default']
+    Copyright: typeof import('./src/components/PublicGlobal/Copyright.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
@@ -37,18 +37,19 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    HeaderMenu: typeof import('./src/components/layout/Main/HeaderMenu.vue')['default']
-    HeaderOption: typeof import('./src/components/layout/Main/HeaderOption.vue')['default']
-    HeaderTabs: typeof import('./src/components/layout/Main/HeaderTabs.vue')['default']
-    HeaderTitle: typeof import('./src/components/layout/Main/HeaderTitle.vue')['default']
-    LayoutLeftRight: typeof import('./src/components/layout/LayoutLeftRight.vue')['default']
-    LayoutUpDown: typeof import('./src/components/layout/LayoutUpDown.vue')['default']
-    ListMenus: typeof import('./src/components/publicGlobal/ListMenus.vue')['default']
+    HeaderMenu: typeof import('./src/components/Layout/Main/HeaderMenu.vue')['default']
+    HeaderOption: typeof import('./src/components/Layout/Main/HeaderOption.vue')['default']
+    HeaderTabs: typeof import('./src/components/Layout/Main/HeaderTabs.vue')['default']
+    HeaderTitle: typeof import('./src/components/Layout/Main/HeaderTitle.vue')['default']
+    LayoutLeftRight: typeof import('./src/components/Layout/LayoutLeftRight.vue')['default']
+    LayoutUpDown: typeof import('./src/components/Layout/LayoutUpDown.vue')['default']
+    ListMenus: typeof import('./src/components/PublicGlobal/ListMenus.vue')['default']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SLMBadge: typeof import('./src/components/publicGlobal/SLMBadge.vue')['default']
-    SmartRecommend: typeof import('./src/components/layout/Main/SmartRecommend.vue')['default']
-    SystemSetting: typeof import('./src/components/layout/Main/SystemSetting.vue')['default']
+    SLMBadge: typeof import('./src/components/PublicGlobal/SLMBadge.vue')['default']
+    SmartRecommend: typeof import('./src/components/Layout/Main/SmartRecommend.vue')['default']
+    SystemSetting: typeof import('./src/components/Layout/Main/SystemSetting.vue')['default']
   }
 }
 

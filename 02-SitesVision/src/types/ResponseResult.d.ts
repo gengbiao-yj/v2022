@@ -20,6 +20,7 @@ interface UserLogin {
   token: string;
   userId: number;
   userName: string;
+  cusNo: string;
 }
 
 /*  业务 - 通用模块各接口返回数据泛型

@@ -2,8 +2,8 @@
 <script setup lang="ts">
 import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
-import LayoutUpDown from '@comps/layout/LayoutUpDown.vue';
-import LayoutLeftRight from '@comps/layout/LayoutLeftRight.vue';
+import LayoutUpDown from '@comps/Layout/LayoutUpDown.vue';
+import LayoutLeftRight from '@comps/Layout/LayoutLeftRight.vue';
 
 // 获取布局方式
 import basicPinia from '@/pinia/storagePinia';

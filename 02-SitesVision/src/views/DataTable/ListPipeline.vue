@@ -2,10 +2,12 @@
 <script lang="ts" setup>
 import type { _HTMLDivElement, DataArea } from '@/types';
 import { getDataArea } from '@/utils/hooks';
+import { listViewSites } from '@/apis/user';
+import basicPinia from '@/pinia/storagePinia';
+import { ElMessage } from 'element-plus';
 
-const searchTable = () => {
-  console.log('submit!');
-};
+const { getUserInfo } = basicPinia();
+const userInfo = getUserInfo();
 
 /*  筛选项目展开折叠
 ------------------------------------------------ */
@@ -34,11 +36,6 @@ const province = reactive<Array<DataArea>>([]); // 省
 const city = reactive<Array<DataArea>>([]); // 市
 const county = reactive<Array<DataArea>>([]); // 区
 
-onBeforeMount(() => {
-  // 省份列表
-  getAreaList('0', 101);
-});
-
 /**
  * 省市区列表查询
  * @param JoinCOde  关联编码
@@ -63,22 +60,70 @@ const getAreaList = async (JoinCOde: string, TypeID: number) => {
 /*  数据列表
 ------------------------------------------------ */
 const currentPage = ref(1); // 当前页码
-const pageSize = ref(5); // 每页数据量
-const totalPipeline = ref(11);
+const pageSize = ref(15); // 每页数据量
+const totalPipeline = ref(0);
+const loading = ref(false); // 加载动画
 // 每页数据量改变
 const handleSizeChange = (val: number) => {
-  console.log(val);
+  pageSize.value = val;
+  searchTableData();
 };
 
 // 页码改变
 const handleCurrentChange = (val: number) => {
-  console.log(val);
+  currentPage.value = val;
+  searchTableData();
 };
 
-const tableData = reactive([]); // 表格数据
+const tableData = reactive<Array<object>>([]); // 表格数据
+
+// 查询列表数据
+const searchTableData = async () => {
+  try {
+    loading.value = true;
+    const { data, code } = await listViewSites({
+      cusNo: userInfo.cusNo || '',
+      provinceCode: filterForm.province,
+      cityCode: filterForm.city,
+      districtCode: filterForm.county,
+      parameter: '',
+      size: pageSize.value,
+      page: currentPage.value
+    });
+    loading.value = false;
+    if (code === 200) {
+      tableData.length = 0;
+      data.rows.forEach((e: object) => tableData.push(e));
+      totalPipeline.value = data.total;
+    }
+  } catch (error) {
+    loading.value = false;
+    ElMessage.warning('查询失败！');
+    console.log(error);
+  }
+};
+
+// 按钮查询
+const searchTable = () => {
+  searchTableData();
+};
+
+/*  生命周期
+------------------------------------------------ */
+onBeforeMount(() => {
+  // 省份列表
+  getAreaList('0', 101);
+  // 数据查询
+  searchTableData();
+});
 </script>
 <template>
-  <div class="list-pipeline">
+  <div
+    class="list-pipeline"
+    v-loading="loading"
+    element-loading-background="rgba(100,100,100,0.4)"
+    element-loading-text="加载中..."
+  >
     <div class="filter-box" ref="filterBox">
       <div class="filter-title">
         <span class="ft-s-16 ft-w-6 title-color">查询条件</span>
@@ -103,7 +148,7 @@ const tableData = reactive([]); // 表格数据
           :model="filterForm"
           label-position="left"
           label-width="70px"
-          size="small"
+          size="middle"
           class="demo-form-inline"
         >
           <!-- 省份 -->
@@ -164,21 +209,80 @@ const tableData = reactive([]); // 表格数据
           :data="tableData"
           height="calc(100% - 65px)"
           style="width: 100%"
-          header-cell-class-name="table-header-row"
+          header-cell-class-name="table-header-cell"
+          cell-class-name="table-cell"
         >
           <el-table-column label="#" type="index" />
-          <el-table-column prop="date" label="项目编号" width="180" />
-          <el-table-column prop="name" label="项目名称" width="180" />
-          <el-table-column prop="address" label="项目进度" />
-          <el-table-column prop="address" label="状态" />
-          <el-table-column prop="address" label="预计开业日期" />
-          <el-table-column prop="address" label="经营性质" />
-          <el-table-column prop="address" label="省份" />
-          <el-table-column prop="address" label="城市" />
-          <el-table-column prop="address" label="区县" />
-          <el-table-column prop="address" label="门店编号" />
-          <el-table-column prop="address" label="地址" />
-          <el-table-column prop="address" label="备注" />
+          <el-table-column
+            prop="siteCode"
+            label="项目编号"
+            width="130"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="siteName"
+            label="项目名称"
+            width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="progressName"
+            label="项目进度"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="siteStatusName"
+            label="状态"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="planOpenDate"
+            label="预计开业日期"
+            width="120"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="busTypeName"
+            label="经营性质"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="provinceName"
+            label="省份"
+            show-overflow-tooltip
+          />
+          <el-table-column prop="cityName" label="城市" show-overflow-tooltip />
+          <el-table-column
+            prop="districtName"
+            label="区县"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="storeCode"
+            label="门店编号"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="address"
+            label="地址"
+            width="280"
+            show-overflow-tooltip
+          >
+            <template #default="scope">
+              <svg class="icon svg-24" aria-hidden="true">
+                <use href="#icon-dizhi"></use>
+              </svg>
+              <span>
+                {{ scope.row.address }}
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="remark"
+            label="备注"
+            width="220"
+            show-overflow-tooltip
+          />
         </el-table>
         <div class="table-pagination">
           <el-pagination
@@ -266,9 +370,25 @@ const tableData = reactive([]); // 表格数据
   }
 
   &::v-deep {
-    .table-header-row {
+    .table-header-cell {
       @include primary-bg-color(0.5);
       color: #333333;
+    }
+
+    .table-cell .cell {
+      font-size: 13px;
+      @include flex(row, flex-start, center);
+      > svg {
+        width: 28px;
+        cursor: pointer;
+      }
+
+      > span {
+        width: calc(100% - 28px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }

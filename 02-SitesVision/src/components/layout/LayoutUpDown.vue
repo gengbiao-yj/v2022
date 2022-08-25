@@ -1,9 +1,9 @@
 <!-- name:上下布局 -->
 <script lang="ts" setup>
-import HeaderTitle from '@comps/layout/Main/HeaderTitle.vue';
-import HeaderMenu from '@comps/layout/Main/HeaderMenu.vue';
-import HeaderOption from '@comps/layout/Main/HeaderOption.vue';
-import HeaderTabs from '@comps/layout/Main/HeaderTabs.vue';
+import HeaderTitle from '@comps/Layout/Main/HeaderTitle.vue';
+import HeaderMenu from '@comps/Layout/Main/HeaderMenu.vue';
+import HeaderOption from '@comps/Layout/Main/HeaderOption.vue';
+import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
 </script>
 
 <template>
