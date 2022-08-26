@@ -6,7 +6,6 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Breadcrumb: typeof import('./src/components/Layout/Main/Breadcrumb.vue')['default']
-    Copyright: typeof import('./src/components/PublicGlobal/Copyright.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
@@ -21,6 +20,7 @@ declare module '@vue/runtime-core' {
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -47,8 +47,11 @@ declare module '@vue/runtime-core' {
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SLMBadge: typeof import('./src/components/PublicGlobal/SLMBadge.vue')['default']
     SmartRecommend: typeof import('./src/components/Layout/Main/SmartRecommend.vue')['default']
+    SvAreaData: typeof import('./src/components/PublicGlobal/SvAreaData.vue')['default']
+    SvBadge: typeof import('./src/components/PublicGlobal/SvBadge.vue')['default']
+    SvCopyrightLine: typeof import('./src/components/PublicGlobal/SvCopyrightLine.vue')['default']
+    SvTableFilter: typeof import('./src/components/PublicGlobal/SvTableFilter.vue')['default']
     SystemSetting: typeof import('./src/components/Layout/Main/SystemSetting.vue')['default']
   }
 }

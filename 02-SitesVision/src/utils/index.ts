@@ -3,19 +3,11 @@ import {
   colorTransition,
   JudgeDataType,
   DataCrypto,
-  StorageUtils,
-  CollapseWidth
+  StorageUtils
 } from './others';
 
 const cryptoData = new DataCrypto();
 const dataType = new JudgeDataType();
 const storage = new StorageUtils();
 
-export {
-  dataType,
-  cryptoData,
-  storage,
-  fullScreen,
-  colorTransition,
-  CollapseWidth
-};
+export { dataType, cryptoData, storage, fullScreen, colorTransition };

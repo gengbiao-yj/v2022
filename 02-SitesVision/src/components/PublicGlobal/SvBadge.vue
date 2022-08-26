@@ -70,6 +70,6 @@ onMounted(() => {
 
 <script lang="ts">
 export default {
-  name: 'SLMBadge'
+  name: 'SvBadge'
 };
 </script>

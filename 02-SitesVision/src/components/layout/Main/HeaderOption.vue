@@ -44,11 +44,11 @@ const quitSystem = () => {
       transition="el-zoom-in-top"
     >
       <template #reference>
-        <SLMBadge :content="8">
+        <sv-badge :content="8">
           <span class="svg-item">
             <AlarmClock class="svg-20" />
           </span>
-        </SLMBadge>
+        </sv-badge>
       </template>
       <div>~~~~~~~~~~~</div>
     </el-popover>
@@ -62,11 +62,11 @@ const quitSystem = () => {
       transition="el-zoom-in-top"
     >
       <template #reference>
-        <SLMBadge :content="11">
+        <sv-badge :content="11">
           <span class="svg-item">
             <Bell class="svg-20" />
           </span>
-        </SLMBadge>
+        </sv-badge>
       </template>
       <div>~~~~~~~~~~~</div>
     </el-popover>

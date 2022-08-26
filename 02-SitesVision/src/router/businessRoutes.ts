@@ -65,8 +65,7 @@ const routes = [
       {
         path: '/Main/SystemManagement',
         name: 'SystemManagement',
-        component: () =>
-          import('@/views/SystemManagement/SystemManagement.vue'),
+        component: () => import('@/views/SystemManagement/Index.vue'),
         meta: {
           title: '系统维护',
           requireAuth: true

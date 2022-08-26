@@ -32,6 +32,6 @@ div {
 
 <script>
 export default {
-  name: 'CopyrightLine'
+  name: 'SvCopyrightLine'
 };
 </script>

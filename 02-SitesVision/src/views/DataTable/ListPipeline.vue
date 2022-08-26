@@ -1,7 +1,5 @@
 <!-- 数据表格- 机会项目 -->
 <script lang="ts" setup>
-import type { _HTMLDivElement, DataArea } from '@/types';
-import { getDataArea } from '@/utils/hooks';
 import { listViewSites } from '@/apis/user';
 import basicPinia from '@/pinia/storagePinia';
 import { ElMessage } from 'element-plus';
@@ -9,56 +7,14 @@ import { ElMessage } from 'element-plus';
 const { getUserInfo } = basicPinia();
 const userInfo = getUserInfo();
 
-/*  筛选项目展开折叠
------------------------------------------------- */
-const filterBoxClose = ref(true); // 折叠展开标志
-const filterBox = ref() as _HTMLDivElement;
-const changeFilterBoxH = () => {
-  filterBox.value.style.willChange = 'height';
-  if (filterBoxClose.value) {
-    filterBox.value.style.height = filterBox.value.scrollHeight + 'px';
-  } else {
-    filterBox.value.style.height = 120 + 'px';
-  }
-  filterBoxClose.value = !filterBoxClose.value;
-};
-
-/*  省市区查询
------------------------------------------------- */
-const filterForm = reactive({
-  province: '',
-  city: '',
-  county: '',
-  pipelineCode: ''
-});
-
-const province = reactive<Array<DataArea>>([]); // 省
-const city = reactive<Array<DataArea>>([]); // 市
-const county = reactive<Array<DataArea>>([]); // 区
-
-/**
- * 省市区列表查询
- * @param JoinCOde  关联编码
- * @param TypeID
- */
-const getAreaList = async (JoinCOde: string, TypeID: number) => {
-  const res = await getDataArea(JoinCOde, TypeID);
-  if (res) {
-    if (TypeID === 101) {
-      province.length = 0;
-      res.forEach(e => province.push(e));
-    } else if (TypeID === 102) {
-      city.length = 0;
-      res.forEach(e => city.push(e));
-    } else if (TypeID === 103) {
-      county.length = 0;
-      res.forEach(e => county.push(e));
-    }
-  }
-};
-
 /*  数据列表
 ------------------------------------------------ */
+const filterForm = reactive({
+  province: '', // 省份
+  city: '', // 城市
+  county: '', // 区县
+  pipelineCode: '' // 项目编号
+});
 const currentPage = ref(1); // 当前页码
 const pageSize = ref(15); // 每页数据量
 const totalPipeline = ref(0);
@@ -86,7 +42,7 @@ const searchTableData = async () => {
       provinceCode: filterForm.province,
       cityCode: filterForm.city,
       districtCode: filterForm.county,
-      parameter: '',
+      parameter: filterForm.pipelineCode,
       size: pageSize.value,
       page: currentPage.value
     });
@@ -111,8 +67,6 @@ const searchTable = () => {
 /*  生命周期
 ------------------------------------------------ */
 onBeforeMount(() => {
-  // 省份列表
-  getAreaList('0', 101);
   // 数据查询
   searchTableData();
 });
@@ -124,85 +78,43 @@ onBeforeMount(() => {
     element-loading-background="rgba(100,100,100,0.4)"
     element-loading-text="加载中..."
   >
-    <div class="filter-box" ref="filterBox">
-      <div class="filter-title">
-        <span class="ft-s-16 ft-w-6 title-color">查询条件</span>
-        <span class="open-icon" @click="changeFilterBoxH">
-          <transition name="breadcrumb">
-            <span v-if="filterBoxClose">展开</span>
-            <span v-else>折叠</span>
-          </transition>
-          <svg
-            v-rotate:180="filterBoxClose"
-            ref="iconCollapse"
-            class="icon svg-24"
-            aria-hidden="true"
-          >
-            <use href="#icon-open-up-down"></use>
-          </svg>
-        </span>
-      </div>
-      <div class="filter-form">
+    <sv-table-filter>
+      <template #form>
         <el-form
           :inline="true"
           :model="filterForm"
           label-position="left"
           label-width="70px"
-          size="middle"
           class="demo-form-inline"
         >
-          <!-- 省份 -->
-          <el-form-item label="省份">
-            <el-select
-              v-model="filterForm.province"
-              placeholder=""
-              @change="val => getAreaList(val, 102)"
-            >
-              <el-option
-                :label="e.cnName"
-                :value="e.code"
-                v-for="(e, i) in province"
-                :key="i"
-              />
-            </el-select>
-          </el-form-item>
-          <!-- 城市 -->
-          <el-form-item label="城市">
-            <el-select
-              v-model="filterForm.city"
-              placeholder=""
-              @change="val => getAreaList(val, 103)"
-            >
-              <el-option
-                :label="e.cnName"
-                :value="e.code"
-                v-for="(e, i) in city"
-                :key="i"
-              />
-            </el-select>
-          </el-form-item>
-          <!-- 区县 -->
-          <el-form-item label="区县">
-            <el-select v-model="filterForm.county" placeholder="">
-              <el-option
-                :label="e.cnName"
-                :value="e.code"
-                v-for="(e, i) in county"
-                :key="i"
-              />
-            </el-select>
-          </el-form-item>
+          <sv-area-data
+            v-model:province="filterForm.province"
+            v-model:city="filterForm.city"
+            v-model:county="filterForm.county"
+          />
           <!-- 项目编号 -->
           <el-form-item label="项目编号">
-            <el-input v-model="filterForm.pipelineCode" placeholder="" />
+            <el-input v-model="filterForm.pipelineCode" placeholder="">
+              <template #suffix>
+                <transition name="upDown" mode="out-in" appear>
+                  <el-icon
+                    v-if="filterForm.pipelineCode"
+                    class="el-input__icon cur-pointer"
+                    @click="filterForm.pipelineCode = ''"
+                    ><CircleClose
+                  /></el-icon>
+                  <el-icon v-else class="el-input__icon"><EditPen /></el-icon>
+                </transition>
+              </template>
+            </el-input>
           </el-form-item>
         </el-form>
-        <div class="btn-box">
-          <el-button type="primary" @click="searchTable">查询</el-button>
-          <el-button type="danger" @click="onSubmit">清空</el-button>
-        </div>
-      </div>
-    </div>
+      </template>
+      <template #btn>
+        <el-button type="primary" @click="searchTable">查询</el-button>
+        <el-button type="danger">清空</el-button>
+      </template>
+    </sv-table-filter>
     <div class="table-box">
       <div class="table-content">
         <el-table
@@ -269,12 +181,14 @@ onBeforeMount(() => {
             show-overflow-tooltip
           >
             <template #default="scope">
-              <svg class="icon svg-24" aria-hidden="true">
-                <use href="#icon-dizhi"></use>
-              </svg>
-              <span>
-                {{ scope.row.address }}
-              </span>
+              <div class="address-column">
+                <svg class="icon svg-24" aria-hidden="true">
+                  <use href="#icon-dizhi"></use>
+                </svg>
+                <span>
+                  {{ scope.row.address }}
+                </span>
+              </div>
             </template>
           </el-table-column>
           <el-table-column
@@ -298,7 +212,7 @@ onBeforeMount(() => {
         </div>
       </div>
     </div>
-    <CopyrightLine />
+    <sv-copyright-line />
   </div>
 </template>
 
@@ -306,43 +220,6 @@ onBeforeMount(() => {
 .list-pipeline {
   @include box-size(100%, 100%);
   @include flex(column, center, flex-start);
-  .filter-box {
-    @include box-size(100%, 120px);
-    transition: all 0.3s ease-in-out;
-    background: white;
-    border-radius: 6px;
-    padding: 8px 10px 0px;
-    overflow: hidden;
-    .filter-title {
-      padding-bottom: 6px;
-      margin-bottom: 8px;
-      position: relative;
-    }
-    .filter-form {
-      @include flex(row, center, flex-start);
-      padding-left: 15px;
-      > form {
-        width: calc(100% - 220px);
-      }
-
-      > div:nth-child(2) {
-        width: 220px;
-        padding-right: 10px;
-        @include flex(row, flex-end, center);
-      }
-    }
-
-    .open-icon {
-      font-size: 13px;
-      height: 24px;
-      position: absolute;
-      bottom: -14px;
-      top: 0px;
-      right: 20px;
-      cursor: pointer;
-      @include flex(row, flex-start, center);
-    }
-  }
 
   .table-box {
     @include box-size(100%, 100%);
@@ -362,6 +239,7 @@ onBeforeMount(() => {
       @include box-size(100%, 65px);
       @include flex(row, flex-end, center);
       padding-right: 20px;
+      overflow-x: auto;
     }
   }
 
@@ -377,17 +255,19 @@ onBeforeMount(() => {
 
     .table-cell .cell {
       font-size: 13px;
-      @include flex(row, flex-start, center);
-      > svg {
-        width: 28px;
-        cursor: pointer;
-      }
+      .address-column {
+        @include flex(row, flex-start, center);
+        > svg {
+          width: 28px;
+          cursor: pointer;
+        }
 
-      > span {
-        width: calc(100% - 28px);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        > span {
+          width: calc(100% - 28px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
   }

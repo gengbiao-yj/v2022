@@ -80,3 +80,27 @@
   opacity: 0;
   transform: translateY(-20px);
 }
+
+// 上下渐进渐出
+.upDown-enter-active,
+.upDown-leave-active {
+  transition: all .2s;
+}
+
+.upDown-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.upDown-leave-active {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.upDown-move {
+  transition: all .2s;
+}
+
+.upDown-leave-active {
+  position: absolute;
+}

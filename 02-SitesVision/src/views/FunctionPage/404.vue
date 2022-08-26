@@ -9,7 +9,7 @@ const router = useRouter();
         >返回</el-button
       >
     </div>
-    <CopyrightLine />
+    <sv-copyright-line class="copyright-line" />
   </div>
 </template>
 
@@ -52,6 +52,11 @@ export default {
         }
       }
     }
+  }
+  .copyright-line {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
   }
 }
 </style>

@@ -1,27 +1,30 @@
 <!-- 系统维护 -->
 <script lang="ts" setup>
-import type { _HTMLDivElement, _SVGElement } from '@/types';
-import { CollapseWidth } from '@/utils';
-const asideCollapse = ref() as _HTMLDivElement;
-const iconCollapse = ref() as _SVGElement;
+const isAsideCollapse = ref(false);
+const arg = [0, 0];
 // '#f1f1f1'
 </script>
 <template>
   <div class="Sys-Mg-root">
     <div class="Sys-Mg-content">
-      <div class="content-aside" ref="asideCollapse">
+      <div
+        class="content-aside"
+        v-collapseW:[arg]="!isAsideCollapse"
+        :class="{ 'aside-collapse': isAsideCollapse }"
+      >
+        <div style="width: 200px"></div>
         <svg
-          ref="iconCollapse"
           class="icon svg-40"
           aria-hidden="true"
-          @click="CollapseWidth(asideCollapse, iconCollapse, 200, 0, '#f1f1f1')"
+          v-rotateY:180="isAsideCollapse"
+          @click="isAsideCollapse = !isAsideCollapse"
         >
           <use href="#icon-zuohua"></use>
         </svg>
       </div>
       <div class="content-main"></div>
     </div>
-    <CopyrightLine />
+    <sv-copyright-line />
   </div>
 </template>
 
@@ -50,6 +53,11 @@ const iconCollapse = ref() as _SVGElement;
           //animation: ShakeUpDown-sm 0.4s ease;
         }
       }
+    }
+
+    .aside-collapse {
+      margin-left: 8px;
+      border-color: #f1f1f1;
     }
 
     .content-main {
