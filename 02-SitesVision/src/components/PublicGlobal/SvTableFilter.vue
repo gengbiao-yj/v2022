@@ -67,11 +67,11 @@ const arg = [120, 20];
     @include flex(row, center, flex-start);
     padding-left: 15px;
     > .form-content {
-      width: calc(100% - 0px);
+      width: calc(100% - 250px);
     }
 
     > .btn-box {
-      width: 220px;
+      width: 250px;
       padding-right: 10px;
       @include flex(row, flex-end, center);
     }

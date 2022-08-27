@@ -111,16 +111,37 @@ onBeforeMount(() => {
         </el-form>
       </template>
       <template #btn>
-        <el-button type="primary" @click="searchTable">查询</el-button>
-        <el-button type="danger">清空</el-button>
+        <el-button type="primary" @click="searchTable">
+          <template #icon>
+            <Search />
+          </template>
+          查询
+        </el-button>
+        <el-button type="danger">
+          <template #icon>
+            <Refresh />
+          </template>
+          清空
+        </el-button>
       </template>
     </sv-table-filter>
     <div class="table-box">
+      <div class="table-setting">
+        <el-button color="#626aef" size="small">
+          <template #icon>
+            <Plus />
+          </template>
+          新增
+        </el-button>
+        <div class="tools-box">
+          <FullScreen class="svg-18" />
+          <Tools class="svg-18" />
+        </div>
+      </div>
       <div class="table-content">
         <el-table
           :data="tableData"
-          height="calc(100% - 65px)"
-          style="width: 100%"
+          height="calc(100% - 60px)"
           header-cell-class-name="table-header-cell"
           cell-class-name="table-cell"
         >
@@ -227,16 +248,41 @@ onBeforeMount(() => {
     margin-top: 10px;
     background: white;
     border-radius: 6px;
-    padding: 0px 0px 0px;
+    padding: 0px 10px 0px;
     overflow: hidden;
 
+    .table-setting {
+      @include box-size(100%, 40px);
+      @include flex(row, space-between, center);
+      .tools-box {
+        @include box-size(auto, 100%);
+        @include flex(row, flex-end, center);
+        color: #5e5e5e;
+        padding-right: 5px;
+        svg {
+          margin-left: 16px;
+          cursor: pointer;
+          &:hover {
+            transition: all 0.5s ease-in-out;
+            color: var(--primary-color);
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
     .table-content {
-      height: 100%;
+      height: calc(100% - 40px);
       overflow-y: auto;
+      &:deep(.el-table) {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid var(--primary-color);
+      }
     }
 
     .table-pagination {
-      @include box-size(100%, 65px);
+      @include box-size(100%, 60px);
       @include flex(row, flex-end, center);
       padding-right: 20px;
       overflow-x: auto;
@@ -249,7 +295,7 @@ onBeforeMount(() => {
 
   &::v-deep {
     .table-header-cell {
-      @include primary-bg-color(0.5);
+      @include primary-bg-color(1);
       color: #333333;
     }
 

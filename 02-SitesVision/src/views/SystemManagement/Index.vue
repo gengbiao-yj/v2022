@@ -8,8 +8,10 @@ const arg = [0, 160, 0];
 const tag = ref() as _HTMLDivElement;
 const asideMenu = ref() as _HTMLDivElement;
 // '#f1f1f1'
+let manageType = ref(0);
 const asideMenuChange = (i: number) => {
   if (asideMenu.value && tag.value) {
+    manageType.value = i;
     let currentLi = asideMenu.value.children[i] as HTMLDivElement;
     tag.value.style.transform = `translateY(${currentLi.offsetTop - 20}px)`;
   }
@@ -27,43 +29,63 @@ const asideMenuChange = (i: number) => {
           <ul ref="asideMenu" class="aside-menu" v-show="!isAsideCollapse">
             <li @click="asideMenuChange(0)">
               <SetUp class="svg-16" />
-              <span>企业维护</span>
+              <span :class="{ 'primary-color': manageType == 0 }"
+                >企业维护</span
+              >
             </li>
             <li @click="asideMenuChange(1)">
               <SetUp class="svg-16" />
-              <span>品牌维护</span>
+              <span :class="{ 'primary-color': manageType == 1 }"
+                >品牌维护</span
+              >
             </li>
             <li @click="asideMenuChange(2)">
               <SetUp class="svg-16" />
-              <span>用户维护</span>
+              <span :class="{ 'primary-color': manageType == 2 }"
+                >用户维护</span
+              >
             </li>
             <li @click="asideMenuChange(3)">
               <SetUp class="svg-16" />
-              <span>数据项维护</span>
+              <span :class="{ 'primary-color': manageType == 3 }"
+                >数据项维护</span
+              >
             </li>
             <li @click="asideMenuChange(4)">
               <SetUp class="svg-16" />
-              <span>字段管理</span>
+              <span :class="{ 'primary-color': manageType == 4 }"
+                >字段管理</span
+              >
             </li>
             <li @click="asideMenuChange(5)">
               <SetUp class="svg-16" />
-              <span>自定义图层维护</span>
+              <span :class="{ 'primary-color': manageType == 5 }"
+                >自定义图层维护</span
+              >
             </li>
             <li @click="asideMenuChange(6)">
               <SetUp class="svg-16" />
-              <span>城市维护</span>
+              <span :class="{ 'primary-color': manageType == 6 }"
+                >城市维护</span
+              >
             </li>
             <li @click="asideMenuChange(7)">
               <SetUp class="svg-16" />
-              <span>竞品维护</span>
+              <span :class="{ 'primary-color': manageType == 7 }"
+                >竞品维护</span
+              >
             </li>
             <li @click="asideMenuChange(8)">
               <SetUp class="svg-16" />
-              <span>报告统计</span>
+              <span :class="{ 'primary-color': manageType == 8 }"
+                >报告统计</span
+              >
             </li>
             <li @click="asideMenuChange(9)">
               <SetUp class="svg-16" />
-              <span>日志统计</span>
+              <span :class="{ 'primary-color': manageType == 9 }"
+                >日志统计</span
+              >
             </li>
             <li ref="tag"></li>
           </ul>
