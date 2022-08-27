@@ -66,10 +66,12 @@ export function setupGlobalDirective(app: App) {
     el.style.transition = 'all ease-in-out 0.3s';
     el.style.willChange = 'width';
     let closeW = 0;
+    let openW = 0;
     let openOffSetW = 0;
-    if (Array.isArray(binding.arg) && binding.arg.length === 2) {
+    if (Array.isArray(binding.arg) && binding.arg.length === 3) {
       closeW = binding.arg[0];
-      openOffSetW = binding.arg[1];
+      openW = binding.arg[1];
+      openOffSetW = binding.arg[2];
     } else {
       el = null;
       return;
@@ -77,7 +79,7 @@ export function setupGlobalDirective(app: App) {
     if (binding.value === false) {
       el.style.width = `${closeW}px`;
     } else if (binding.value === true) {
-      el.style.width = el.scrollWidth + openOffSetW + 'px';
+      el.style.width = openW + openOffSetW + 'px';
     }
     el = null;
   });

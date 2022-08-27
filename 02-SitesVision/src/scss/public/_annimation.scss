@@ -44,7 +44,7 @@
 // 面包屑导航内容
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .breadcrumb-enter-from {
@@ -58,7 +58,7 @@
 }
 
 .breadcrumb-move {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .breadcrumb-leave-active {
@@ -84,7 +84,7 @@
 // 上下渐进渐出
 .upDown-enter-active,
 .upDown-leave-active {
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .upDown-enter-from {
@@ -98,9 +98,22 @@
 }
 
 .upDown-move {
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .upDown-leave-active {
   position: absolute;
+}
+
+// 淡入淡出
+.inOut-enter-active,
+.inOut-leave-active {
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+}
+
+.inOut-enter-from,
+.inOut-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
 }
