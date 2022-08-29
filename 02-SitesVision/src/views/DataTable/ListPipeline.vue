@@ -225,12 +225,31 @@ const popoverColumnCheck = (
   });
 };
 
+// 拖拽指示线显示控制
+const dragLineShow = (status: 'block' | 'none') => {
+  let line = document.querySelector(
+    '.table-column-tree + .drag-line'
+  ) as HTMLDivElement;
+  if (line) {
+    line.style.display = status;
+    return line;
+  }
+};
+
 // 重置表格列
 const resetTableColumn = (node: object) => {
   checkedTableColumn.length = 0;
-  tableColumn[0].children.forEach(e => checkedTableColumn.push(e));
-  checkedTableColumn.forEach(e => (e.fixed = false));
-  treeInstance.value.setCheckedKeys([0]); // 恢复全选
+  tableColumn[0].children.sort((a, b) => a.id - b.id); // 排序复位
+  tableColumn[0] = JSON.parse(JSON.stringify(tableColumn[0])); // 生成新数据，复位DOM排序
+  tableColumn[0].children.forEach(e => {
+    checkedTableColumn.push(e);
+  }); // 表格列顺序复位
+  checkedTableColumn.forEach(e => (e.fixed = false)); // 取消所有固定
+  nextTick(() => {
+    treeInstance.value.setCheckedKeys([0]); // 恢复全选
+  });
+  // 删除拖拽指示线
+  dragLineShow('none');
 };
 
 // 列固定
@@ -243,7 +262,7 @@ const fixedTableColumn = (node: any, fixed: string) => {
   }
 };
 
-// 拖拽设置列，实现位置变更
+// 允许拖拽插入条件
 const allowDrop = (draggingNode: Node, dropNode: Node, type: DropType) => {
   if (dropNode.data.id === 0) {
     return false;
@@ -251,8 +270,33 @@ const allowDrop = (draggingNode: Node, dropNode: Node, type: DropType) => {
     return type === 'prev';
   }
 };
+
+// 允许拖拽条件
 const allowDrag = (draggingNode: Node) => {
   return draggingNode.data.id !== 0;
+};
+
+// 拖拽离开某个节点时触发的事件
+const handleDragLeave = (draggingNode: Node, dropNode: Node, ev: any) => {
+  const line = dragLineShow('block');
+  if (line && ev.target.offsetTop > 50) {
+    line.style.top = `${ev.target.offsetTop + 12}px`;
+  }
+};
+
+// 拖拽完成()成功
+const nodeDropSuccess = () => {
+  treeInstance.value.setCheckedKeys([0]); // 恢复全选
+  let checkedNodes: Array<column> = treeInstance.value.getCheckedNodes(); // 当前选中节点
+  // 表格列按新顺序排列
+  checkedTableColumn.length = 0;
+  checkedNodes = JSON.parse(JSON.stringify(checkedNodes));
+  checkedNodes.forEach((e, i) => {
+    if (e.id !== 0) {
+      e.id = i;
+      checkedTableColumn.push(e);
+    }
+  });
 };
 
 // 点击空白处关闭表格列设置弹窗
@@ -376,6 +420,10 @@ onBeforeMount(() => {
               show-checkbox
               ref="treeInstance"
               @check="popoverColumnCheck"
+              @node-drag-leave="handleDragLeave"
+              @node-drop="nodeDropSuccess"
+              @node-collapse="dragLineShow('none')"
+              @node-expand="dragLineShow('block')"
             >
               <template #default="{ node }">
                 <div class="custom-tree-node">
@@ -384,13 +432,13 @@ onBeforeMount(() => {
                     <el-tooltip
                       effect="dark"
                       content="固定到左侧"
-                      placement="top-start"
+                      placement="bottom-start"
                     >
                       <svg
-                        class="icon svg-14 mg-r-10"
+                        class="icon svg-12 mg-r-15"
                         :class="{ 'primary-color': node.data.fixed == 'left' }"
                         aria-hidden="true"
-                        v-show="node.id !== 1"
+                        v-show="node.data.id !== 0"
                         @click.stop="fixedTableColumn(node, 'left')"
                       >
                         <use href="#icon-xueyuan-shangyijie"></use>
@@ -399,21 +447,21 @@ onBeforeMount(() => {
                     <el-tooltip
                       effect="dark"
                       content="固定到右侧"
-                      placement="top-start"
+                      placement="bottom-start"
                     >
                       <svg
-                        class="icon svg-14"
+                        class="icon svg-12 mg-r-5"
                         :class="{ 'primary-color': node.data.fixed == 'right' }"
                         aria-hidden="true"
-                        v-show="node.id !== 1"
+                        v-show="node.data.id !== 0"
                         @click.stop="fixedTableColumn(node, 'right')"
                       >
                         <use href="#icon-xueyuan-xiayijie"></use>
                       </svg>
                     </el-tooltip>
                     <span
-                      v-if="node.id === 1"
-                      class="primary-color"
+                      v-if="node.data.id === 0"
+                      class="primary-color ft-s-12"
                       @click.stop="resetTableColumn(node)"
                       >重置</span
                     >
@@ -421,6 +469,7 @@ onBeforeMount(() => {
                 </div>
               </template>
             </el-tree>
+            <div class="drag-line"></div>
           </el-popover>
         </div>
       </div>

@@ -53,6 +53,10 @@
     border-bottom: 1px #e7e7e7 solid;
   }
 
+  .el-tree__drop-indicator {
+    display: none !important;
+  }
+
   .custom-tree-node {
     width: 100%;
     display: flex;
@@ -63,6 +67,16 @@
       justify-content: space-between;
       align-items: center;
     }
+  }
+
+  & + .drag-line {
+    height: 1px;
+    background-color: var(--primary-color);
+    position: absolute;
+    top: 82px;
+    left: 10%;
+    right: 6%;
+    display: none;
   }
 }
 
