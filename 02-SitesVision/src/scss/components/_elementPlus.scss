@@ -39,6 +39,33 @@
   }
 }
 
+/// src\views\DataTable\ListPipeline.vue 表格列设置弹窗样式
+.table-column-tree {
+  .el-tree-node__expand-icon {
+    display: none;
+  }
+
+  .el-tree-node__content {
+    height: 35px;
+  }
+
+  > div > .el-tree-node__content {
+    border-bottom: 1px #e7e7e7 solid;
+  }
+
+  .custom-tree-node {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    >div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
 /*  element 主体颜色修改
 ------------------------------------------------ */
 :root {

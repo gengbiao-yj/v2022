@@ -1,7 +1,7 @@
 <!-- 操作按钮 -->
 <script setup lang="ts">
 import basicPinia from '@/pinia/storagePinia';
-import { fullScreen } from '@/utils/index';
+import { fullScreen } from '@/utils/hooks';
 import SystemSetting from './SystemSetting.vue';
 import { ElMessageBox } from 'element-plus';
 
@@ -11,7 +11,7 @@ const basicStore = basicPinia();
 const { getUserInfo } = basicStore;
 const userInfo = getUserInfo();
 const userName = ref(userInfo.userName);
-const setRestFullScreen = fullScreen();
+const setRestFullScreen = fullScreen(document.documentElement);
 const optionDrawer = ref<boolean>(false);
 const refresh = () => {
   router.replace(`/Main/Refresh`);

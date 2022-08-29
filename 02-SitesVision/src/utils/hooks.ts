@@ -41,6 +41,50 @@ export function busEmit(name: eventBusName, params: any) {
   EventBus.emit(name, params);
 }
 
+/*  全屏切换
+------------------------------------------------ */
+let isScreen = false;
+let isAddEvent = false;
+function updateIsScreen() {
+  isScreen = !isScreen;
+}
+export function fullScreen(_element: any) {
+  if (!isAddEvent) {
+    document.addEventListener('fullscreenchange', updateIsScreen);
+    isAddEvent = true;
+  }
+  onBeforeUnmount(() => {
+    document.removeEventListener('fullscreenchange', updateIsScreen);
+    isAddEvent = false;
+  });
+  return () => {
+    const _document: any = document;
+    if (isScreen) {
+      if (_document.exitFullscreen) {
+        _document.exitFullscreen();
+      } else if (_document.webkitCancelFullScreen) {
+        _document.webkitCancelFullScreen();
+      } else if (_document.mozCancelFullScreen) {
+        _document.mozCancelFullScreen();
+      } else if (_document.msExitFullscreen) {
+        // IE11
+        _document.msExitFullscreen();
+      }
+    } else {
+      if (_element.requestFullscreen) {
+        _element.requestFullscreen();
+      } else if (_element.webkitRequestFullScreen) {
+        _element.webkitRequestFullScreen();
+      } else if (_element.mozRequestFullScreen) {
+        _element.mozRequestFullScreen();
+      } else if (_element.msRequestFullscreen) {
+        // IE11
+        _element.msRequestFullscreen();
+      }
+    }
+  };
+}
+
 /*  接口
 ------------------------------------------------ */
 // 省市区接口

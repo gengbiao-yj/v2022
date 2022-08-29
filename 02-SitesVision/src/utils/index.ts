@@ -1,5 +1,4 @@
 import {
-  fullScreen,
   colorTransition,
   JudgeDataType,
   DataCrypto,
@@ -10,4 +9,4 @@ const cryptoData = new DataCrypto();
 const dataType = new JudgeDataType();
 const storage = new StorageUtils();
 
-export { dataType, cryptoData, storage, fullScreen, colorTransition };
+export { dataType, cryptoData, storage, colorTransition };
