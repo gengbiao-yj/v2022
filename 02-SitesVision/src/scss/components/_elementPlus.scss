@@ -5,7 +5,7 @@
   padding: 0 !important;
 }
 
-/// src\components\businessSelf\headerMenu\HeaderTabs.vue
+/// src\components\businessSelf\headerMenu\HeaderTabs.vue  tabs 标签页样式覆盖
 .header-tabs .el-tabs__header {
   margin-bottom: 0px !important;
   width: 100%;
@@ -39,7 +39,8 @@
   }
 }
 
-/// src\components\PublicGlobal\SvTableColumnOption.vue 表格列设置弹窗样式
+/// src\components\PublicGlobal\SvTableColumnOption.vue  表格列配置的弹窗样式
+// el-tree 组件样式覆盖
 .table-column-tree {
   // 隐藏展开收缩指示箭头
   .el-tree-node__expand-icon {
@@ -49,7 +50,7 @@
   .el-tree-node__content {
     height: 35px;
   }
-  // 父节点 - 展示列 增加边框
+  // 父节点 - 《展示列》 增加边框
   > div > .el-tree-node__content {
     border-bottom: 1px #e7e7e7 solid;
   }
@@ -111,7 +112,7 @@
   ) !important;
 }
 
-/*  element 主体颜色修改
+/*  element 主题颜色修改
 ------------------------------------------------ */
 :root {
   --el-color-primary: var(--primary-color) !important;
