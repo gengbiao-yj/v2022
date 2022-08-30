@@ -23,8 +23,8 @@ interface DataAreaParams {
 
 /*  业务 - 列表模块各接口的请求参数泛型
 ------------------------------------------------ */
-// 机会点列表接口
-interface ListSitesParams {
+// 机会点列表接口、门店列表接口
+interface ListViewParams {
   cusNo: string; // 企业编号
   provinceCode: string; // 省份编码
   cityCode: string; // 城市编码
@@ -34,4 +34,4 @@ interface ListSitesParams {
   page: number; // 页码
 }
 
-export type { UserLoginParams, DataAreaParams, ListSitesParams };
+export type { UserLoginParams, DataAreaParams, ListViewParams };

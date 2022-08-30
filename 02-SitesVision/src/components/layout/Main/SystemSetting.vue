@@ -172,7 +172,8 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
       .layout-aside {
         width: 15px;
         height: 100%;
-        background: #1a1a1a;
+        background: #ffffff;
+        //background: #1a1a1a;
         position: absolute;
         left: 0px;
       }

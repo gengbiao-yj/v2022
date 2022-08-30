@@ -9,8 +9,8 @@ import type {
   UserLogin,
   UserLoginParams,
   DataArea,
-  ListSitesParams,
-  ListSites
+  ListViewParams,
+  ListView
 } from '@/types/index';
 
 /*  注册登录 - start
@@ -38,12 +38,46 @@ function dataArea(Data: DataAreaParams) {
 /*  列表模式
 ------------------------------------------------ */
 // 机会点列表
-function listViewSites(Data: ListSitesParams) {
-  return http.request<ResponseResult<ListSites>>({
+function listViewSites(Data: ListViewParams) {
+  return http.request<ResponseResult<ListView>>({
     url: '/listView/sites',
     method: 'post',
     data: qs.stringify(Data)
   });
 }
 
-export { login, dataArea, listViewSites };
+// 门店列表
+function listViewStores(Data: ListViewParams) {
+  return http.request<ResponseResult<ListView>>({
+    url: '/listView/stores',
+    method: 'post',
+    data: qs.stringify(Data)
+  });
+}
+
+// 关注竞品店列表
+function listViewCompetitors(Data: ListViewParams) {
+  return http.request<ResponseResult<ListView>>({
+    url: '/listView/competitor',
+    method: 'post',
+    data: qs.stringify(Data)
+  });
+}
+
+// 已有商圈列表
+function listViewTas(Data: ListViewParams) {
+  return http.request<ResponseResult<ListView>>({
+    url: '/listView/ta',
+    method: 'post',
+    data: qs.stringify(Data)
+  });
+}
+
+export {
+  login,
+  dataArea,
+  listViewSites,
+  listViewStores,
+  listViewCompetitors,
+  listViewTas
+};

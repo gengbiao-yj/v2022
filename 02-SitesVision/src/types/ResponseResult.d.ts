@@ -4,8 +4,6 @@
 
 /*  业务 - 定义后台返回数据的泛型；<T> 业务数据泛型
 ------------------------------------------------ */
-import { ListSitesParams } from '@/types/RequestParams';
-
 interface ResponseResult<T> {
   code: number;
   message: string;
@@ -38,10 +36,10 @@ interface DataArea {
   typeID: number;
 }
 
-/*  业务 - 列表模块各接口的请求参数泛型
+/*  业务 - 列表模块各接口的返回数据泛型
 ------------------------------------------------ */
-// 机会点列表接口
-interface ListSites {
+// 机会点列表接口、门店列表接口
+interface ListView {
   rows: Array; // 表格数据
   total: number; // 总数
 }
@@ -58,4 +56,4 @@ interface AmapV3IP {
   centerLngLat: object; // rectangle 算出的中心点
 }
 
-export type { ResponseResult, UserLogin, AmapV3IP, DataArea, ListSites };
+export type { ResponseResult, UserLogin, AmapV3IP, DataArea, ListView };

@@ -29,7 +29,7 @@ breadcrumbs.push(
 const menuCollapse = ref<boolean>(false);
 // 左右布局时，浏览器宽度监视
 import { getWatchBrowserWidth } from '@/utils/hooks';
-getWatchBrowserWidth((val: number) => {
+const browserWidth = getWatchBrowserWidth((val: number) => {
   // aside menu 展开、折叠交替
   if (val <= 800 && val > 700) {
     menuCollapse.value = true; // 折叠
@@ -65,7 +65,10 @@ busOn('menuCollapse', (param: boolean) => {
     v-rotate:180="menuCollapse"
     @click="reverseState"
   />
-  <el-breadcrumb separator-class="el-icon-arrow-right">
+  <el-breadcrumb
+    separator-class="el-icon-arrow-right"
+    v-show="browserWidth > 500"
+  >
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="item of breadcrumbs" :key="item.path">
         <span class="breadcrumb-title">{{ item.meta?.title }}</span>

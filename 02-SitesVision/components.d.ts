@@ -53,7 +53,10 @@ declare module '@vue/runtime-core' {
     SvAreaData: typeof import('./src/components/PublicGlobal/SvAreaData.vue')['default']
     SvBadge: typeof import('./src/components/PublicGlobal/SvBadge.vue')['default']
     SvCopyrightLine: typeof import('./src/components/PublicGlobal/SvCopyrightLine.vue')['default']
+    SvFullScreen: typeof import('./src/components/PublicGlobal/SvFullScreen.vue')['default']
+    SvTableColumnOption: typeof import('./src/components/PublicGlobal/SvTableColumnOption.vue')['default']
     SvTableFilter: typeof import('./src/components/PublicGlobal/SvTableFilter.vue')['default']
+    SvTablePagination: typeof import('./src/components/PublicGlobal/SvTablePagination.vue')['default']
     SystemSetting: typeof import('./src/components/Layout/Main/SystemSetting.vue')['default']
   }
 }

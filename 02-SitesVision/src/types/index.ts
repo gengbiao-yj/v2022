@@ -2,14 +2,14 @@ import type { POIItem, SystemSetType, MenuItem, TabsItem } from './Components';
 import type {
   UserLoginParams,
   DataAreaParams,
-  ListSitesParams
+  ListViewParams
 } from './RequestParams';
 import type {
   ResponseResult,
   UserLogin,
   AmapV3IP,
   DataArea,
-  ListSites
+  ListView
 } from './ResponseResult';
 import type {
   StorageKeyType,
@@ -40,6 +40,6 @@ export type {
   eventBusName,
   DataAreaParams,
   DataArea,
-  ListSitesParams,
-  ListSites
+  ListViewParams,
+  ListView
 };

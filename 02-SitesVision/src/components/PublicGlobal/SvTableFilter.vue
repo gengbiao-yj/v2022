@@ -13,7 +13,7 @@ const props = defineProps({
 /*  筛选项目展开折叠
 ------------------------------------------------ */
 const filterBoxClose = ref(true); // 折叠展开标志
-const arg = [120, 20];
+const arg = [110, 20]; // 闭合高度、展开补偿高度（px）
 </script>
 
 <template>
@@ -52,7 +52,7 @@ const arg = [120, 20];
 
 <style scoped lang="scss">
 .filter-box {
-  @include box-size(100%, 120px);
+  @include box-size(100%, 110px);
   transition: all 0.3s ease-in-out;
   background: white;
   border-radius: 6px;
@@ -66,14 +66,10 @@ const arg = [120, 20];
   .filter-form {
     @include flex(row, center, flex-start);
     padding-left: 15px;
-    > .form-content {
-      width: calc(100% - 250px);
-    }
 
     > .btn-box {
-      width: 250px;
-      padding-right: 10px;
-      @include flex(row, flex-end, center);
+      min-height: 30px;
+      flex-wrap: wrap;
     }
   }
 
@@ -100,6 +96,33 @@ const arg = [120, 20];
 
   .title-color {
     @include primary-color();
+  }
+}
+
+@media screen and (min-width: 1px) {
+  .filter-box {
+    .form-content {
+      width: calc(100% - 100px);
+    }
+    .btn-box {
+      width: 100px;
+      @include flex(column, space-around, flex-end);
+      &:deep(button) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 560px) {
+  .filter-box {
+    .form-content {
+      width: calc(100% - 240px);
+    }
+    .btn-box {
+      width: 240px;
+      @include flex(row, space-around, center);
+    }
   }
 }
 </style>

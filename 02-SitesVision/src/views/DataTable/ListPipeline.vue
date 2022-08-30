@@ -3,10 +3,7 @@
 import { listViewSites } from '@/apis/user';
 import basicPinia from '@/pinia/storagePinia';
 import { ElMessage } from 'element-plus';
-import { fullScreen } from '@/utils/hooks';
 import { _HTMLDivElement } from '@/types';
-import type Node from 'element-plus/es/components/tree/src/model/node';
-import type { DropType } from 'element-plus/es/components/tree/src/tree.type';
 
 const { getUserInfo } = basicPinia();
 const userInfo = getUserInfo();
@@ -23,19 +20,15 @@ const currentPage = ref(1); // 当前页码
 const pageSize = ref(15); // 每页数据量
 const totalPipeline = ref(0);
 const loading = ref(false); // 加载动画
-// 每页数据量改变
-const handleSizeChange = (val: number) => {
-  pageSize.value = val;
-  searchTableData();
-};
-
-// 页码改变
-const handleCurrentChange = (val: number) => {
-  currentPage.value = val;
-  searchTableData();
-};
-
 const tableData = reactive<Array<object>>([]); // 表格数据
+
+// 重置查询项
+const resetFilters = () => {
+  filterForm.province = '';
+  filterForm.city = ''; // 城市
+  filterForm.county = ''; // 区县
+  filterForm.pipelineCode = ''; // 项目编号
+};
 
 // 查询列表数据
 const searchTableData = async () => {
@@ -70,244 +63,108 @@ const searchTable = () => {
 
 /*  列表功能
 ------------------------------------------------ */
-/**
- * 全屏
- */
-const tableContent = ref() as _HTMLDivElement;
-let _fullScreen: () => void;
-const setRestFullScreen = () => {
-  if (_fullScreen) {
-    _fullScreen();
-  } else {
-    console.log(tableContent.value);
-    _fullScreen = fullScreen(tableContent.value);
-    _fullScreen();
-  }
-};
+const tableContent = ref() as _HTMLDivElement; // 表格容器实例，用于全屏
 
-/**
- * 列筛选
- */
-const columnPopover = ref(false); // 列设置 popover 展现状态
-const treeInstance = ref(); // 列设置 tree instance
-const defaultProps = {
-  children: 'children',
-  label: 'label',
-  disabled: 'disabled'
-}; // tree props
-
-interface column {
-  id: number;
-  label: string;
-  fixed: string | boolean;
-  minWidth: string;
-  width: string;
-  prop: string;
-} // type: tree-node-data 数据类型
-
-const tableColumn = reactive([
-  {
-    id: 0,
-    label: '展示列',
-    children: [
-      {
-        id: 1,
-        label: '项目编号',
-        fixed: false,
-        minWidth: '',
-        width: '130',
-        prop: 'siteCode'
-      },
-      {
-        id: 2,
-        label: '项目名称',
-        fixed: false,
-        minWidth: '180',
-        width: '',
-        prop: 'siteName'
-      },
-      {
-        id: 3,
-        label: '项目进度',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'progressName'
-      },
-      {
-        id: 4,
-        label: '状态',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'siteStatusName'
-      },
-      {
-        id: 5,
-        label: '预计开业日期',
-        fixed: false,
-        minWidth: '',
-        width: '120',
-        prop: 'planOpenDate'
-      },
-      {
-        id: 6,
-        label: '经营性质',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'busTypeName'
-      },
-      {
-        id: 7,
-        label: '省份',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'provinceName'
-      },
-      {
-        id: 8,
-        label: '城市',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'cityName'
-      },
-      {
-        id: 9,
-        label: '区县',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'districtName'
-      },
-      {
-        id: 10,
-        label: '门店编号',
-        fixed: false,
-        minWidth: '',
-        width: '',
-        prop: 'storeCode'
-      },
-      {
-        id: 11,
-        label: '地址',
-        fixed: false,
-        minWidth: '280',
-        width: '',
-        prop: 'address'
-      },
-      {
-        id: 12,
-        label: '备注',
-        fixed: false,
-        minWidth: '220',
-        width: '',
-        prop: 'remark'
-      }
-    ] as Array<column>
-  }
-]); // tree node data
-const checkedTableColumn = reactive([...tableColumn[0].children]); // 当前已选择要展示的列
-
-// 节点复选框状态变更
-const popoverColumnCheck = (
-  item: object,
-  data: {
-    checkedNodes: Array<column>;
-  }
-) => {
-  checkedTableColumn.length = 0;
-  // console.log(data);
-  data.checkedNodes.forEach(e => {
-    if (e.id !== 0) checkedTableColumn.push(e);
-  });
-};
-
-// 拖拽指示线显示控制
-const dragLineShow = (status: 'block' | 'none') => {
-  let line = document.querySelector(
-    '.table-column-tree + .drag-line'
-  ) as HTMLDivElement;
-  if (line) {
-    line.style.display = status;
-    return line;
-  }
-};
-
-// 重置表格列
-const resetTableColumn = (node: object) => {
-  checkedTableColumn.length = 0;
-  tableColumn[0].children.sort((a, b) => a.id - b.id); // 排序复位
-  tableColumn[0] = JSON.parse(JSON.stringify(tableColumn[0])); // 生成新数据，复位DOM排序
-  tableColumn[0].children.forEach(e => {
-    checkedTableColumn.push(e);
-  }); // 表格列顺序复位
-  checkedTableColumn.forEach(e => (e.fixed = false)); // 取消所有固定
-  nextTick(() => {
-    treeInstance.value.setCheckedKeys([0]); // 恢复全选
-  });
-  // 删除拖拽指示线
-  dragLineShow('none');
-};
-
-// 列固定
-const fixedTableColumn = (node: any, fixed: string) => {
-  let filter = checkedTableColumn.filter(e => e.id === node.data.id);
-  if (filter.length) {
-    filter[0].fixed === fixed
-      ? (filter[0].fixed = false)
-      : (filter[0].fixed = fixed);
-  }
-};
-
-// 允许拖拽插入条件
-const allowDrop = (draggingNode: Node, dropNode: Node, type: DropType) => {
-  if (dropNode.data.id === 0) {
-    return false;
-  } else {
-    return type === 'prev';
-  }
-};
-
-// 允许拖拽条件
-const allowDrag = (draggingNode: Node) => {
-  return draggingNode.data.id !== 0;
-};
-
-// 拖拽离开某个节点时触发的事件
-const handleDragLeave = (draggingNode: Node, dropNode: Node, ev: any) => {
-  const line = dragLineShow('block');
-  if (line && ev.target.offsetTop > 50) {
-    line.style.top = `${ev.target.offsetTop + 12}px`;
-  }
-};
-
-// 拖拽完成()成功
-const nodeDropSuccess = () => {
-  treeInstance.value.setCheckedKeys([0]); // 恢复全选
-  let checkedNodes: Array<column> = treeInstance.value.getCheckedNodes(); // 当前选中节点
-  // 表格列按新顺序排列
-  checkedTableColumn.length = 0;
-  checkedNodes = JSON.parse(JSON.stringify(checkedNodes));
-  checkedNodes.forEach((e, i) => {
-    if (e.id !== 0) {
-      e.id = i;
-      checkedTableColumn.push(e);
+// 表格列配置
+const checkedTableColumn = reactive({
+  value: [
+    {
+      id: 1,
+      label: '项目编号',
+      fixed: false,
+      minWidth: '',
+      width: '130',
+      prop: 'siteCode'
+    },
+    {
+      id: 2,
+      label: '项目名称',
+      fixed: false,
+      minWidth: '180',
+      width: '',
+      prop: 'siteName'
+    },
+    {
+      id: 3,
+      label: '项目进度',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'progressName'
+    },
+    {
+      id: 4,
+      label: '状态',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'siteStatusName'
+    },
+    {
+      id: 5,
+      label: '预计开业日期',
+      fixed: false,
+      minWidth: '',
+      width: '120',
+      prop: 'planOpenDate'
+    },
+    {
+      id: 6,
+      label: '经营性质',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'busTypeName'
+    },
+    {
+      id: 7,
+      label: '省份',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'provinceName'
+    },
+    {
+      id: 8,
+      label: '城市',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'cityName'
+    },
+    {
+      id: 9,
+      label: '区县',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'districtName'
+    },
+    {
+      id: 10,
+      label: '门店编号',
+      fixed: false,
+      minWidth: '',
+      width: '',
+      prop: 'storeCode'
+    },
+    {
+      id: 11,
+      label: '地址',
+      fixed: false,
+      minWidth: '280',
+      width: '',
+      prop: 'address'
+    },
+    {
+      id: 12,
+      label: '备注',
+      fixed: false,
+      minWidth: '220',
+      width: '',
+      prop: 'remark'
     }
-  });
-};
-
-// 点击空白处关闭表格列设置弹窗
-const closeColumnPopover = () => {
-  columnPopover.value = false;
-};
-onMounted(() => {
-  document.body.addEventListener('click', closeColumnPopover);
-});
-onBeforeUnmount(() => {
-  document.body.removeEventListener('click', closeColumnPopover);
+  ]
 });
 
 /*  生命周期
@@ -319,12 +176,12 @@ onBeforeMount(() => {
 </script>
 <template>
   <div
-    class="list-pipeline"
+    class="list-root"
     v-loading="loading"
     element-loading-background="rgba(100,100,100,0.4)"
     element-loading-text="加载中..."
   >
-    <sv-table-filter>
+    <sv-table-filter title="机会项目">
       <template #form>
         <el-form
           :inline="true"
@@ -337,10 +194,15 @@ onBeforeMount(() => {
             v-model:province="filterForm.province"
             v-model:city="filterForm.city"
             v-model:county="filterForm.county"
+            size="small"
           />
           <!-- 项目编号 -->
           <el-form-item label="项目编号">
-            <el-input v-model="filterForm.pipelineCode" placeholder="">
+            <el-input
+              v-model="filterForm.pipelineCode"
+              placeholder=""
+              size="small"
+            >
               <template #suffix>
                 <transition name="upDown" mode="out-in" appear>
                   <el-icon
@@ -357,120 +219,47 @@ onBeforeMount(() => {
         </el-form>
       </template>
       <template #btn>
-        <el-button type="primary" @click="searchTable">
+        <el-button type="primary" @click="searchTable" size="small">
           <template #icon>
             <Search />
           </template>
           查询
         </el-button>
-        <el-button type="danger">
+        <el-button type="danger" size="small" @click="resetFilters">
           <template #icon>
             <Refresh />
           </template>
-          清空
+          重置
         </el-button>
       </template>
     </sv-table-filter>
     <div class="table-box" ref="tableContent">
       <div class="table-setting">
+        <div class="pd-l-10">
+          <el-button size="small">
+            <template #icon>
+              <Plus class="primary-color" />
+            </template>
+            <span class="primary-color">新建</span>
+          </el-button>
+          <el-button size="small">
+            <template #icon>
+              <Download class="primary-color" />
+            </template>
+            <span class="primary-color">导出</span>
+          </el-button>
+        </div>
         <div class="tools-box">
-          <!-- 新增 -->
-          <el-tooltip effect="dark" content="新增" placement="top-start">
-            <Plus class="svg-18" />
-          </el-tooltip>
           <!-- 刷新 -->
           <el-tooltip effect="dark" content="刷新" placement="top-start">
             <Refresh class="svg-18" @click="searchTable" />
           </el-tooltip>
           <!-- 全屏 -->
-          <el-tooltip effect="dark" content="全屏" placement="top-start">
-            <FullScreen class="svg-18" @click="setRestFullScreen" />
-          </el-tooltip>
-          <!-- 列设置 -->
-          <el-popover
-            v-model:visible="columnPopover"
-            placement="bottom"
-            :width="230"
-            trigger="click"
-          >
-            <template #reference>
-              <div>
-                <el-tooltip
-                  effect="dark"
-                  content="设置列"
-                  placement="top-start"
-                >
-                  <Tools
-                    class="svg-18"
-                    @click.stop="columnPopover = !columnPopover"
-                  />
-                </el-tooltip>
-              </div>
-            </template>
-            <el-tree
-              :data="tableColumn"
-              :props="defaultProps"
-              :default-expanded-keys="[0]"
-              :default-checked-keys="[0]"
-              draggable
-              :allow-drop="allowDrop"
-              :allow-drag="allowDrag"
-              class="table-column-tree"
-              node-key="id"
-              show-checkbox
-              ref="treeInstance"
-              @check="popoverColumnCheck"
-              @node-drag-leave="handleDragLeave"
-              @node-drop="nodeDropSuccess"
-              @node-collapse="dragLineShow('none')"
-              @node-expand="dragLineShow('block')"
-            >
-              <template #default="{ node }">
-                <div class="custom-tree-node">
-                  <span>{{ node.label }}</span>
-                  <div>
-                    <el-tooltip
-                      effect="dark"
-                      content="固定到左侧"
-                      placement="bottom-start"
-                    >
-                      <svg
-                        class="icon svg-12 mg-r-15"
-                        :class="{ 'primary-color': node.data.fixed == 'left' }"
-                        aria-hidden="true"
-                        v-show="node.data.id !== 0"
-                        @click.stop="fixedTableColumn(node, 'left')"
-                      >
-                        <use href="#icon-xueyuan-shangyijie"></use>
-                      </svg>
-                    </el-tooltip>
-                    <el-tooltip
-                      effect="dark"
-                      content="固定到右侧"
-                      placement="bottom-start"
-                    >
-                      <svg
-                        class="icon svg-12 mg-r-5"
-                        :class="{ 'primary-color': node.data.fixed == 'right' }"
-                        aria-hidden="true"
-                        v-show="node.data.id !== 0"
-                        @click.stop="fixedTableColumn(node, 'right')"
-                      >
-                        <use href="#icon-xueyuan-xiayijie"></use>
-                      </svg>
-                    </el-tooltip>
-                    <span
-                      v-if="node.data.id === 0"
-                      class="primary-color ft-s-12"
-                      @click.stop="resetTableColumn(node)"
-                      >重置</span
-                    >
-                  </div>
-                </div>
-              </template>
-            </el-tree>
-            <div class="drag-line"></div>
-          </el-popover>
+          <sv-full-screen :tableInstance="tableContent" />
+          <!-- 列表设置 -->
+          <sv-table-column-option
+            v-model:tableColumn="checkedTableColumn.value"
+          />
         </div>
       </div>
       <div class="table-content">
@@ -484,8 +273,8 @@ onBeforeMount(() => {
           <el-table-column key="index" label="#" type="index" fixed="left" />
 
           <el-table-column
-            v-for="item in checkedTableColumn"
-            :key="item.id"
+            v-for="(item, i) in checkedTableColumn.value"
+            :key="i"
             :prop="item.prop"
             :label="item.label"
             :width="item.width"
@@ -508,15 +297,12 @@ onBeforeMount(() => {
           </el-table-column>
         </el-table>
         <div class="table-pagination">
-          <el-pagination
+          <sv-table-pagination
             v-model:currentPage="currentPage"
-            v-model:page-size="pageSize"
-            :page-sizes="[5, 10, 15, 20]"
-            background
-            layout="total, sizes, prev, pager, next, jumper"
+            v-model:pageSize="pageSize"
             :total="totalPipeline"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            :pageSizeOption="[5, 10, 15, 20]"
+            @change="searchTableData"
           />
         </div>
       </div>
@@ -526,7 +312,7 @@ onBeforeMount(() => {
 </template>
 
 <style lang="scss" scoped>
-.list-pipeline {
+.list-root {
   @include box-size(100%, 100%);
   @include flex(column, center, flex-start);
 
@@ -540,14 +326,15 @@ onBeforeMount(() => {
 
     .table-setting {
       @include box-size(100%, 40px);
-      @include flex(row, flex-end, center);
+      @include flex(row, space-between, center);
       @include primary-bg-color(1);
       .tools-box {
         @include box-size(auto, 100%);
         @include flex(row, flex-end, center);
-        color: #5e5e5e;
         padding-right: 10px;
-        svg {
+        svg,
+        &:deep(> svg),
+        &:deep(.el-tooltip__trigger > svg) {
           margin-left: 16px;
           cursor: pointer;
           color: white;
@@ -559,15 +346,11 @@ onBeforeMount(() => {
             outline: none;
           }
         }
-        > div {
-          @include flex(row, center, center);
-        }
       }
     }
 
     .table-content {
       height: calc(100% - 40px);
-      //overflow-y: auto;
       &:deep(.el-table) {
         width: 100%;
         border-radius: 0 0 5px 5px;
@@ -578,20 +361,17 @@ onBeforeMount(() => {
     .table-pagination {
       @include box-size(100%, 60px);
       @include flex(row, flex-end, center);
-      padding-right: 20px;
       overflow-x: auto;
     }
   }
 
-  .title-color {
-    @include primary-color();
-  }
-
   &::v-deep {
+    // 标题行样式
     .table-header-cell {
       color: #333333;
     }
 
+    // 单元格排布
     .table-cell .cell {
       font-size: 13px;
       position: relative;

@@ -19,6 +19,10 @@ const props = defineProps({
   county: {
     type: String,
     required: true
+  },
+  size: {
+    type: String,
+    default: 'default'
   }
 });
 
@@ -82,6 +86,8 @@ onBeforeMount(() => {
     <el-select
       v-model="province"
       placeholder=""
+      clearable
+      :size="props.size"
       @change="val => formItemChange(val, 101)"
     >
       <el-option
@@ -97,6 +103,8 @@ onBeforeMount(() => {
     <el-select
       v-model="city"
       placeholder=""
+      clearable
+      :size="props.size"
       @change="val => formItemChange(val, 102)"
     >
       <el-option
@@ -113,6 +121,7 @@ onBeforeMount(() => {
       v-model="county"
       placeholder=""
       clearable
+      :size="props.size"
       @change="val => formItemChange(val, 103)"
     >
       <el-option
