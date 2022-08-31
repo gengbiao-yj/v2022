@@ -39,8 +39,8 @@ const newPrimaryColor = () => {
   systemSettings.value.historyPrimaryCol.unshift(
     systemSettings.value.primaryColor
   );
-  if (systemSettings.value.historyPrimaryCol.length > 6) {
-    systemSettings.value.historyPrimaryCol.splice(5);
+  if (systemSettings.value.historyPrimaryCol.length > 24) {
+    systemSettings.value.historyPrimaryCol.splice(23);
   }
   setSystemParams(systemSettings.value);
 };
@@ -54,6 +54,19 @@ const selectOldPrimary = (e: string) => {
 // 选择布局方式
 const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
   systemSettings.value.layoutType = e;
+  setSystemParams(systemSettings.value);
+};
+
+// 配置选择导航栏主题
+const isMenuPrimary = (aside: boolean, header: boolean) => {
+  if (aside && !header) {
+    systemSettings.value.primaryAside = !systemSettings.value.primaryAside;
+  } else if (!aside && header) {
+    systemSettings.value.primaryHeader = !systemSettings.value.primaryHeader;
+  } else {
+    systemSettings.value.primaryAside = false;
+    systemSettings.value.primaryHeader = false;
+  }
   setSystemParams(systemSettings.value);
 };
 </script>
@@ -87,7 +100,7 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
           ></span>
         </div>
       </div>
-      <el-divider> 布局方式 </el-divider>
+      <el-divider> 导航栏布局 </el-divider>
       <div class="layout-type-box">
         <!-- 左右 -->
         <div class="layout-type">
@@ -108,6 +121,37 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
           <span>上下</span>
           <span
             v-if="systemSettings.layoutType === 'UpDown'"
+            class="circle-tip"
+          ></span>
+        </div>
+      </div>
+      <el-divider> 导航栏风格 </el-divider>
+      <div class="layout-type-box">
+        <!-- 侧边栏主题色 -->
+        <div class="layout-type">
+          <div @click="isMenuPrimary(true, false)">
+            <div class="layout-aside primary-bg-color"></div>
+          </div>
+          <span>主题侧栏</span>
+          <span v-if="systemSettings.primaryAside" class="circle-tip"></span>
+        </div>
+        <!-- 顶栏主题色 -->
+        <div class="layout-type">
+          <div @click="isMenuPrimary(false, true)">
+            <div class="layout-header primary-bg-color"></div>
+          </div>
+          <span>主题顶栏</span>
+          <span v-if="systemSettings.primaryHeader" class="circle-tip"></span>
+        </div>
+        <!-- 侧栏+顶栏白色 -->
+        <div class="layout-type layout-primary-cancel">
+          <div @click="isMenuPrimary(false, false)">
+            <div class="layout-header"></div>
+            <div class="layout-aside"></div>
+          </div>
+          <span>主题取消</span>
+          <span
+            v-if="!systemSettings.primaryHeader && !systemSettings.primaryAside"
             class="circle-tip"
           ></span>
         </div>
@@ -133,6 +177,7 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
   background: #03be32;
 }
 
+// 主题盒子
 .primary-box {
   width: 100%;
   margin-top: 10px;
@@ -144,9 +189,9 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
     height: 40px;
     @include flex(column, flex-start, center);
     > .primary-box-item {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
       padding: 1px;
       border: 1px solid #afafaf;
       cursor: pointer;
@@ -154,6 +199,7 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
   }
 }
 
+// 导航栏布局、主题盒子
 .layout-type-box {
   width: 100%;
   height: auto;
@@ -165,7 +211,7 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
       width: 50px;
       height: 40px;
       position: relative;
-      background: #d4d4d4;
+      background: #dedede;
       border-radius: 5px;
       overflow: hidden;
       box-shadow: 0px 0px 10px 2px #ededed;
@@ -188,6 +234,19 @@ const selectLayoutType = (e: 'UpDown' | 'LeftRight') => {
     > span:nth-child(2) {
       font-size: 12px;
       color: #333333;
+    }
+  }
+  .layout-primary-cancel {
+    position: relative;
+    &::before {
+      display: block;
+      content: '';
+      width: 1px;
+      height: 26px;
+      position: absolute;
+      top: 7px;
+      left: -14px;
+      background: #cecece;
     }
   }
 }

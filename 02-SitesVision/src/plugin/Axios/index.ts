@@ -8,7 +8,7 @@ const http = new Axios({
   timeout: 100000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    time: new Date().getTime(),
+    time: '',
     token: '',
     timestamp: '',
     mode: 'cors'

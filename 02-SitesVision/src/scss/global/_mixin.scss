@@ -40,3 +40,12 @@
     $per
   );
 }
+
+@mixin primary-border-color($per: 1) {
+  border-color: rgba(
+    var(--primary-color-r),
+    var(--primary-color-g),
+    var(--primary-color-b),
+    $per
+  );
+}

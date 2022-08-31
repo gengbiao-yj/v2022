@@ -37,19 +37,62 @@ busOn('leftRightWidth700', (param: boolean) => {
 ------------------------------------------------ */
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
-const systemSettings = ref(basicStore.systemParams);
+const systemSet = computed(() => basicStore.systemParams);
+const textColor = ref(''); // menu 文字颜色
+const activeTextColor = ref(''); // menu 选中项文字颜色
+const menuBgColor = ref(''); // menu 背景颜色
+
+onBeforeMount(() => {
+  judgeMenuPrimary(systemSet.value);
+});
 watch(
   () => basicStore.systemParams,
   val => {
-    systemSettings.value = val;
+    judgeMenuPrimary(val);
+  },
+  {
+    deep: true
   }
 );
+
+/**
+ * menu 主题判断逻辑
+ * @param val
+ */
+const judgeMenuPrimary = (val: SystemSetType) => {
+  if (val.layoutType === 'LeftRight') {
+    if (val.primaryAside) {
+      setMenuPrimary('#e8e8e8', '#fff', val.primaryColor);
+    } else {
+      setMenuPrimary('#303133', val.primaryColor, '#fff');
+    }
+  } else {
+    if (val.primaryHeader) {
+      setMenuPrimary('#e8e8e8', '#fff', val.primaryColor);
+    } else {
+      setMenuPrimary('#303133', val.primaryColor, '#fff');
+    }
+  }
+};
+
+/**
+ * 设置 menu 主题颜色
+ * @param tc  文字颜色
+ * @param atc 激活项文字颜色
+ * @param mbc 背景色
+ */
+const setMenuPrimary = (tc: string, atc: string, mbc: string) => {
+  textColor.value = tc;
+  activeTextColor.value = atc;
+  menuBgColor.value = mbc;
+};
 
 /*  界面渲染
 ------------------------------------------------ */
 // 细分组件
 import SmartRecommend from './SmartRecommend.vue';
 import { DataTableType } from '@/data/headerMenu';
+import { SystemSetType } from '@/types';
 
 // 智能推荐下拉，展开收缩标志位
 const smartRecommendShow = ref<boolean>(false);
@@ -60,7 +103,7 @@ const menuSelect = (e: any) => {
   activeIndex.value = e;
 };
 
-// 路由刷新，动态激活默认选项
+// 路由刷新，动态激活默认选项 systemSet.primaryColor
 const router = useRouter();
 const route = useRoute();
 const defaultActive = ref<string>('');
@@ -79,7 +122,15 @@ watch(route, newV => {
       :collapse="menuCollapseState"
       router
       :default-active="defaultActive"
-      :active-text-color="systemSettings.primaryColor || '#000'"
+      :text-color="textColor"
+      :active-text-color="activeTextColor"
+      :background-color="menuBgColor"
+      :id="
+        (systemSet.primaryAside && systemSet.layoutType === 'LeftRight') ||
+        (systemSet.primaryHeader && systemSet.layoutType === 'UpDown')
+          ? 'primaryMenu'
+          : 'defaultMenu'
+      "
       :class="{
         'header-height': props.isAside === 'horizontal',
         'aside-height': props.isAside === 'vertical',
@@ -104,8 +155,7 @@ watch(route, newV => {
               class="select-menu"
               :class="{ 'select-menu-asside': props.isAside === 'vertical' }"
               :style="{
-                color:
-                  activeIndex == 1 ? systemSettings.primaryColor : '#303133'
+                color: activeIndex == 1 ? systemSet.primaryColor : '#303133'
               }"
             >
               <Guide class="svg-16 mg-r-5" />
@@ -148,6 +198,7 @@ watch(route, newV => {
 
 <style lang="scss" scoped>
 .header-menu-root {
+  height: 100%;
   .select-menu {
     height: 100%;
     min-width: 85px;
@@ -165,7 +216,8 @@ watch(route, newV => {
   height: 50px;
 }
 .aside-height {
-  height: calc(100% - 50px);
+  //height: calc(100% - 50px);
+  height: 100%;
 }
 .remove-border {
   border: none !important;

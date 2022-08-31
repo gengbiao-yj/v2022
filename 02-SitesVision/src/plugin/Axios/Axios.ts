@@ -37,6 +37,7 @@ export default class Axios {
         if (status === 1) {
           config.headers!.token = value.token;
           config.headers!.timestamp = value.timestamp;
+          config.headers!.time = new Date().getTime();
         } else {
           config.headers!.token = '';
           config.headers!.timestamp = '';

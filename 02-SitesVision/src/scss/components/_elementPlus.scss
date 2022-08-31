@@ -90,26 +90,60 @@
 
 /*  el-menu 组件样式覆盖
 ------------------------------------------------ */
-// hover 状态样式重写
-.el-sub-menu__title:hover,
-.el-menu-item:hover {
-  background: none !important;
-  > span,
-  svg {
-    transition: all 0.3s ease-in-out;
-    transform: translateY(-1px);
-    color: var(--el-color-primary) !important;
+// menu - mode:vertical
+.el-menu--popup-container {
+  .el-menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    > span,
+    svg,
+    i {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .el-menu-item.is-active {
+    background-color: rgba(255, 255, 255, 0.4) !important;
   }
 }
 
-// focus 状态增加背景样式
-.el-menu-item.is-active {
-  background-color: rgba(
-    var(--primary-color-r),
-    var(--primary-color-g),
-    var(--primary-color-b),
-    0.2
-  ) !important;
+#defaultMenu {
+  // hover 状态样式重写
+  .el-sub-menu__title:hover,
+  .el-menu-item:hover {
+    background: none;
+    > span,
+    svg {
+      transition: all 0.2s ease;
+      color: var(--primary-color);
+    }
+  }
+
+  // focus 状态增加背景样式
+  .el-menu-item.is-active {
+    background-color: rgba(
+      var(--primary-color-r),
+      var(--primary-color-g),
+      var(--primary-color-b),
+      0.2
+    );
+  }
+}
+
+#primaryMenu {
+  // hover 状态样式重写
+  .el-sub-menu__title:hover,
+  .el-menu-item:hover {
+    background: none;
+    > span,
+    svg {
+      transition: all 0.2s ease;
+      color: white;
+    }
+  }
+
+  // focus 状态增加背景样式
+  .el-menu-item.is-active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 /*  element 主题颜色修改

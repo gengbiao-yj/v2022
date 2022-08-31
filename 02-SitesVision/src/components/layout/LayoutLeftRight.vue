@@ -6,6 +6,10 @@ import HeaderOption from '@comps/Layout/Main/HeaderOption.vue';
 import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
 import Breadcrumb from '@comps/Layout/Main/Breadcrumb.vue';
 
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const systemSet = computed(() => basicStore.systemParams);
+
 import { busOn, busEmit } from '@/utils/hooks';
 /*  订阅总线事件
 ------------------------------------------------ */
@@ -44,13 +48,25 @@ const drawClosed = () => {
         <div class="aside-title">
           <HeaderTitle />
         </div>
-        <div class="aside-menu">
+        <div
+          class="aside-menu"
+          :class="{
+            'primary-bg-color':
+              systemSet.primaryAside && systemSet.layoutType === 'LeftRight'
+          }"
+        >
           <HeaderMenu is-aside="vertical" />
         </div>
       </el-aside>
       <el-container style="width: 100%">
         <el-header height="50px">
-          <div class="header">
+          <div
+            class="header"
+            :class="{
+              'primary-bg-color':
+                systemSet.primaryHeader && systemSet.layoutType === 'LeftRight'
+            }"
+          >
             <div class="header-left">
               <Breadcrumb />
             </div>
@@ -107,18 +123,9 @@ const drawClosed = () => {
   .aside-title {
     @include box-size(100%, 50px);
     @include flex(row, flex-start, flex-end);
+    @include primary-bg-color(1);
     overflow: hidden;
     border-bottom: 1px dashed #a8a8a8;
-    background: linear-gradient(
-      90deg,
-      var(--primary-color),
-      rgba(
-        var(--primary-color-r),
-        var(--primary-color-g),
-        var(--primary-color-b),
-        0.25
-      )
-    );
     padding-left: 15px;
     padding-bottom: 10px;
   }

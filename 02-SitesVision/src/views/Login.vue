@@ -206,8 +206,12 @@ const apiUserLogin = async (
       setUserInfo(data);
       const user = getUserInfo();
       console.log(user.token);
-      router.replace('/Main');
-      ElMessage.success('登录成功！');
+      ElMessage.success('登录成功,即将进入系统！');
+      let ti = setTimeout(() => {
+        ElMessage.closeAll();
+        router.replace('/Main');
+        clearTimeout(ti);
+      }, 800);
     } else {
       ElMessage.error(message);
     }

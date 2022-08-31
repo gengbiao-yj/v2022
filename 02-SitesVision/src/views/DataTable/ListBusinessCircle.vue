@@ -315,7 +315,7 @@ onBeforeMount(() => {
     .table-setting {
       @include box-size(100%, 40px);
       @include flex(row, space-between, center);
-      @include primary-bg-color(1);
+      @include primary-bg-color(0.5);
       .tools-box {
         @include box-size(auto, 100%);
         @include flex(row, flex-end, center);
@@ -342,7 +342,8 @@ onBeforeMount(() => {
       &:deep(.el-table) {
         width: 100%;
         border-radius: 0 0 5px 5px;
-        border: 1px solid var(--primary-color);
+        border: 1px solid;
+        @include primary-border-color(0.5);
       }
     }
 

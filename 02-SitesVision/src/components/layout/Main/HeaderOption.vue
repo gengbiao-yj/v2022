@@ -93,12 +93,18 @@ const quitSystem = () => {
       popper-class="header-option-popover"
     >
       <template #reference>
-        <span class="svg-item svg-bg"><Avatar class="svg-20" /></span>
+        <span class="svg-item svg-bg"
+          ><img
+            src="../../../../public/resource/imgs/schoolboy.png"
+            class="svg-38"
+        /></span>
       </template>
       <div class="user-option">
         <div class="user-option-header">
           <span class="avatar-box"
-            ><Avatar style="color: white" class="svg-30"
+            ><img
+              src="../../../../public/resource/imgs/schoolboy.png"
+              class="svg-38"
           /></span>
           <span class="user-name">{{ userName }}</span>
         </div>
@@ -136,15 +142,11 @@ const quitSystem = () => {
     margin-right: 10px;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
-    color: #303133;
+    color: #070707;
 
     &:hover {
-      color: rgba(
-        var(--primary-color-r),
-        var(--primary-color-g),
-        var(--primary-color-b),
-        0.7
-      );
+      transition: all 0.3s ease;
+      transform: rotate(30deg);
     }
 
     &:last-child {
@@ -154,6 +156,7 @@ const quitSystem = () => {
 
   .svg-bg {
     background: #e5e5e5;
+    overflow: hidden;
   }
 }
 
@@ -168,6 +171,8 @@ const quitSystem = () => {
     .avatar-box {
       border-radius: 999px;
       background: #e9e5e5;
+      border-radius: 6px;
+      overflow: hidden;
       @include box-size(36px, 36px);
       @include flex(row, center, center);
     }

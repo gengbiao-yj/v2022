@@ -5,6 +5,14 @@
   color: crimson;
 }
 
+.color-white {
+  color: #fff;
+}
+
 .primary-color {
   color: var(--primary-color);
+}
+
+.primary-bg-color {
+  background-color: var(--primary-color) !important;
 }

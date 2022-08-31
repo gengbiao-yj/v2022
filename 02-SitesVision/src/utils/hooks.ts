@@ -3,7 +3,6 @@ import mitt from 'mitt';
 const EventBus = mitt();
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import type { eventBusName } from '@/types';
-import { dataArea } from '@/apis/user';
 
 /*  通用 start
 ------------------------------------------------ */
@@ -41,7 +40,7 @@ export function busEmit(name: eventBusName, params: any) {
   EventBus.emit(name, params);
 }
 
-/*  全屏切换
+/*  全屏切换 start
 ------------------------------------------------ */
 let isScreen = false;
 let isAddEvent = false;
@@ -84,22 +83,3 @@ export function fullScreen(_element: any) {
     }
   };
 }
-
-/*  接口
------------------------------------------------- */
-// 省市区接口
-export const getDataArea = async (JoinCode: string, TypeID: number) => {
-  try {
-    const { code, data } = await dataArea({
-      JoinCode,
-      TypeID
-    });
-    if (code === 200) {
-      return reactive(data);
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};

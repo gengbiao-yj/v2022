@@ -4,6 +4,10 @@ import HeaderTitle from '@comps/Layout/Main/HeaderTitle.vue';
 import HeaderMenu from '@comps/Layout/Main/HeaderMenu.vue';
 import HeaderOption from '@comps/Layout/Main/HeaderOption.vue';
 import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
+
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const systemSet = computed(() => basicStore.systemParams);
 </script>
 
 <template>
@@ -16,7 +20,13 @@ import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
         <div class="header-menu">
           <HeaderMenu />
         </div>
-        <div class="header-right">
+        <div
+          class="header-right"
+          :class="{
+            'primary-bg-color':
+              systemSet.primaryHeader && systemSet.layoutType === 'UpDown'
+          }"
+        >
           <HeaderOption />
         </div>
       </div>
@@ -64,22 +74,12 @@ import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
     &-left {
       @include box-size(210px, 100%);
       @include flex(row, flex-start, flex-end);
+      @include primary-bg-color(1);
       padding-left: 15px;
-      background: linear-gradient(
-        90deg,
-        var(--primary-color),
-        rgba(
-          var(--primary-color-r),
-          var(--primary-color-g),
-          var(--primary-color-b),
-          0.25
-        )
-      );
       padding-bottom: 10px;
     }
     &-menu {
       @include box-size(calc(100% - 510px), 100%);
-      padding-left: 20px;
     }
     &-right {
       @include box-size(300px, 100%);

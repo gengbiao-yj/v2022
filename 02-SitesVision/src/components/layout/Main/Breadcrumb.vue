@@ -3,6 +3,10 @@
 import type { RouteLocationMatched } from 'vue-router';
 import { busEmit, busOn } from '@/utils/hooks';
 
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const systemSet = computed(() => basicStore.systemParams);
+
 /*  面包屑层级信息获取
 ------------------------------------------------ */
 // 监视路由变化
@@ -61,13 +65,23 @@ busOn('menuCollapse', (param: boolean) => {
 
 <template>
   <Fold
-    class="svg-18 mg-r-10 menu-collapse-icon"
+    class="svg-18 mg-r-10 cur-pointer"
+    :class="
+      !systemSet.primaryHeader && systemSet.layoutType === 'LeftRight'
+        ? 'primary-color'
+        : 'color-white'
+    "
     v-rotate:180="menuCollapse"
     @click="reverseState"
   />
   <el-breadcrumb
     separator-class="el-icon-arrow-right"
     v-show="browserWidth > 500"
+    :class="
+      !systemSet.primaryHeader && systemSet.layoutType === 'LeftRight'
+        ? ''
+        : 'breadcrumb-primary'
+    "
   >
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="item of breadcrumbs" :key="item.path">
@@ -78,9 +92,8 @@ busOn('menuCollapse', (param: boolean) => {
 </template>
 
 <style scoped lang="scss">
-.menu-collapse-icon {
-  @include primary-color();
-  cursor: pointer;
+.breadcrumb-primary:deep(span) {
+  color: white;
 }
 </style>
 

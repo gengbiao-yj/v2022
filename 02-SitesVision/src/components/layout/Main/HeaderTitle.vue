@@ -13,7 +13,7 @@ const time = (val: boolean) => {
       ti = setTimeout(() => {
         isAsideMenuCollapse.value = val;
         clearTimeout(ti);
-      }, 200);
+      }, 250);
     } else {
       isAsideMenuCollapse.value = val;
     }
@@ -38,7 +38,7 @@ getWatchBrowserWidth((val: number) => {
   <transition-group name="breadcrumb">
     <template v-if="!isAsideMenuCollapse">
       <img src="@/assets/img/logo1.png" />
-      <span>智慧选址平台</span>
+      <!--      <span>智慧选址平台</span>-->
     </template>
     <img v-else src="@/assets/img/logo2.png" />
   </transition-group>
