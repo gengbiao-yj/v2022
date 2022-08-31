@@ -146,7 +146,7 @@ const quitSystem = () => {
 
     &:hover {
       transition: all 0.3s ease;
-      transform: rotate(30deg);
+      transform: rotate(15deg);
     }
 
     &:last-child {

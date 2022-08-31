@@ -35,43 +35,26 @@ busOn('leftRightWidth700', (param: boolean) => {
 
 /*  获取主题颜色
 ------------------------------------------------ */
-import basicPinia from '@/pinia/storagePinia';
-const basicStore = basicPinia();
-const systemSet = computed(() => basicStore.systemParams);
 const textColor = ref(''); // menu 文字颜色
 const activeTextColor = ref(''); // menu 选中项文字颜色
 const menuBgColor = ref(''); // menu 背景颜色
 
-onBeforeMount(() => {
-  judgeMenuPrimary(systemSet.value);
-});
-watch(
-  () => basicStore.systemParams,
-  val => {
-    judgeMenuPrimary(val);
-  },
-  {
-    deep: true
-  }
-);
+import basicPinia from '@/pinia/storagePinia';
+const basicStore = basicPinia();
+const primaryColor = ref('#fff');
+
+const primaryHeader = ref(false);
+const primaryAside = ref(false);
 
 /**
  * menu 主题判断逻辑
  * @param val
  */
-const judgeMenuPrimary = (val: SystemSetType) => {
-  if (val.layoutType === 'LeftRight') {
-    if (val.primaryAside) {
-      setMenuPrimary('#e8e8e8', '#fff', val.primaryColor);
-    } else {
-      setMenuPrimary('#303133', val.primaryColor, '#fff');
-    }
+const judgeMenuPrimary = () => {
+  if (primaryHeader.value || primaryAside.value) {
+    setMenuPrimary('#e8e8e8', '#fff', primaryColor.value);
   } else {
-    if (val.primaryHeader) {
-      setMenuPrimary('#e8e8e8', '#fff', val.primaryColor);
-    } else {
-      setMenuPrimary('#303133', val.primaryColor, '#fff');
-    }
+    setMenuPrimary('#303133', primaryColor.value, '#fff');
   }
 };
 
@@ -87,12 +70,39 @@ const setMenuPrimary = (tc: string, atc: string, mbc: string) => {
   menuBgColor.value = mbc;
 };
 
+// 监听系统主题颜色变化
+basicStore.$subscribe(
+  (mutation, state) => {
+    primaryColor.value = state.systemParams.primaryColor;
+    primaryAside.value =
+      state.systemParams.primaryAside &&
+      state.systemParams.layoutType === 'LeftRight';
+    primaryHeader.value =
+      state.systemParams.primaryHeader &&
+      state.systemParams.layoutType === 'UpDown';
+    judgeMenuPrimary();
+  },
+  {
+    immediate: true
+  }
+);
+
+// 监听菜单栏主题颜色变化
+// watch(
+//   [() => primaryHeader.value, () => primaryAside.value],
+//   () => {
+//     judgeMenuPrimary();
+//   },
+//   {
+//     immediate: true
+//   }
+// );
+
 /*  界面渲染
 ------------------------------------------------ */
 // 细分组件
 import SmartRecommend from './SmartRecommend.vue';
 import { DataTableType } from '@/data/headerMenu';
-import { SystemSetType } from '@/types';
 
 // 智能推荐下拉，展开收缩标志位
 const smartRecommendShow = ref<boolean>(false);
@@ -125,12 +135,7 @@ watch(route, newV => {
       :text-color="textColor"
       :active-text-color="activeTextColor"
       :background-color="menuBgColor"
-      :id="
-        (systemSet.primaryAside && systemSet.layoutType === 'LeftRight') ||
-        (systemSet.primaryHeader && systemSet.layoutType === 'UpDown')
-          ? 'primaryMenu'
-          : 'defaultMenu'
-      "
+      :id="primaryAside || primaryHeader ? 'primaryMenu' : 'defaultMenu'"
       :class="{
         'header-height': props.isAside === 'horizontal',
         'aside-height': props.isAside === 'vertical',
@@ -155,7 +160,7 @@ watch(route, newV => {
               class="select-menu"
               :class="{ 'select-menu-asside': props.isAside === 'vertical' }"
               :style="{
-                color: activeIndex == 1 ? systemSet.primaryColor : '#303133'
+                color: '#303133'
               }"
             >
               <Guide class="svg-16 mg-r-5" />

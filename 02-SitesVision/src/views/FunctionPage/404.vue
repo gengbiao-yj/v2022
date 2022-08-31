@@ -5,7 +5,7 @@ const router = useRouter();
   <div class="root-404">
     <div>
       <span>您访问的页面不存在</span>
-      <el-button size="mini" type="primary" @click="router.go(-1)"
+      <el-button size="small" type="primary" @click="router.go(-1)"
         >返回</el-button
       >
     </div>

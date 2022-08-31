@@ -7,7 +7,11 @@ import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
 
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
-const systemSet = computed(() => basicStore.systemParams);
+const primaryHeader = computed<boolean>(
+  () =>
+    basicStore.systemParams.primaryHeader &&
+    basicStore.systemParams.layoutType === 'UpDown'
+);
 </script>
 
 <template>
@@ -23,8 +27,7 @@ const systemSet = computed(() => basicStore.systemParams);
         <div
           class="header-right"
           :class="{
-            'primary-bg-color':
-              systemSet.primaryHeader && systemSet.layoutType === 'UpDown'
+            'primary-bg-color': primaryHeader
           }"
         >
           <HeaderOption />
@@ -107,6 +110,7 @@ const systemSet = computed(() => basicStore.systemParams);
     width: calc(100% - 510px) !important;
   }
   .header-left {
+    border-right: 1px dashed #a8a8a8;
     display: initial;
   }
 }

@@ -8,7 +8,16 @@ import Breadcrumb from '@comps/Layout/Main/Breadcrumb.vue';
 
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
-const systemSet = computed(() => basicStore.systemParams);
+const primaryAside = computed<boolean>(
+  () =>
+    basicStore.systemParams.primaryAside &&
+    basicStore.systemParams.layoutType === 'LeftRight'
+);
+const primaryBreadcrum = computed<boolean>(
+  () =>
+    basicStore.systemParams.primaryHeader &&
+    basicStore.systemParams.layoutType === 'LeftRight'
+);
 
 import { busOn, busEmit } from '@/utils/hooks';
 /*  订阅总线事件
@@ -51,8 +60,7 @@ const drawClosed = () => {
         <div
           class="aside-menu"
           :class="{
-            'primary-bg-color':
-              systemSet.primaryAside && systemSet.layoutType === 'LeftRight'
+            'primary-bg-color': primaryAside
           }"
         >
           <HeaderMenu is-aside="vertical" />
@@ -63,12 +71,11 @@ const drawClosed = () => {
           <div
             class="header"
             :class="{
-              'primary-bg-color':
-                systemSet.primaryHeader && systemSet.layoutType === 'LeftRight'
+              'primary-bg-color': primaryBreadcrum
             }"
           >
             <div class="header-left">
-              <Breadcrumb />
+              <Breadcrumb :primary-header="primaryBreadcrum" />
             </div>
             <div class="header-right">
               <HeaderOption />
