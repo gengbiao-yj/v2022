@@ -6,12 +6,28 @@ import { defineProps } from 'vue';
 /*  props
 ------------------------------------------------ */
 const props = defineProps({
+  // 侧边栏、顶栏切换
   isAside: {
     type: String,
     default: 'horizontal',
     validator(value: string) {
       return ['horizontal', 'vertical'].includes(value);
     }
+  },
+  // 系统主题色
+  primaryColor: {
+    type: String,
+    required: true
+  },
+  // 为顶烂时，是否采用主题色
+  primaryHeader: {
+    type: Boolean,
+    required: true
+  },
+  // 为侧栏时，是否使用主题色
+  primaryAside: {
+    type: Boolean,
+    required: true
   }
 });
 
@@ -33,28 +49,22 @@ busOn('leftRightWidth700', (param: boolean) => {
   isShowAsideDraw.value = param;
 });
 
-/*  获取主题颜色
+/*  主题设置
 ------------------------------------------------ */
 const textColor = ref(''); // menu 文字颜色
 const activeTextColor = ref(''); // menu 选中项文字颜色
 const menuBgColor = ref(''); // menu 背景颜色
-
-import basicPinia from '@/pinia/storagePinia';
-const basicStore = basicPinia();
-const primaryColor = ref('#fff');
-
-const primaryHeader = ref(false);
-const primaryAside = ref(false);
+const menuId = ref('defaultMenu');
 
 /**
  * menu 主题判断逻辑
  * @param val
  */
-const judgeMenuPrimary = () => {
-  if (primaryHeader.value || primaryAside.value) {
-    setMenuPrimary('#e8e8e8', '#fff', primaryColor.value);
+const judgeMenuPrimary = (color: string, aside: boolean, header: boolean) => {
+  if (aside || header) {
+    setMenuPrimary('#e8e8e8', '#fff', color);
   } else {
-    setMenuPrimary('#303133', primaryColor.value, '#fff');
+    setMenuPrimary('#303133', color, '#fff');
   }
 };
 
@@ -70,33 +80,21 @@ const setMenuPrimary = (tc: string, atc: string, mbc: string) => {
   menuBgColor.value = mbc;
 };
 
-// 监听系统主题颜色变化
-basicStore.$subscribe(
-  (mutation, state) => {
-    primaryColor.value = state.systemParams.primaryColor;
-    primaryAside.value =
-      state.systemParams.primaryAside &&
-      state.systemParams.layoutType === 'LeftRight';
-    primaryHeader.value =
-      state.systemParams.primaryHeader &&
-      state.systemParams.layoutType === 'UpDown';
-    judgeMenuPrimary();
+// 监控设置变化
+watch(
+  [
+    () => props.primaryColor,
+    () => props.primaryAside,
+    () => props.primaryHeader
+  ],
+  ([color, aside, header]) => {
+    menuId.value = aside || header ? 'primaryMenu' : 'defaultMenu';
+    judgeMenuPrimary(color, aside, header);
   },
   {
     immediate: true
   }
 );
-
-// 监听菜单栏主题颜色变化
-// watch(
-//   [() => primaryHeader.value, () => primaryAside.value],
-//   () => {
-//     judgeMenuPrimary();
-//   },
-//   {
-//     immediate: true
-//   }
-// );
 
 /*  界面渲染
 ------------------------------------------------ */
@@ -135,7 +133,7 @@ watch(route, newV => {
       :text-color="textColor"
       :active-text-color="activeTextColor"
       :background-color="menuBgColor"
-      :id="primaryAside || primaryHeader ? 'primaryMenu' : 'defaultMenu'"
+      :id="menuId"
       :class="{
         'header-height': props.isAside === 'horizontal',
         'aside-height': props.isAside === 'vertical',

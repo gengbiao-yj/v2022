@@ -7,10 +7,18 @@ import HeaderTabs from '@comps/Layout/Main/HeaderTabs.vue';
 
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
-const primaryHeader = computed<boolean>(
-  () =>
-    basicStore.systemParams.primaryHeader &&
-    basicStore.systemParams.layoutType === 'UpDown'
+const primaryHeader = ref(false); // 顶部菜单栏是否使用主题色
+const primaryColor = ref('#fff'); // 系统主题色
+basicStore.$subscribe(
+  (mutation, state) => {
+    primaryColor.value = state.systemParams.primaryColor;
+    primaryHeader.value =
+      state.systemParams.primaryHeader &&
+      state.systemParams.layoutType === 'UpDown';
+  },
+  {
+    immediate: true
+  }
 );
 </script>
 
@@ -22,7 +30,11 @@ const primaryHeader = computed<boolean>(
           <HeaderTitle />
         </div>
         <div class="header-menu">
-          <HeaderMenu />
+          <HeaderMenu
+            :primary-color="primaryColor"
+            :primary-aside="false"
+            :primary-header="primaryHeader"
+          />
         </div>
         <div
           class="header-right"

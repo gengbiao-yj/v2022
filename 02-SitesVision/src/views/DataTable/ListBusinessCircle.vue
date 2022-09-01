@@ -159,6 +159,8 @@ const checkedTableColumn = reactive({
   ]
 });
 
+const stripe = ref(false);
+
 /*  生命周期
 ------------------------------------------------ */
 onBeforeMount(() => {
@@ -242,6 +244,18 @@ onBeforeMount(() => {
           <el-tooltip effect="dark" content="刷新" placement="top-start">
             <Refresh class="svg-18" @click="searchTable" />
           </el-tooltip>
+          <!-- 斑马纹-->
+          <el-tooltip effect="dark" content="斑马纹" placement="top-start">
+            <div style="display: flex; align-items: center">
+              <svg
+                class="icon svg-18 cur-pointer"
+                aria-hidden="true"
+                @click="stripe = !stripe"
+              >
+                <use href="#icon-stripe"></use>
+              </svg>
+            </div>
+          </el-tooltip>
           <!-- 全屏 -->
           <sv-full-screen :tableInstance="tableContent" />
           <!-- 列表设置 -->
@@ -257,6 +271,7 @@ onBeforeMount(() => {
           header-cell-class-name="table-header-cell"
           cell-class-name="table-cell"
           style="width: 100%"
+          :stripe="stripe"
         >
           <el-table-column key="index" label="#" type="index" fixed="left" />
 
@@ -326,9 +341,9 @@ onBeforeMount(() => {
           margin-left: 16px;
           cursor: pointer;
           color: white;
+          transition: all 0.2s ease-in-out;
           &:hover {
-            transition: all 0.5s ease-in-out;
-            transform: rotate(180deg);
+            transform: rotate(20deg);
           }
           &:focus {
             outline: none;

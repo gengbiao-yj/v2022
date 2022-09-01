@@ -8,15 +8,22 @@ import Breadcrumb from '@comps/Layout/Main/Breadcrumb.vue';
 
 import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
-const primaryAside = computed<boolean>(
-  () =>
-    basicStore.systemParams.primaryAside &&
-    basicStore.systemParams.layoutType === 'LeftRight'
-);
-const primaryBreadcrum = computed<boolean>(
-  () =>
-    basicStore.systemParams.primaryHeader &&
-    basicStore.systemParams.layoutType === 'LeftRight'
+const primaryAside = ref(false); // 侧边菜单栏是否使用主题色
+const primaryBreadcrum = ref(false); // 顶部面包屑是否使用主题色
+const primaryColor = ref('#fff'); // 系统主题色
+basicStore.$subscribe(
+  (mutation, state) => {
+    primaryColor.value = state.systemParams.primaryColor;
+    primaryAside.value =
+      state.systemParams.primaryAside &&
+      state.systemParams.layoutType === 'LeftRight';
+    primaryBreadcrum.value =
+      state.systemParams.primaryHeader &&
+      state.systemParams.layoutType === 'LeftRight';
+  },
+  {
+    immediate: true
+  }
 );
 
 import { busOn, busEmit } from '@/utils/hooks';
@@ -63,7 +70,12 @@ const drawClosed = () => {
             'primary-bg-color': primaryAside
           }"
         >
-          <HeaderMenu is-aside="vertical" />
+          <HeaderMenu
+            is-aside="vertical"
+            :primary-color="primaryColor"
+            :primary-aside="primaryAside"
+            :primary-header="false"
+          />
         </div>
       </el-aside>
       <el-container style="width: 100%">

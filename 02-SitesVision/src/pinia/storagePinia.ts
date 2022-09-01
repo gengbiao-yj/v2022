@@ -18,7 +18,7 @@ export default defineStore('basicPinia', () => {
   }
   function setUserInfo(data: UserLogin) {
     userInfo.value = data;
-    storage.setLocal('userInfo', data, 480);
+    storage.setLocal('userInfo', data, 1000 * 60 * 60 * 12);
   }
   function resetUserInfo() {
     userInfo.value = {} as UserLogin;
@@ -52,7 +52,7 @@ export default defineStore('basicPinia', () => {
       data.primaryColor
     );
     systemParams.value = data;
-    storage.setLocal('systemSetting', data, 2400);
+    storage.setLocal('systemSetting', data, 1000 * 60 * 60 * 24 * 7);
   }
 
   /*  header tabs 导航标签页持久化存储
@@ -67,7 +67,7 @@ export default defineStore('basicPinia', () => {
 
   function setTabs(data: Array<TabsItem>) {
     tabs.value = data;
-    storage.setLocal('routerTabs', data, 480);
+    storage.setLocal('routerTabs', data, 1000 * 60 * 60 * 24 * 7);
   }
 
   function getTabs() {

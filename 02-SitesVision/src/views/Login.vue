@@ -89,7 +89,8 @@
           <el-button
             size="large"
             type="primary"
-            style="width: 100%; margin: 15px auto"
+            style="width: 100%; margin: 15px auto; color: white"
+            color="#4695ff"
             @click="loginBtnClick"
             >登录</el-button
           >
