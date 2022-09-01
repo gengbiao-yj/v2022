@@ -42,7 +42,10 @@ basicStore.$subscribe(
             'primary-bg-color': primaryHeader
           }"
         >
-          <HeaderOption />
+          <HeaderOption
+            :primary-bread="false"
+            :primary-header="primaryHeader"
+          />
         </div>
       </div>
     </el-header>

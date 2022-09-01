@@ -4,6 +4,21 @@ import basicPinia from '@/pinia/storagePinia';
 import { fullScreen } from '@/utils/hooks';
 import SystemSetting from './SystemSetting.vue';
 import { ElMessageBox } from 'element-plus';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  // 上下布局，顶栏是否采用主题背景色
+  primaryHeader: {
+    type: Boolean,
+    required: true
+  },
+  // 左右布局，面包屑栏是否采用主题背景色
+  primaryBread: {
+    type: Boolean,
+    required: true
+  }
+});
+const isPrimary = computed(() => props.primaryHeader || props.primaryBread); // 是否设置主题背景色
 
 const router = useRouter();
 // 获取用户信息
@@ -46,7 +61,7 @@ const quitSystem = () => {
       <template #reference>
         <sv-badge :content="8">
           <span class="svg-item">
-            <AlarmClock class="svg-20" />
+            <AlarmClock class="svg-20" :class="{ 'color-white': isPrimary }" />
           </span>
         </sv-badge>
       </template>
@@ -64,7 +79,7 @@ const quitSystem = () => {
       <template #reference>
         <sv-badge :content="11">
           <span class="svg-item">
-            <Bell class="svg-20" />
+            <Bell class="svg-20" :class="{ 'color-white': isPrimary }" />
           </span>
         </sv-badge>
       </template>
@@ -72,15 +87,15 @@ const quitSystem = () => {
     </el-popover>
     <!-- 刷新 -->
     <span class="svg-item" @click="refresh">
-      <Refresh class="svg-20" />
+      <Refresh class="svg-20" :class="{ 'color-white': isPrimary }" />
     </span>
     <!-- 全屏 -->
     <span class="svg-item" @click="setRestFullScreen">
-      <FullScreen class="svg-20" />
+      <FullScreen class="svg-20" :class="{ 'color-white': isPrimary }" />
     </span>
     <!-- 设置 -->
     <span class="svg-item" @click="optionDrawer = true">
-      <Setting class="svg-20" />
+      <Setting class="svg-20" :class="{ 'color-white': isPrimary }" />
     </span>
     <!-- 用户操作 -->
     <el-popover

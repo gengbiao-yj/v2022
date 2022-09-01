@@ -90,7 +90,10 @@ const drawClosed = () => {
               <Breadcrumb :primary-header="primaryBreadcrum" />
             </div>
             <div class="header-right">
-              <HeaderOption />
+              <HeaderOption
+                :primary-bread="primaryBreadcrum"
+                :primary-header="false"
+              />
             </div>
           </div>
         </el-header>
