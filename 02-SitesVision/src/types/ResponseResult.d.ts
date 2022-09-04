@@ -14,11 +14,18 @@ interface ResponseResult<T> {
 ------------------------------------------------ */
 // 登录接口
 interface UserLogin {
-  positionID: number;
+  avatar: string; // 头像路径
+  positionID: number; // 职务ID
   token: string;
-  userId: number;
+  userId: number; // 用户ID
   userName: string;
   cusNo: string;
+  loginName: string; // 姓名
+  phone: string;
+  mail: string;
+  leader: string; // 直属领导
+  dept: string; // 部门名称
+  position: string; // 职务名称
 }
 
 /*  业务 - 通用模块各接口返回数据泛型
@@ -34,6 +41,12 @@ interface DataArea {
   remark: null | string;
   selected: number;
   typeID: number;
+}
+
+// 图片上传
+interface UploadImg {
+  message: string;
+  url: string;
 }
 
 /*  业务 - 列表模块各接口的返回数据泛型
@@ -56,4 +69,11 @@ interface AmapV3IP {
   centerLngLat: object; // rectangle 算出的中心点
 }
 
-export type { ResponseResult, UserLogin, AmapV3IP, DataArea, ListView };
+export type {
+  ResponseResult,
+  UserLogin,
+  AmapV3IP,
+  DataArea,
+  ListView,
+  UploadImg
+};

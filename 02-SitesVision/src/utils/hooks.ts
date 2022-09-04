@@ -42,23 +42,18 @@ export function busEmit(name: eventBusName, params: any) {
 
 /*  全屏切换 start
 ------------------------------------------------ */
-let isScreen = false;
-let isAddEvent = false;
-function updateIsScreen() {
-  isScreen = !isScreen;
-}
-export function fullScreen(_element: any) {
-  if (!isAddEvent) {
-    document.addEventListener('fullscreenchange', updateIsScreen);
-    isAddEvent = true;
-  }
+export function fullScreen() {
+  const isScreen = ref(false);
+  const updateIsScreen = () => {
+    isScreen.value = !isScreen.value;
+  };
+  document.addEventListener('fullscreenchange', updateIsScreen);
   onBeforeUnmount(() => {
     document.removeEventListener('fullscreenchange', updateIsScreen);
-    isAddEvent = false;
   });
-  return () => {
+  return (_element: any) => {
     const _document: any = document;
-    if (isScreen) {
+    if (isScreen.value) {
       if (_document.exitFullscreen) {
         _document.exitFullscreen();
       } else if (_document.webkitCancelFullScreen) {

@@ -4,9 +4,9 @@ import { amapIP } from '@/apis/amap';
 import { storage } from '@/utils';
 import LayoutUpDown from '@comps/Layout/LayoutUpDown.vue';
 import LayoutLeftRight from '@comps/Layout/LayoutLeftRight.vue';
+import basicPinia from '@/pinia/storagePinia';
 
 // 获取布局方式
-import basicPinia from '@/pinia/storagePinia';
 const basicStore = basicPinia();
 const systemSettings = ref(basicStore.systemParams);
 watch(
@@ -15,6 +15,10 @@ watch(
     systemSettings.value = val;
   }
 );
+const isComponent = {
+  LeftRight: LayoutLeftRight,
+  UpDown: LayoutUpDown
+};
 
 // IP 定位
 onMounted(() => {
@@ -31,14 +35,11 @@ const IPPosition = async () => {
 </script>
 
 <template>
+  <!-- 过渡效果需要所有业务页面有唯一的根节点，务必使用div做包裹 -->
   <div class="main-root">
-    <transition-group name="fade-transform" mode="out-in" appear>
-      <LayoutLeftRight v-if="systemSettings.layoutType === 'LeftRight'">
-      </LayoutLeftRight>
-
-      <LayoutUpDown v-if="systemSettings.layoutType === 'UpDown'">
-      </LayoutUpDown>
-    </transition-group>
+    <transition name="fade-transform" mode="out-in" appear>
+      <component :is="isComponent[systemSettings.layoutType]" />
+    </transition>
   </div>
 </template>
 

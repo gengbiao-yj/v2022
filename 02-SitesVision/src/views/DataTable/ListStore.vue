@@ -3,7 +3,6 @@
 import { listViewStores } from '@/apis/user';
 import basicPinia from '@/pinia/storagePinia';
 import { ElMessage } from 'element-plus';
-import { _HTMLDivElement } from '@/types';
 
 const { getUserInfo } = basicPinia();
 const userInfo = getUserInfo();
@@ -58,12 +57,13 @@ const searchTableData = async () => {
 
 // 按钮查询
 const searchTable = () => {
+  currentPage.value = 1;
   searchTableData();
 };
 
 /*  列表功能
 ------------------------------------------------ */
-const tableContent = ref() as _HTMLDivElement; // 表格容器实例，用于全屏
+const tableRoot = ref(); // 表格容器实例，用于全屏
 
 // 表格列配置
 const checkedTableColumn = reactive({
@@ -158,6 +158,7 @@ onBeforeMount(() => {
     v-loading="loading"
     element-loading-background="rgba(100,100,100,0.4)"
     element-loading-text="加载中..."
+    ref="tableRoot"
   >
     <sv-table-filter title="已开门店">
       <template #form>
@@ -211,48 +212,46 @@ onBeforeMount(() => {
         </el-button>
       </template>
     </sv-table-filter>
-    <div class="table-box" ref="tableContent">
-      <div class="table-setting">
-        <div class="pd-l-10">
-          <el-button size="small">
-            <template #icon>
-              <Plus class="primary-color" />
-            </template>
-            <span class="primary-color">新建</span>
-          </el-button>
-          <el-button size="small">
-            <template #icon>
-              <Download class="primary-color" />
-            </template>
-            <span class="primary-color">导出</span>
-          </el-button>
-        </div>
-        <div class="tools-box">
-          <!-- 刷新 -->
-          <el-tooltip effect="dark" content="刷新" placement="top-start">
-            <Refresh class="svg-18" @click="searchTable" />
-          </el-tooltip>
-          <!-- 斑马纹-->
-          <el-tooltip effect="dark" content="斑马纹" placement="top-start">
-            <div style="display: flex; align-items: center">
-              <svg
-                class="icon svg-18 cur-pointer"
-                aria-hidden="true"
-                @click="stripe = !stripe"
-              >
-                <use href="#icon-stripe"></use>
-              </svg>
-            </div>
-          </el-tooltip>
-          <!-- 全屏 -->
-          <sv-full-screen :tableInstance="tableContent" />
-          <!-- 列表设置 -->
-          <sv-table-column-option
-            v-model:tableColumn="checkedTableColumn.value"
-          />
-        </div>
-      </div>
-      <div class="table-content">
+    <sv-table-box>
+      <template #btnsBox>
+        <el-button size="small">
+          <template #icon>
+            <Plus class="primary-color" />
+          </template>
+          <span class="primary-color">新建</span>
+        </el-button>
+        <el-button size="small">
+          <template #icon>
+            <Download class="primary-color" />
+          </template>
+          <span class="primary-color">导出</span>
+        </el-button>
+      </template>
+      <template #toolsBox>
+        <!-- 刷新 -->
+        <el-tooltip effect="dark" content="刷新" placement="top-start">
+          <Refresh class="svg-18" @click="searchTable" />
+        </el-tooltip>
+        <!-- 斑马纹-->
+        <el-tooltip effect="dark" content="斑马纹" placement="top-start">
+          <div style="display: flex; align-items: center">
+            <svg
+              class="icon svg-18 cur-pointer"
+              aria-hidden="true"
+              @click="stripe = !stripe"
+            >
+              <use href="#icon-stripe"></use>
+            </svg>
+          </div>
+        </el-tooltip>
+        <!-- 全屏 -->
+        <sv-full-screen :instance="tableRoot" />
+        <!-- 列表设置 -->
+        <sv-table-column-option
+          v-model:tableColumn="checkedTableColumn.value"
+        />
+      </template>
+      <template #table>
         <el-table
           :data="tableData"
           height="calc(100% - 60px)"
@@ -287,17 +286,17 @@ onBeforeMount(() => {
             </template>
           </el-table-column>
         </el-table>
-        <div class="table-pagination">
-          <sv-table-pagination
-            v-model:currentPage="currentPage"
-            v-model:pageSize="pageSize"
-            :total="totalPipeline"
-            :pageSizeOption="[5, 10, 15, 20]"
-            @change="searchTableData"
-          />
-        </div>
-      </div>
-    </div>
+      </template>
+      <template #pagination>
+        <sv-table-pagination
+          v-model:currentPage="currentPage"
+          v-model:pageSize="pageSize"
+          :total="totalPipeline"
+          :pageSizeOption="[5, 10, 15, 20]"
+          @change="searchTableData"
+        />
+      </template>
+    </sv-table-box>
     <sv-copyright-line />
   </div>
 </template>
@@ -306,77 +305,6 @@ onBeforeMount(() => {
 .list-root {
   @include box-size(100%, 100%);
   @include flex(column, center, flex-start);
-
-  .table-box {
-    @include box-size(100%, 100%);
-    flex: 1;
-    margin-top: 10px;
-    background: white;
-    border-radius: 6px;
-    overflow: hidden;
-
-    .table-setting {
-      @include box-size(100%, 40px);
-      @include flex(row, space-between, center);
-      @include primary-bg-color(0.5);
-      .tools-box {
-        @include box-size(auto, 100%);
-        @include flex(row, flex-end, center);
-        padding-right: 10px;
-        svg,
-        &:deep(> svg),
-        &:deep(.el-tooltip__trigger > svg) {
-          margin-left: 16px;
-          cursor: pointer;
-          color: white;
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            transform: rotate(20deg);
-          }
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-    }
-
-    .table-content {
-      height: calc(100% - 40px);
-      &:deep(.el-table) {
-        width: 100%;
-        border-radius: 0 0 5px 5px;
-        border: 1px solid;
-        @include primary-border-color(0.5);
-      }
-    }
-
-    .table-pagination {
-      @include box-size(100%, 60px);
-      @include flex(row, flex-end, center);
-      overflow-x: auto;
-    }
-  }
-
-  &::v-deep {
-    // 标题行样式
-    .table-header-cell {
-      color: #333333;
-    }
-
-    // 单元格排布
-    .table-cell .cell {
-      font-size: 13px;
-      position: relative;
-      > svg {
-        width: 28px;
-        position: absolute;
-      }
-
-      > span:nth-child(2) {
-        margin-left: 32px;
-      }
-    }
-  }
 }
 </style>
 

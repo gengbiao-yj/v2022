@@ -105,8 +105,8 @@
 import { login } from '@/apis/user';
 import MD5 from 'js-md5';
 import { ElMessage } from 'element-plus';
-import type { FormInstance, FormRules } from 'element-plus';
 import basicPinia from '@/pinia/storagePinia';
+import type { FormInstance, FormRules } from 'element-plus';
 
 const router = useRouter();
 // const route = useRoute();

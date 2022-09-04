@@ -85,6 +85,7 @@
 .upDown-enter-active,
 .upDown-leave-active {
   transition: all 0.2s;
+  position: absolute;
 }
 
 .upDown-enter-from {
@@ -101,19 +102,25 @@
   transition: all 0.2s;
 }
 
-.upDown-leave-active {
+// 左侧滑出
+.fromLeft-enter-active,
+.fromLeft-leave-active {
+  transition: all 0.3s ease-in-out;
   position: absolute;
 }
 
-// 淡入淡出
-.inOut-enter-active,
-.inOut-leave-active {
-  transition: all 0.5s ease-in-out;
-  position: absolute;
+.fromLeft-enter-from,
+.fromLeft-leave-to {
+  opacity: 0;
+  transform: translateX(-150px);
 }
 
 .inOut-enter-from,
 .inOut-leave-to {
   opacity: 0;
-  transform: scale(0.8);
+}
+.inOut-enter-active,
+.inOut-leave-active {
+  transition: all 0.2s ease-in-out;
+  position: absolute;
 }

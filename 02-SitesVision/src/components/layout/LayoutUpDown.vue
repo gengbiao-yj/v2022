@@ -23,45 +23,47 @@ basicStore.$subscribe(
 </script>
 
 <template>
-  <el-container>
-    <el-header height="50px">
-      <div class="header">
-        <div class="header-left">
-          <HeaderTitle />
+  <div>
+    <el-container>
+      <el-header height="50px">
+        <div class="header">
+          <div class="header-left">
+            <HeaderTitle />
+          </div>
+          <div class="header-menu">
+            <HeaderMenu
+              :primary-color="primaryColor"
+              :primary-aside="false"
+              :primary-header="primaryHeader"
+            />
+          </div>
+          <div
+            class="header-right"
+            :class="{
+              'primary-bg-color': primaryHeader
+            }"
+          >
+            <HeaderOption
+              :primary-bread="false"
+              :primary-header="primaryHeader"
+            />
+          </div>
         </div>
-        <div class="header-menu">
-          <HeaderMenu
-            :primary-color="primaryColor"
-            :primary-aside="false"
-            :primary-header="primaryHeader"
-          />
+      </el-header>
+      <el-main>
+        <div class="tabs">
+          <HeaderTabs />
         </div>
-        <div
-          class="header-right"
-          :class="{
-            'primary-bg-color': primaryHeader
-          }"
-        >
-          <HeaderOption
-            :primary-bread="false"
-            :primary-header="primaryHeader"
-          />
+        <div class="main-container">
+          <router-view v-slot="{ Component }">
+            <transition name="fade-transform" mode="out-in" appear>
+              <component :is="Component"></component>
+            </transition>
+          </router-view>
         </div>
-      </div>
-    </el-header>
-    <el-main>
-      <div class="tabs">
-        <HeaderTabs />
-      </div>
-      <div class="main-container">
-        <router-view v-slot="{ Component }">
-          <transition name="fade-transform" mode="out-in" appear>
-            <component :is="Component"></component>
-          </transition>
-        </router-view>
-      </div>
-    </el-main>
-  </el-container>
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <style scoped lang="scss">

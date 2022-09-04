@@ -10,7 +10,9 @@ import type {
   UserLoginParams,
   DataArea,
   ListViewParams,
-  ListView
+  ListView,
+  UploadImg,
+  changePwdParams
 } from '@/types/index';
 
 /*  注册登录 - start
@@ -24,6 +26,24 @@ function login(Data: UserLoginParams) {
   });
 }
 
+// 用户信息修改
+function saveUser(Data: UserLogin) {
+  return http.request<ResponseResult<UserLogin>>({
+    url: '/user/saveUser',
+    method: 'post',
+    data: qs.stringify(Data)
+  });
+}
+
+// 用户密码修改
+function changPwd(Data: changePwdParams) {
+  return http.request<ResponseResult<object>>({
+    url: '/user/changPwd',
+    method: 'post',
+    data: qs.stringify(Data)
+  });
+}
+
 /*  通用 - start
 ------------------------------------------------ */
 // 省市区查询
@@ -32,6 +52,15 @@ function dataArea(Data: DataAreaParams) {
     url: '/common/dataArea',
     method: 'post',
     data: qs.stringify(Data)
+  });
+}
+
+// 图片上传
+function uploadImage(Data: any) {
+  return http.request<ResponseResult<UploadImg>>({
+    url: '/common/uploadImage',
+    method: 'post',
+    data: Data
   });
 }
 
@@ -79,5 +108,8 @@ export {
   listViewSites,
   listViewStores,
   listViewCompetitors,
-  listViewTas
+  listViewTas,
+  uploadImage,
+  saveUser,
+  changPwd
 };

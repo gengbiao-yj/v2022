@@ -26,7 +26,10 @@ const basicStore = basicPinia();
 const { getUserInfo } = basicStore;
 const userInfo = getUserInfo();
 const userName = ref(userInfo.userName);
-const setRestFullScreen = fullScreen(document.documentElement);
+const setRestFullScreen = fullScreen();
+const clickFullScreen = () => {
+  setRestFullScreen(document.documentElement);
+};
 const optionDrawer = ref<boolean>(false);
 const refresh = () => {
   router.replace(`/Main/Refresh`);
@@ -49,24 +52,6 @@ const quitSystem = () => {
 </script>
 <template>
   <div class="header-option-root">
-    <!-- 事项(待办、已办、完结、我提交的) -->
-    <el-popover
-      placement="bottom-end"
-      title=""
-      :width="110"
-      trigger="click"
-      :hide-after="120"
-      transition="el-zoom-in-top"
-    >
-      <template #reference>
-        <sv-badge :content="8">
-          <span class="svg-item">
-            <AlarmClock class="svg-20" :class="{ 'color-white': isPrimary }" />
-          </span>
-        </sv-badge>
-      </template>
-      <div>~~~~~~~~~~~</div>
-    </el-popover>
     <!-- 通知 -->
     <el-popover
       placement="bottom-end"
@@ -90,7 +75,7 @@ const quitSystem = () => {
       <Refresh class="svg-20" :class="{ 'color-white': isPrimary }" />
     </span>
     <!-- 全屏 -->
-    <span class="svg-item" @click="setRestFullScreen">
+    <span class="svg-item" @click="clickFullScreen">
       <FullScreen class="svg-20" :class="{ 'color-white': isPrimary }" />
     </span>
     <!-- 设置 -->
@@ -124,7 +109,7 @@ const quitSystem = () => {
           <span class="user-name">{{ userName }}</span>
         </div>
         <div class="user-option-list">
-          <div>
+          <div @click.stop="router.push('/Main/AccountSetting')">
             <User class="svg-16" />
             <span>个人信息</span>
           </div>

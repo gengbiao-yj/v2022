@@ -1,6 +1,6 @@
 <!-- 系统维护 -->
 <script lang="ts" setup>
-import { _HTMLDivElement } from '@/types';
+import type { _HTMLDivElement } from '@/types';
 
 const isAsideCollapse = ref(false);
 const arg = [0, 160, 0];
@@ -25,7 +25,7 @@ const asideMenuChange = (i: number) => {
         v-collapseW:[arg]="!isAsideCollapse"
         :class="{ 'aside-collapse': isAsideCollapse }"
       >
-        <transition name="inOut" mode="out-in" appear>
+        <transition name="fromLeft" mode="out-in" appear>
           <ul ref="asideMenu" class="aside-menu" v-show="!isAsideCollapse">
             <li @click="asideMenuChange(0)">
               <SetUp class="svg-16" />

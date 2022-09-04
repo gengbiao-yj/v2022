@@ -82,10 +82,16 @@
   }
 }
 
-/*  form 表单内 small-input 组件宽度同步 small-select
+/*  form 表单内部组件样式重写
 ------------------------------------------------ */
+// small-input 组件宽度同步 small-select
 .el-form-item__content .el-input.el-input--small .el-input__suffix .el-icon {
   font-size: 14px;
+}
+
+// 表单验证通过，显示绿色
+.el-form-item.is-success .el-input__validateIcon {
+  color: #4cd900;
 }
 
 /*  el-menu 组件样式覆盖

@@ -2,14 +2,16 @@ import type { POIItem, SystemSetType, MenuItem, TabsItem } from './Components';
 import type {
   UserLoginParams,
   DataAreaParams,
-  ListViewParams
+  ListViewParams,
+  changePwdParams
 } from './RequestParams';
 import type {
   ResponseResult,
   UserLogin,
   AmapV3IP,
   DataArea,
-  ListView
+  ListView,
+  UploadImg
 } from './ResponseResult';
 import type {
   StorageKeyType,
@@ -41,5 +43,7 @@ export type {
   DataAreaParams,
   DataArea,
   ListViewParams,
-  ListView
+  ListView,
+  UploadImg,
+  changePwdParams
 };

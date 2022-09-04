@@ -13,6 +13,14 @@ interface UserLoginParams {
   positionID: number; // 对接系统部门ID
 }
 
+// 修改密码接口
+interface changePwdParams {
+  loginName: string; // 登录名
+  newPwd: string; // 新密码
+  pwd: string; // 旧密码
+  cusNo: string;
+}
+
 /*  业务 - 通用模块各接口的请求参数泛型
 ------------------------------------------------ */
 // 省市区查询接口
@@ -34,4 +42,9 @@ interface ListViewParams {
   page: number; // 页码
 }
 
-export type { UserLoginParams, DataAreaParams, ListViewParams };
+export type {
+  UserLoginParams,
+  DataAreaParams,
+  ListViewParams,
+  changePwdParams
+};

@@ -1,3 +1,4 @@
+// 目前自动注册的路由不能启用懒加载模式，已放弃该方案
 import { RouteRecordRaw } from 'vue-router';
 
 const businessPages = require.context('../views/BusinessPage', true, /\.vue$/);

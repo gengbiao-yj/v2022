@@ -78,6 +78,18 @@ export default defineStore('basicPinia', () => {
     return tabs.value;
   }
 
+  /*  BASE_URL 存储
+  ------------------------------------------------ */
+  const BASE_URL = ref<string>('');
+  function setBaseUrl(data: string) {
+    BASE_URL.value = data;
+    storage.setSession('baseUrl', data);
+  }
+  function getBaseUrl() {
+    BASE_URL.value = storage.getSession('baseUrl').value;
+    return BASE_URL.value;
+  }
+
   return {
     getUserInfo,
     setUserInfo,
@@ -88,6 +100,9 @@ export default defineStore('basicPinia', () => {
     setSystemParams,
     tabs,
     setTabs,
-    getTabs
+    getTabs,
+    BASE_URL,
+    setBaseUrl,
+    getBaseUrl
   };
 });
