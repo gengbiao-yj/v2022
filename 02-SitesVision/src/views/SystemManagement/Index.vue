@@ -84,7 +84,7 @@ const asideMenuChange = (i: number) => {
           <use href="#icon-zuohua"></use>
         </svg>
         <!-- 系统设置项 -->
-        <div></div>
+        <div>系统设置项</div>
       </div>
     </div>
     <sv-copyright-line />
