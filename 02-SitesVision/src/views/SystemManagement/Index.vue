@@ -74,6 +74,7 @@ const asideMenuChange = (i: number) => {
         </ul>
       </div>
       <div class="content-main">
+        <!-- content-aside 侧边工具栏展开折叠按钮 -->
         <svg
           class="icon svg-40"
           aria-hidden="true"
@@ -82,6 +83,7 @@ const asideMenuChange = (i: number) => {
         >
           <use href="#icon-zuohua"></use>
         </svg>
+        <!-- 系统设置项 -->
       </div>
     </div>
     <sv-copyright-line />

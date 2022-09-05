@@ -31,6 +31,8 @@
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@types/crypto-js": "^4.1.1",
     "@types/js-md5": "^0.4.3",
     "@types/nprogress": "^0.2.0",
@@ -64,5 +66,8 @@
   ],
   "engines": {
     "node": "14.x"
+  },
+  "gitHooks": {
+    "commit-msg": "commitlint -E GIT_PARAMS"
   }
 }
