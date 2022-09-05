@@ -21,7 +21,7 @@ const config = defineConfig({
         /*  vue Api 全局引入
         ------------------------------------------------ */
         imports: ['vue', 'vue-router'],
-        // 解决 vue api 全局引入后 eslint报错问题
+        // 关闭 eslint 检查
         eslintrc: {
           enabled: true
         }
